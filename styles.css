@@ -1078,8 +1078,8 @@ section {
 
 /* VISIT */
 #visit {
-  background: #1c2b28;
-  color: white;
+  background: #454444;
+  color: rgb(225, 219, 219);
   position: relative;
   overflow: hidden;
 }
