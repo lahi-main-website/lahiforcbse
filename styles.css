@@ -264,7 +264,7 @@ section {
   margin-bottom: 20px;
 }
 .section-title .it {
-  font-style: var(--font-display);
+  font-style: var(--font-body);
   color: var(--teal);
 }
 .section-desc {
