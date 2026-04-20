@@ -264,7 +264,7 @@ section {
   margin-bottom: 20px;
 }
 .section-title .it {
-  font-style: italic;
+  font-style: var(--font-display);
   color: var(--teal);
 }
 .section-desc {
@@ -434,7 +434,7 @@ section {
 .hero-right-quote p {
   font-family: var(--font-serif);
   font-size: 0.95rem;
-  font-style: italic;
+  font-style: var(--font-display);
   color: var(--ink);
   line-height: 1.6;
   margin-bottom: 6px;
@@ -702,7 +702,7 @@ section {
   line-height: 1.65;
 }
 .what-it-means {
-  background: var(--teal);
+  background: #894b07e3;
   border-radius: var(--radius-lg);
   padding: 32px;
   color: white;
@@ -739,7 +739,7 @@ section {
 .what-it-means p {
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.7);
-  font-style: italic;
+  font-style: var(--font-display);
 }
 @media (max-width: 860px) {
   .policy-content {
@@ -822,7 +822,7 @@ section {
 .programme-card .hindi {
   font-size: 0.8rem;
   color: var(--muted);
-  font-style: italic;
+  font-style: var(--font-display);
 }
 .programme-body {
   padding: 18px 22px;
@@ -1059,7 +1059,7 @@ section {
 .comp-aspect {
   font-weight: 600;
   color: var(--ink);
-  font-style: italic;
+  font-style: var(--font-display);
 }
 .comp-typical {
   color: #b0a89a;
@@ -1747,7 +1747,7 @@ footer {
   padding: 15px 28px;
   font-size: 0.84rem;
   color: var(--muted);
-  font-style: italic;
+  font-style: var(--font-display);
 }
 @media (max-width: 600px) {
   .lahi-does-grid {
