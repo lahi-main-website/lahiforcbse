@@ -158,7 +158,6 @@
  
     document.getElementById('form-container').style.display = 'none';
     document.getElementById('success-msg').style.display = 'block';
-<<<<<<< HEAD
   }
 
 // ══════════════════════════════════════════════════════════════
@@ -171,7 +170,7 @@ console.log('[LAHI CMS] script.js loaded — initialising CMS module');
 
 // ── Configuration ─────────────────────────────────────────────
 // Google Workspace domain GAS URL — uses JSONP strategy (see loadCMSData)
-const CMS_API_URL        = 'https://script.google.com/a/macros/lendahandindia.org/s/AKfycbxNDgCtt13vnChN9zcJPrfNThvB2avwtPh1IOD7ZCcWK89wzh49-5ekkUBqDb4jSgBR/exec';
+const CMS_API_URL        = 'https://script.google.com/a/macros/lendahandindia.org/s/AKfycbyjh_u6yoaHGtheooh62hFG_ztfNkfKQeuPG2FDBPsDmR9I8RLOSHjU0Vz2J9zL_nyh/exec';
 const FAQ_JSON_URL       = './faq-data.json';
 const RESOURCES_JSON_URL = './resources.json';
 const JSONP_TIMEOUT_MS   = 7000; // 7 s before falling back to local JSON
@@ -683,6 +682,3 @@ function escapeHTML(str) {
 }
 
 console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLoaded');
-=======
-  }
->>>>>>> 37880ee3dd44bb9b9f54e6f5d82e12664aa21773
