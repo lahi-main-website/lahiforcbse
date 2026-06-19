@@ -158,6 +158,7 @@
  
     document.getElementById('form-container').style.display = 'none';
     document.getElementById('success-msg').style.display = 'block';
+<<<<<<< HEAD
   }
 
 // ══════════════════════════════════════════════════════════════
@@ -682,3 +683,6 @@ function escapeHTML(str) {
 }
 
 console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLoaded');
+=======
+  }
+>>>>>>> 37880ee3dd44bb9b9f54e6f5d82e12664aa21773

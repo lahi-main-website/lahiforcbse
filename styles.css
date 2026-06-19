@@ -1953,6 +1953,7 @@ button:focus-visible {
   color: white;
   letter-spacing: 0.04em;
 }
+<<<<<<< HEAD
 
 /* ══════════════════════════════════════════════════════════════
    TIMETABLE GENERATOR SECTION
@@ -2694,3 +2695,5 @@ button:focus-visible {
 @media (max-width: 400px) {
   .brochure-grid { grid-template-columns: 1fr; }
 }
+=======
+>>>>>>> 37880ee3dd44bb9b9f54e6f5d82e12664aa21773
