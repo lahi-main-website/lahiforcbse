@@ -25,7 +25,9 @@
         <li><a href="#policy">NEP-NCF</a></li>
         <li><a href="#programmes">Programmes</a></li>
         <li><a href="#provides">What We Offer</a></li>
+        <li><a href="#timetable-gen">Timetable</a></li>
         <li><a href="#visit">Exposure Visit</a></li>
+        <li><a href="#faq">FAQs</a></li>
         <li><a href="#resources">Resources</a></li>
         <li><a href="#register" class="nav-cta">Register Interest</a></li>
       </ul>
@@ -45,11 +47,11 @@
       <a href="#policy" class="mobile-nav-link">NEP–NCF</a>
       <a href="#programmes" class="mobile-nav-link">Programmes</a>
       <a href="#provides" class="mobile-nav-link">What We Offer</a>
+      <a href="#timetable-gen" class="mobile-nav-link">Timetable</a>
       <a href="#visit" class="mobile-nav-link">Exposure Visit</a>
+      <a href="#faq" class="mobile-nav-link">FAQs</a>
       <a href="#resources" class="mobile-nav-link">Resources</a>
-      <a href="#register" class="mobile-cta mobile-nav-link"
-        >Register Interest</a
-      >
+      <a href="#register" class="mobile-cta mobile-nav-link">Register Interest</a>
     </div>
 
     <!-- HERO -->
@@ -1008,6 +1010,89 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════
+         TIMETABLE GENERATOR SECTION
+         ══════════════════════════════════════════ -->
+    <section id="timetable-gen" class="timetable-gen-section">
+      <div class="section-inner">
+        <div class="section-label reveal">Interactive Tool</div>
+        <h2 class="section-title reveal">
+          Skill Education <span class="it">Timetable Generator</span>
+        </h2>
+        <p class="section-desc reveal">
+          Plan Skill Education without disrupting your existing timetable.
+        </p>
+
+        <div class="tg-card reveal">
+          <!-- Left: description + features + CTA -->
+          <div class="tg-card-left">
+            <div class="tg-icon-wrap" aria-hidden="true">
+              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="56" height="56" rx="14" fill="rgba(137,75,7,0.10)"/>
+                <rect x="13" y="15" width="30" height="26" rx="4" stroke="#894b07" stroke-width="1.8" fill="none"/>
+                <line x1="13" y1="22" x2="43" y2="22" stroke="#894b07" stroke-width="1.8"/>
+                <line x1="21" y1="11" x2="21" y2="19" stroke="#894b07" stroke-width="1.8" stroke-linecap="round"/>
+                <line x1="35" y1="11" x2="35" y2="19" stroke="#894b07" stroke-width="1.8" stroke-linecap="round"/>
+                <rect x="18" y="27" width="6" height="5" rx="1.5" fill="#e07b2a"/>
+                <rect x="26" y="27" width="6" height="5" rx="1.5" fill="#894b07" opacity="0.5"/>
+                <rect x="34" y="27" width="6" height="5" rx="1.5" fill="#894b07" opacity="0.3"/>
+                <rect x="18" y="34" width="6" height="4" rx="1.5" fill="#894b07" opacity="0.3"/>
+                <rect x="26" y="34" width="6" height="4" rx="1.5" fill="#e07b2a" opacity="0.7"/>
+                <rect x="34" y="34" width="6" height="4" rx="1.5" fill="#894b07" opacity="0.5"/>
+              </svg>
+            </div>
+
+            <h3 class="tg-heading">Worried about fitting Skill Education into your school timetable?</h3>
+            <p class="tg-desc">
+              Schools can use this interactive Timetable Generator to explore different scheduling options, test configurations, and create timetables that align with CBSE and NCF-SE recommendations — making implementation easier and reducing trial and error.
+            </p>
+
+            <ul class="tg-features">
+              <li><span class="tg-check">✓</span> Explore timetable options</li>
+              <li><span class="tg-check">✓</span> Test multiple configurations</li>
+              <li><span class="tg-check">✓</span> Align with CBSE recommendations</li>
+              <li><span class="tg-check">✓</span> Reduce implementation challenges</li>
+            </ul>
+
+            <button class="btn-primary tg-launch-btn" onclick="openTimetableModal()">
+              🗓️ Launch Timetable Generator
+            </button>
+          </div>
+
+          <!-- Right: preview graphic -->
+          <div class="tg-card-right" aria-hidden="true">
+            <div class="tg-preview-wrap">
+              <div class="tg-preview-bar tg-bar-skill">Skill Education</div>
+              <div class="tg-preview-bar tg-bar-math">Mathematics</div>
+              <div class="tg-preview-bar tg-bar-sci">Science</div>
+              <div class="tg-preview-bar tg-bar-skill tg-bar-sm">Skill Ed</div>
+              <div class="tg-preview-bar tg-bar-lang">Language R1</div>
+              <div class="tg-preview-bar tg-bar-sst">Social Science</div>
+              <div class="tg-preview-label">Sample Generated Timetable</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMETABLE GENERATOR MODAL -->
+    <div id="timetable-modal" class="tg-modal-overlay" role="dialog" aria-modal="true" aria-label="Timetable Generator">
+      <div class="tg-modal-box">
+        <div class="tg-modal-header">
+          <span class="tg-modal-title">CBSE Skill Education Timetable Generator</span>
+          <button class="tg-modal-close" onclick="closeTimetableModal()" aria-label="Close">✕</button>
+        </div>
+        <div class="tg-modal-body">
+          <iframe
+            id="timetable-iframe"
+            src="cbse-timetable-generator.html"
+            title="CBSE Skill Education Timetable Generator"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
     <!-- EXPOSURE VISIT -->
     <section id="visit">
       <div class="section-inner">
@@ -1480,6 +1565,63 @@
       </div>
     </section>
 
+    <!-- ══════════════════════════════════════════
+         DYNAMIC FAQ SECTION
+         Data loaded from: faq-data.json (or Google Sheets CMS API)
+         ══════════════════════════════════════════ -->
+    <section id="faq" class="faq-section">
+      <div class="section-inner">
+        <div class="section-label reveal">Common Questions</div>
+        <h2 class="section-title reveal">
+          Frequently Asked <span class="it">Questions</span>
+        </h2>
+        <p class="section-desc reveal">
+          Answers on Kaushal Bodh, Kaushal Vikas, Composite Skill Labs, timetabling, and assessment — based on CBSE guidelines, NCF-SE 2023, and NEP 2020.
+        </p>
+
+        <!-- Search + Category Filter -->
+        <div class="faq-controls reveal">
+          <div class="faq-search-wrap">
+            <span class="faq-search-icon">🔍</span>
+            <input
+              type="text"
+              id="faq-search"
+              class="faq-search"
+              placeholder="Search FAQs…"
+              aria-label="Search frequently asked questions"
+              oninput="filterFAQs()"
+            />
+          </div>
+          <div class="faq-cats" id="faq-cats" role="tablist" aria-label="FAQ categories">
+            <button class="faq-cat active" data-cat="All" onclick="setFAQCat(this)" role="tab" aria-selected="true">All</button>
+            <button class="faq-cat" data-cat="Policy" onclick="setFAQCat(this)" role="tab">Policy</button>
+            <button class="faq-cat" data-cat="Timetable" onclick="setFAQCat(this)" role="tab">Timetable</button>
+            <button class="faq-cat" data-cat="Skill Labs" onclick="setFAQCat(this)" role="tab">Skill Labs</button>
+            <button class="faq-cat" data-cat="Teacher Training" onclick="setFAQCat(this)" role="tab">Teacher Training</button>
+            <button class="faq-cat" data-cat="Assessments" onclick="setFAQCat(this)" role="tab">Assessments</button>
+          </div>
+        </div>
+
+        <!-- FAQ accordion list — NOTE: no 'reveal' class here; content is dynamic -->
+        <div id="faq-list" class="faq-list" aria-live="polite">
+          <div class="faq-loading" id="faq-loading-spinner">
+            <div class="faq-spinner"></div>
+            <p>Loading FAQs…</p>
+          </div>
+        </div>
+
+        <!-- Empty state -->
+        <div id="faq-empty" class="faq-empty" style="display:none">
+          <p>No FAQs match your search. Try a different keyword or category.</p>
+        </div>
+
+        <!-- Error state -->
+        <div id="faq-error" class="faq-error" style="display:none">
+          <p>FAQs are currently being updated. Please check back shortly or <a href="mailto:schools@lendahandindia.org">contact us</a>.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- RESOURCES & CIRCULARS -->
     <section id="resources" style="background: var(--warm)">
       <div class="section-inner">
@@ -1488,425 +1630,158 @@
           Resources &amp; <span class="it">Circulars</span>
         </h2>
         <p class="section-desc reveal">
-          Key policy documents and CBSE circulars that shape skill education
-          implementation for schools.
+          Key policy documents, CBSE circulars, webinar recordings, and downloadable brochures for skill education implementation.
         </p>
 
-        <div class="resource-cards reveal" style="margin-top: 48px">
-          <!-- NEP 2020 -->
-          <div class="resource-card">
-            <div class="resource-card-visible">
-              <div class="resource-icon">📄</div>
-              <div class="resource-summary">
-                <h3>NEP 2020</h3>
-                <p>
-                  Mandates skill education from Grade 6, replacing rote learning
-                  with competency-based, experiential learning.
-                </p>
+        <!-- Resource Tabs -->
+        <div class="res-tabs reveal" role="tablist" aria-label="Resource categories">
+          <button class="res-tab active" data-tab="guides" onclick="switchResTab(this)" role="tab" aria-selected="true">📚 Guides &amp; Tools</button>
+          <button class="res-tab" data-tab="webinars" onclick="switchResTab(this)" role="tab" aria-selected="false">🎥 Webinar Library</button>
+          <button class="res-tab" data-tab="brochures" onclick="switchResTab(this)" role="tab" aria-selected="false">📄 Downloadable Brochures</button>
+        </div>
+
+        <!-- Tab Panel A: Guides & Tools (existing resource cards) -->
+        <div id="res-panel-guides" class="res-panel" role="tabpanel">
+          <div class="resource-cards" style="margin-top: 32px">
+            <!-- NEP 2020 -->
+            <div class="resource-card">
+              <div class="resource-card-visible">
+                <div class="resource-icon">📄</div>
+                <div class="resource-summary">
+                  <h3>NEP 2020</h3>
+                  <p>Mandates skill education from Grade 6, replacing rote learning with competency-based, experiential learning.</p>
+                </div>
+                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
               </div>
-              <button class="resource-view-btn" aria-expanded="false">
-                View <span class="resource-arrow">↓</span>
-              </button>
+              <div class="resource-expand">
+                <ul>
+                  <li>Move from rote learning to competency-based, experiential learning</li>
+                  <li>New 5+3+3+4 structure replacing 10+2</li>
+                  <li>Integration of vocational education from Grade 6 onwards</li>
+                  <li>Focus on holistic development, skills, and real-world application</li>
+                </ul>
+                <p style="margin-top:14px;font-size:0.875rem;color:var(--teal);font-weight:600;">Skill education is positioned as a core part of mainstream schooling, not an add-on.</p>
+                <a href="https://aicte.gov.in/sites/default/files/nep2020.pdf" target="_blank" class="resource-dl-btn">↓ Download NEP 2020 Document</a>
+              </div>
             </div>
-            <div class="resource-expand">
-              <ul>
-                <li>
-                  Move from rote learning to competency-based, experiential
-                  learning
-                </li>
-                <li>New 5+3+3+4 structure replacing 10+2</li>
-                <li>
-                  Integration of vocational education from Grade 6 onwards
-                </li>
-                <li>
-                  Focus on holistic development, skills, and real-world
-                  application
-                </li>
-              </ul>
-              <p
-                style="
-                  margin-top: 14px;
-                  font-size: 0.875rem;
-                  color: var(--teal);
-                  font-weight: 600;
-                "
-              >
-                Skill education is positioned as a core part of mainstream
-                schooling, not an add-on.
-              </p>
-              <a
-                href="https://aicte.gov.in/sites/default/files/nep2020.pdf"
-                target="_blank"
-                class="resource-dl-btn"
-                >↓ Download NEP 2020 Document</a
-              >
+
+            <!-- NCF 2023 -->
+            <div class="resource-card">
+              <div class="resource-card-visible">
+                <div class="resource-icon">📘</div>
+                <div class="resource-summary">
+                  <h3>NCF 2023</h3>
+                  <p>Operationalises NEP in classrooms — introduces Kaushal Bodh and multi-sector skill exposure for Grades 6–10.</p>
+                </div>
+                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+              </div>
+              <div class="resource-expand">
+                <ul>
+                  <li>Introduces Kaushal Bodh (Grades 6–8)</li>
+                  <li>Recommends multi-sector skill exposure (Grades 9–10)</li>
+                  <li>Emphasises experiential, project-based learning</li>
+                  <li>Focus on teacher-led implementation and school ecosystem readiness</li>
+                </ul>
+                <p style="margin-top:14px;font-size:0.875rem;color:var(--teal);font-weight:600;">NCF translates policy into what schools actually need to do.</p>
+                <a href="https://dsel.education.gov.in/sites/default/files/guidelines/ncf_2023.pdf" target="_blank" class="resource-dl-btn">↓ Download NCF 2023 Document</a>
+              </div>
+            </div>
+
+            <!-- CBSE Circulars -->
+            <div class="resource-card">
+              <div class="resource-card-visible">
+                <div class="resource-icon">🏛️</div>
+                <div class="resource-summary">
+                  <h3>CBSE Circulars</h3>
+                  <p>Multiple circulars pushing Composite Skill Labs, Kaushal Bodh implementation, and NEP–NCF alignment across schools.</p>
+                </div>
+                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+              </div>
+              <div class="resource-expand">
+                <ul>
+                  <li>Skill education included as part of secondary curriculum structure</li>
+                  <li>Push for Composite Skill Labs in schools</li>
+                  <li>Ongoing teacher training and capacity-building initiatives</li>
+                  <li>Increasing alignment of affiliation and inspections with NEP–NCF</li>
+                </ul>
+                <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+                  <a href="https://cbseacademic.nic.in/web_material/Circulars/2023/01_Circular_2023.pdf" target="_blank" rel="noopener" class="resource-link">→ Integration of Skill Education (2023) — sets the direction</a>
+                  <a href="https://www.cbse.gov.in/cbsenew/documents/75_Circular_2024_Composite_Skill_Labs_27082024.pdf" target="_blank" rel="noopener" class="resource-link">→ Composite Skill Labs (2024) — infrastructure expectation</a>
+                  <a href="https://cbseacademic.nic.in/web_material/Circulars/2025/81_Circular_2025.pdf" target="_blank" rel="noopener" class="resource-link">→ Mandatory Kaushal Bodh (2025) — immediate implementation</a>
+                  <a href="https://www.cbse.gov.in/cbsenew/documents/01_Circular_2025_SKILL_10012025.pdf" target="_blank" rel="noopener" class="resource-link">→ NEP–NCF alignment push (latest) — ongoing compliance direction</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timetable -->
+            <div class="resource-card">
+              <div class="resource-card-visible">
+                <div class="resource-icon">🗓️</div>
+                <div class="resource-summary">
+                  <h3>Timetable Integration</h3>
+                  <p>~110 hours/year per CBSE guidelines — typically 4–5 periods per week per grade, in distributed or block models.</p>
+                </div>
+                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+              </div>
+              <div class="resource-expand">
+                <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px;">
+                  <div style="background:var(--cream);border-radius:10px;padding:14px 16px;border:1px solid var(--border);">
+                    <p style="font-size:0.8rem;font-weight:700;color:var(--ink);margin-bottom:4px;">Distributed Model (Most Common)</p>
+                    <p style="font-size:0.85rem;color:var(--muted);line-height:1.6;">4–5 periods spread across the week.</p>
+                  </div>
+                  <div style="background:var(--cream);border-radius:10px;padding:14px 16px;border:1px solid var(--border);">
+                    <p style="font-size:0.8rem;font-weight:700;color:var(--ink);margin-bottom:4px;">Block Model (Recommended for hands-on learning)</p>
+                    <p style="font-size:0.85rem;color:var(--muted);line-height:1.6;">2 double periods + 1 single period per week.</p>
+                  </div>
+                </div>
+                <p style="font-size:0.875rem;color:var(--muted);font-style:italic;line-height:1.6;">Schools often focus on allocating time. The real impact comes from how that time is used.</p>
+                <button onclick="openTimetableModal()" class="resource-dl-btn" style="background:var(--saffron);border:none;cursor:pointer;">🗓️ Launch Timetable Generator</button>
+              </div>
+            </div>
+
+            <!-- Case Studies -->
+            <div class="resource-card">
+              <div class="resource-card-visible">
+                <div class="resource-icon">📊</div>
+                <div class="resource-summary">
+                  <h3>Case Studies</h3>
+                  <p>Real implementation stories from Lend A Hand India partner schools — how they started, what changed, and what they'd do differently.</p>
+                </div>
+                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+              </div>
+              <div class="resource-expand">
+                <a href="#register" class="resource-dl-btn">📩 Request Case Study Pack</a>
+              </div>
+            </div>
+
+        <!-- Tab Panel B: Webinar Library (dynamic) -->
+        <div id="res-panel-webinars" class="res-panel" style="display:none" role="tabpanel">
+          <div id="webinar-cards" class="webinar-grid" style="margin-top:32px">
+            <div class="res-loading" id="webinar-loading-spinner">
+              <div class="faq-spinner"></div>
+              <p>Loading webinars…</p>
             </div>
           </div>
-
-          <!-- NCF 2023 -->
-          <div class="resource-card">
-            <div class="resource-card-visible">
-              <div class="resource-icon">📘</div>
-              <div class="resource-summary">
-                <h3>NCF 2023</h3>
-                <p>
-                  Operationalises NEP in classrooms — introduces Kaushal Bodh
-                  and multi-sector skill exposure for Grades 6–10.
-                </p>
-              </div>
-              <button class="resource-view-btn" aria-expanded="false">
-                View <span class="resource-arrow">↓</span>
-              </button>
-            </div>
-            <div class="resource-expand">
-              <ul>
-                <li>Introduces Kaushal Bodh (Grades 6–8)</li>
-                <li>Recommends multi-sector skill exposure (Grades 9–10)</li>
-                <li>Emphasises experiential, project-based learning</li>
-                <li>
-                  Focus on teacher-led implementation and school ecosystem
-                  readiness
-                </li>
-              </ul>
-              <p
-                style="
-                  margin-top: 14px;
-                  font-size: 0.875rem;
-                  color: var(--teal);
-                  font-weight: 600;
-                "
-              >
-                NCF translates policy into what schools actually need to do.
-              </p>
-              <a
-                href="https://dsel.education.gov.in/sites/default/files/guidelines/ncf_2023.pdf"
-                target="_blank"
-                class="resource-dl-btn"
-                >↓ Download NCF 2023 Document</a
-              >
-            </div>
-          </div>
-
-          <!-- CBSE Circulars -->
-          <div class="resource-card">
-            <div class="resource-card-visible">
-              <div class="resource-icon">🏛️</div>
-              <div class="resource-summary">
-                <h3>CBSE Circulars</h3>
-                <p>
-                  Multiple circulars pushing Composite Skill Labs, Kaushal Bodh
-                  implementation, and NEP–NCF alignment across schools.
-                </p>
-              </div>
-              <button class="resource-view-btn" aria-expanded="false">
-                View <span class="resource-arrow">↓</span>
-              </button>
-            </div>
-            <div class="resource-expand">
-              <ul>
-                <li>
-                  Skill education included as part of secondary curriculum
-                  structure
-                </li>
-                <li>Push for Composite Skill Labs in schools</li>
-                <li>
-                  Ongoing teacher training and capacity-building initiatives
-                </li>
-                <li>
-                  Increasing alignment of affiliation and inspections with
-                  NEP–NCF
-                </li>
-              </ul>
-              <div
-                style="
-                  margin-top: 16px;
-                  display: flex;
-                  flex-direction: column;
-                  gap: 8px;
-                "
-              >
-                <a
-                  href="https://cbseacademic.nic.in/web_material/Circulars/2023/01_Circular_2023.pdf"
-                  target="_blank"
-                  rel="noopener"
-                  class="resource-link"
-                  >→ Integration of Skill Education (2023) — sets the
-                  direction</a
-                >
-                <a
-                  href="https://www.cbse.gov.in/cbsenew/documents/75_Circular_2024_Composite_Skill_Labs_27082024.pdf"
-                  target="_blank"
-                  rel="noopener"
-                  class="resource-link"
-                  >→ Composite Skill Labs (2024) — infrastructure expectation</a
-                >
-                <a
-                  href="https://cbseacademic.nic.in/web_material/Circulars/2025/81_Circular_2025.pdf"
-                  target="_blank"
-                  rel="noopener"
-                  class="resource-link"
-                  >→ Mandatory Kaushal Bodh (2025) — immediate implementation</a
-                >
-                <a
-                  href="https://www.cbse.gov.in/cbsenew/documents/01_Circular_2025_SKILL_10012025.pdf"
-                  target="_blank"
-                  rel="noopener"
-                  class="resource-link"
-                  >→ NEP–NCF alignment push (latest) — ongoing compliance
-                  direction</a
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Timetable -->
-          <div class="resource-card">
-            <div class="resource-card-visible">
-              <div class="resource-icon">🗓️</div>
-              <div class="resource-summary">
-                <h3>Timetable Integration</h3>
-                <p>
-                  ~110 hours/year per CBSE guidelines — typically 4–5 periods
-                  per week per grade, in distributed or block models.
-                </p>
-              </div>
-              <button class="resource-view-btn" aria-expanded="false">
-                View <span class="resource-arrow">↓</span>
-              </button>
-            </div>
-            <div class="resource-expand">
-              <div
-                style="
-                  display: flex;
-                  flex-direction: column;
-                  gap: 12px;
-                  margin-bottom: 14px;
-                "
-              >
-                <div
-                  style="
-                    background: var(--cream);
-                    border-radius: 10px;
-                    padding: 14px 16px;
-                    border: 1px solid var(--border);
-                  "
-                >
-                  <p
-                    style="
-                      font-size: 0.8rem;
-                      font-weight: 700;
-                      color: var(--ink);
-                      margin-bottom: 4px;
-                    "
-                  >
-                    Distributed Model (Most Common)
-                  </p>
-                  <p
-                    style="
-                      font-size: 0.85rem;
-                      color: var(--muted);
-                      line-height: 1.6;
-                    "
-                  >
-                    4–5 periods spread across the week.
-                  </p>
-                </div>
-                <div
-                  style="
-                    background: var(--cream);
-                    border-radius: 10px;
-                    padding: 14px 16px;
-                    border: 1px solid var(--border);
-                  "
-                >
-                  <p
-                    style="
-                      font-size: 0.8rem;
-                      font-weight: 700;
-                      color: var(--ink);
-                      margin-bottom: 4px;
-                    "
-                  >
-                    Block Model (Recommended for hands-on learning)
-                  </p>
-                  <p
-                    style="
-                      font-size: 0.85rem;
-                      color: var(--muted);
-                      line-height: 1.6;
-                    "
-                  >
-                    2 double periods + 1 single period per week.
-                  </p>
-                </div>
-              </div>
-              <p
-                style="
-                  font-size: 0.875rem;
-                  color: var(--muted);
-                  font-style: italic;
-                  line-height: 1.6;
-                "
-              >
-                Schools often focus on allocating time. The real impact comes
-                from how that time is used.
-              </p>
-              <a
-                href="#register"
-                class="resource-dl-btn"
-                style="background: var(--saffron)"
-                >👉 Request a sample timetable</a
-              >
-            </div>
-          </div>
-
-          <!-- Case Studies -->
-          <div class="resource-card">
-            <div class="resource-card-visible">
-              <div class="resource-icon">📊</div>
-              <div class="resource-summary">
-                <h3>Case Studies</h3>
-                <p>
-                  Real implementation stories from Lend A Hand India partner schools — how
-                  they started, what changed, and what they'd do differently.
-                </p>
-              </div>
-              <button class="resource-view-btn" aria-expanded="false">
-                View <span class="resource-arrow">↓</span>
-              </button>
-            </div>
-            <div class="resource-expand">
-              <a href="#register" class="resource-dl-btn"
-                >📩 Request Case Study Pack</a
-              >
-            </div>
-          </div>
-
-          <!-- Skill Education FAQ -->
-          <style>
-            .faq-icon-wrap {
-              width: 44px;
-              height: 44px;
-              border-radius: 8px;
-              background: rgba(137, 75, 7, 0.08);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              flex-shrink: 0;
-              cursor: pointer;
-              position: relative;
-            }
-            .faq-icon-wrap svg {
-              overflow: visible;
-            }
-            /* Rotating ring */
-            .faq-ring {
-              transform-origin: 16px 16px;
-              animation: faq-spin 8s linear infinite;
-            }
-            @keyframes faq-spin {
-              to { transform: rotate(360deg); }
-            }
-            /* Q mark bounce on hover */
-            .faq-icon-wrap:hover .faq-q {
-              animation: faq-bounce 0.5s ease forwards;
-            }
-            @keyframes faq-bounce {
-              0%   { transform: translateY(0); }
-              30%  { transform: translateY(-4px) scale(1.15); }
-              60%  { transform: translateY(1px) scale(0.95); }
-              100% { transform: translateY(0) scale(1); }
-            }
-            /* Dot blink */
-            .faq-dot {
-              animation: faq-blink 2.4s ease-in-out infinite;
-              transform-origin: 16px 24px;
-            }
-            @keyframes faq-blink {
-              0%, 80%, 100% { opacity: 1; }
-              90%            { opacity: 0; }
-            }
-            /* Ripple on hover */
-            .faq-icon-wrap:hover .faq-ripple {
-              animation: faq-ripple 0.6s ease-out forwards;
-            }
-            .faq-ripple {
-              opacity: 0;
-            }
-            @keyframes faq-ripple {
-              0%   { r: 10; opacity: 0.35; }
-              100% { r: 20; opacity: 0; }
-            }
-          </style>
-          <div class="resource-card">
-            <div class="resource-card-visible">
-              <div class="faq-icon-wrap" title="Skill Education FAQ">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Ripple circle (shows on hover) -->
-                  <circle class="faq-ripple" cx="16" cy="16" r="10" fill="none" stroke="#e07b39" stroke-width="1.5"/>
-                  <!-- Spinning dashed ring -->
-                  <circle class="faq-ring" cx="16" cy="16" r="13"
-                    fill="none"
-                    stroke="#c96a1a"
-                    stroke-width="1.2"
-                    stroke-dasharray="3.5 3.5"
-                    opacity="0.45"/>
-                  <!-- Background circle -->
-                  <circle cx="16" cy="16" r="11" fill="rgba(137,75,7,0.10)"/>
-                  <!-- Question mark body -->
-                  <g class="faq-q" style="transform-origin:16px 16px">
-                    <path d="M13 11.5C13 9.57 14.57 8 16.5 8C18.43 8 20 9.57 20 11.5C20 13.1 19.0 14.1 17.8 14.8C17.1 15.2 16.5 15.8 16.5 16.7V18"
-                      stroke="#894b07" stroke-width="1.8" stroke-linecap="round" fill="none"/>
-                  </g>
-                  <!-- Dot -->
-                  <circle class="faq-dot" cx="16.5" cy="22" r="1.2" fill="#894b07"/>
-                </svg>
-              </div>
-              <div class="resource-summary">
-                <h3>Skill Education FAQ</h3>
-                <p>
-                  Answers to the most common questions on Kaushal Bodh, Kaushal Vikas, CSL setup, timetabling, assessment, and more — based on CBSE guidelines, NCF-SE 2023, and NEP 2020.
-                </p>
-              </div>
-              <button class="resource-view-btn" aria-expanded="false">
-                View <span class="resource-arrow">↓</span>
-              </button>
-            </div>
-            <div class="resource-expand">
-              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px;">
-                <div style="background: var(--cream); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);">
-                  <p style="font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Policy &amp; Mandate</p>
-                  <p style="font-size: 0.85rem; color: var(--muted); line-height: 1.6;">What is Kaushal Bodh and Kaushal Vikas? Is skill education mandatory? What does NEP 2020 require?</p>
-                </div>
-                <div style="background: var(--cream); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);">
-                  <p style="font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Composite Skill Lab (CSL) Setup</p>
-                  <p style="font-size: 0.85rem; color: var(--muted); line-height: 1.6;">Space requirements, estimated costs (₹3–6 lakhs), sector selection, layout guidance, and safety provisions.</p>
-                </div>
-                <div style="background: var(--cream); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);">
-                  <p style="font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Timetabling, Teachers &amp; Assessment</p>
-                  <p style="font-size: 0.85rem; color: var(--muted); line-height: 1.6;">110 hours/year, who can teach, portfolio-based assessment, and how marks appear on report cards.</p>
-                </div>
-                <div style="background: var(--cream); border-radius: 10px; padding: 14px 16px; border: 1px solid var(--border);">
-                  <p style="font-size: 0.8rem; font-weight: 700; color: var(--ink); margin-bottom: 4px;">Projects, Kaushal Mela &amp; Community</p>
-                  <p style="font-size: 0.85rem; color: var(--muted); line-height: 1.6;">Project examples for Classes VI–VIII, running the Kaushal Mela, and addressing parent concerns about vocational education.</p>
-                </div>
-              </div>
-              <p style="font-size: 0.875rem; color: var(--muted); font-style: italic; line-height: 1.6;">
-                11 sections · 50+ questions · Covers Kaushal Bodh, Kaushal Vikas, CSL, AI integration, safety, and inclusivity.
-              </p>
-              <a
-                href="./Skill_Education_FAQ__1_.docx"
-                class="resource-dl-btn"
-                download
-                style="background: var(--saffron)"
-                >📄 Download Full FAQ (DOCX)</a
-              >
-            </div>
+          <div id="webinar-error" style="display:none" class="res-update-msg">
+            <p>Webinars are currently being updated. Please check back shortly.</p>
           </div>
         </div>
+
+        <!-- Tab Panel C: Downloadable Brochures (dynamic) -->
+        <div id="res-panel-brochures" class="res-panel" style="display:none" role="tabpanel">
+          <div id="brochure-cards" class="brochure-grid" style="margin-top:32px">
+            <div class="res-loading" id="brochure-loading-spinner">
+              <div class="faq-spinner"></div>
+              <p>Loading brochures…</p>
+            </div>
+          </div>
+          <div id="brochure-error" style="display:none" class="res-update-msg">
+            <p>Brochures are currently being updated. Please check back shortly.</p>
+          </div>
+        </div>
+
       </div>
     </section>
-
     <!-- FOOTER -->
     <footer>
       <div class="footer-inner">
@@ -1942,7 +1817,9 @@
               <li><a href="#policy">NEP-NCF Context</a></li>
               <li><a href="#programmes">Programmes</a></li>
               <li><a href="#provides">What We Offer</a></li>
+              <li><a href="#timetable-gen">Timetable Generator</a></li>
               <li><a href="#visit">Exposure Visit</a></li>
+              <li><a href="#faq">FAQs</a></li>
               <li><a href="#resources">Resources</a></li>
               <li><a href="#register">Register Interest</a></li>
             </ul>

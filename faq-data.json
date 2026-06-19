@@ -1,0 +1,110 @@
+[
+  {
+    "category": "Policy",
+    "question": "What is Kaushal Bodh and who must implement it?",
+    "answer": "Kaushal Bodh textbooks developed by NCERT for classes VI–VIII have been made mandatory for all CBSE affiliated schools from the academic session 2025–26. The curriculum focuses on developing foundational competencies, fostering dignity of labour, and building awareness of the three forms of work — Work with Life Forms, Work with Machines & Materials, and Work in Human Services — through project-based learning.",
+    "status": "Active"
+  },
+  {
+    "category": "Policy",
+    "question": "What is Kaushal Vikas, and when does it begin?",
+    "answer": "Kaushal Vikas (CBSE Subject Code 444), developed by NCERT for Class IX, has been made mandatory for all CBSE affiliated schools from the academic session 2026–27 onwards. It introduces learners to work-centered knowledge, skills, and values linked to local contexts and emerging economic opportunities. It replaces fragmented skill electives with a unified, board-assessed subject.",
+    "status": "Active"
+  },
+  {
+    "category": "Policy",
+    "question": "Is Skill Education replacing an existing subject?",
+    "answer": "No. Kaushal Bodh (Classes VI–VIII) and Kaushal Vikas (Class IX) are standalone mandatory skill subjects. They are not a replacement of any existing subject. Schools should plan time allocation separately for these subjects.",
+    "status": "Active"
+  },
+  {
+    "category": "Policy",
+    "question": "What does NEP 2020 actually say about skill education?",
+    "answer": "NEP 2020 mandates: no hard separation between vocational and academic streams; skill education as a Mandatory Full Mark Subject for Grades 6–10; 110 dedicated hours per year; exposure from Grade 6 onwards; and that by 2025, at least 50% of learners have meaningful vocational exposure. The Composite Skill Lab (CSL) is the institutional step towards this goal.",
+    "status": "Active"
+  },
+  {
+    "category": "Policy",
+    "question": "Is Kaushal Bodh mandatory even for schools that already offer a skill elective in Classes IX–XII?",
+    "answer": "Yes. Kaushal Bodh (Classes VI–VIII) and Kaushal Vikas (Classes IX–X) are both mandatory under NEP 2020 and NCF-SE 2023. Existing skill electives in senior classes (XI–XII) are separate specialisations and continue independently.",
+    "status": "Active"
+  },
+  {
+    "category": "Timetable",
+    "question": "How many periods per week are required for skill education?",
+    "answer": "Schools must allocate 110 hours annually for skill education (Classes VI–X). This works out to approximately 4–5 periods per week. NCF-SE 2023 recommends combining these periods into blocks of 2 consecutive periods to allow meaningful hands-on work — a single period is too short for most practical activities.",
+    "status": "Active"
+  },
+  {
+    "category": "Timetable",
+    "question": "How do we make space in an already full timetable?",
+    "answer": "NCF-SE 2023 provides an illustrative timetable that slots Vocational Education (VE) in double periods, including Saturdays. Practical strategies include: using two working Saturdays per month exclusively for VE periods; clubbing skill periods into double-period blocks; mapping 110 hours per year backwards from the academic calendar; and reviewing existing timetable for redundant slots that can be repurposed.",
+    "status": "Active"
+  },
+  {
+    "category": "Timetable",
+    "question": "Will allocating 5 periods to vocational education reduce periods for other subjects?",
+    "answer": "Yes, some trade-off in total periods is expected — this is deliberate under NEP 2020, which explicitly calls for reducing curriculum content to enhance essential learning and critical thinking. Schools are encouraged to align subject teachers (e.g., biology teacher for agriculture, chemistry for food processing) to contextualise skill learning across subjects.",
+    "status": "Active"
+  },
+  {
+    "category": "Skill Labs",
+    "question": "Is a Composite Skill Lab absolutely mandatory?",
+    "answer": "Yes. CBSE Circular No. Skill-75/2024 (August 23, 2024) mandates all affiliated schools to set up a Composite Skill Lab (CSL). Schools seeking fresh CBSE affiliation must have a CSL with all necessary equipment. Existing schools must comply with the mandate.",
+    "status": "Active"
+  },
+  {
+    "category": "Skill Labs",
+    "question": "What is the minimum space requirement for a CSL?",
+    "answer": "One room of minimum 600 sq. ft for Classes VI–XII; OR two rooms of minimum 400 sq. ft each — one for Classes VI–X and one for Classes XI–XII. The room should have proper ventilation, at least two clear walls for pegboards, electrical wiring with 5A and 15A sockets, adequate lighting and fans, and ideally proximity to an outdoor/garden area.",
+    "status": "Active"
+  },
+  {
+    "category": "Skill Labs",
+    "question": "What does it cost to set up a CSL?",
+    "answer": "The estimated cost is ₹3–6 lakhs depending on skill subjects chosen, lab size, type of furniture, and quantities of tools required. This is a suggestive range — schools investing in branded or specialised equipment may spend more. Tool lists for all 13 sectors are available in the CBSE CSL Guidelines document.",
+    "status": "Active"
+  },
+  {
+    "category": "Skill Labs",
+    "question": "Can the CSL be combined with another existing lab like the IT lab or science lab?",
+    "answer": "Partially, with important caveats: The IT Lab can be leveraged for skill subjects requiring computers but cannot replace a CSL. The ATL/Tinkering Lab can supplement one form of work but cannot be designated as the CSL. The Makers Space Lab comes closest and may be converted if it meets all CSL specifications. The Home Science Lab can be used for food production but cannot replace the CSL.",
+    "status": "Active"
+  },
+  {
+    "category": "Teacher Training",
+    "question": "Who will teach Kaushal Vikas? Must we hire a new teacher?",
+    "answer": "Schools do not necessarily need to hire a new teacher. NCF-SE 2023 explicitly recognises that trained local practitioners and experienced community resource persons can deliver vocational courses. Options include: identifying an existing teacher with relevant competency; appointing a dedicated skill teacher; engaging a locally trained resource trainer (artisan, practitioner); or using guest expert sessions from local industries, farms, or NGOs.",
+    "status": "Active"
+  },
+  {
+    "category": "Teacher Training",
+    "question": "What training is available for teachers?",
+    "answer": "CBSE and organisations like Lend A Hand India conduct teacher training programmes on skill education pedagogy, curriculum, practical techniques, and safety. Schools should proactively reach out to CBSE and Lend A Hand India for scheduled training sessions. Contact schools@lendahandindia.org for implementation support.",
+    "status": "Active"
+  },
+  {
+    "category": "Teacher Training",
+    "question": "Can existing subject teachers teach the vocational subject with relevant training?",
+    "answer": "Yes. An existing teacher with relevant subject background (science, home science, art) can be trained and assigned. This is the preferred approach for most schools. The key requirement is practical competency and willingness to facilitate hands-on learning — not just theoretical delivery.",
+    "status": "Active"
+  },
+  {
+    "category": "Assessments",
+    "question": "How does assessment work for Kaushal Bodh (Classes VI–VIII)?",
+    "answer": "Assessment for Kaushal Bodh is observation, portfolio, and project-based — not examination-based. Teachers assess students on: portfolio evidence (photos, samples, reflections, work records); quality and process of project work; skills demonstrated, not just final output; and values such as dignity of labour, teamwork, and attention to detail.",
+    "status": "Active"
+  },
+  {
+    "category": "Assessments",
+    "question": "How will Kaushal Vikas (Class 9–10) marks appear on the report card?",
+    "answer": "Kaushal Vikas is a marks-based, board-assessed subject. The report card will reflect marks (not just grades). The split is: 75% demonstration/portfolio-based and 25% written examination. For Class 10 board exams, it will be treated as a full subject with marks contributing to the overall score.",
+    "status": "Active"
+  },
+  {
+    "category": "Assessments",
+    "question": "What evidence must schools maintain for Kaushal Bodh?",
+    "answer": "Schools should maintain: student portfolios (physical or digital folders with photos, samples, sketches, process notes from each project); teacher observation records; project documentation (topic, steps, outcomes, and student reflections); attendance and hours log confirming 110 hours per year are met; and Kaushal Mela records (photos, presentations from the year-end showcase).",
+    "status": "Active"
+  }
+]
