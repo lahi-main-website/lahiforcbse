@@ -2695,5 +2695,134 @@ button:focus-visible {
 @media (max-width: 400px) {
   .brochure-grid { grid-template-columns: 1fr; }
 }
-=======
->>>>>>> 37880ee3dd44bb9b9f54e6f5d82e12664aa21773
+
+/* ══════════════════════════════════════════════════════════════
+   BOOK A CALL — Google Calendar scheduling CTA
+   ══════════════════════════════════════════════════════════════ */
+
+.book-call-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--saffron);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-decoration: none;
+  font-family: var(--font-body);
+  box-shadow: 0 4px 16px rgba(224, 123, 42, 0.3);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.book-call-btn:hover {
+  background: #c96a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(224, 123, 42, 0.38);
+}
+
+/* Register Interest engagement options */
+.engage-options {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.engage-options li {
+  display: flex;
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.6;
+  align-items: flex-start;
+}
+
+.engage-options li .engage-arrow {
+  color: var(--teal);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Book a Call inline CTA block */
+.book-call-block {
+  background: rgba(224, 123, 42, 0.07);
+  border: 1.5px solid rgba(224, 123, 42, 0.25);
+  border-radius: var(--radius-md);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.book-call-block-text {
+  flex: 1;
+  min-width: 180px;
+}
+
+.book-call-block-text strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.book-call-block-text span {
+  font-size: 0.84rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Exposure visit video row — responsive fix */
+.visit-video-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.visit-video-wrap {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.visit-video-wrap iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  border: none;
+}
+
+@media (max-width: 600px) {
+  .visit-video-row {
+    flex-direction: column;
+  }
+  .visit-video-wrap {
+    width: 100%;
+  }
+  .book-call-block {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* Google Cal scheduling button wrapper */
+.gcal-btn-wrap {
+  margin-top: 20px;
+}
