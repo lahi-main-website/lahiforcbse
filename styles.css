@@ -112,6 +112,14 @@ nav {
 .nav-cta:hover {
   background: var(--teal-light) !important;
 }
+.nav-cta-book {
+  background: var(--saffron) !important;
+  box-shadow: 0 3px 12px rgba(224, 123, 42, 0.28) !important;
+}
+.nav-cta-book:hover {
+  background: #c96a1a !important;
+  box-shadow: 0 5px 18px rgba(224, 123, 42, 0.4) !important;
+}
 
 .nav-hamburger {
   display: none;
@@ -179,6 +187,13 @@ nav {
   padding: 13px 36px;
   border-radius: var(--radius-md);
   margin-top: 8px;
+}
+.mobile-nav-overlay .mobile-cta-book {
+  background: var(--saffron);
+  margin-top: 4px;
+}
+.mobile-nav-overlay .mobile-cta-book:hover {
+  background: #c96a1a;
 }
 @media (max-width: 1100px) {
   .nav-links {
@@ -2697,32 +2712,8 @@ button:focus-visible {
 }
 
 /* ══════════════════════════════════════════════════════════════
-   BOOK A CALL — Google Calendar scheduling CTA
+   BOOK A CALL — Nav CTA button
    ══════════════════════════════════════════════════════════════ */
-
-.book-call-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--saffron);
-  color: white;
-  padding: 12px 24px;
-  border-radius: var(--radius-sm);
-  font-size: 0.92rem;
-  font-weight: 700;
-  text-decoration: none;
-  font-family: var(--font-body);
-  box-shadow: 0 4px 16px rgba(224, 123, 42, 0.3);
-  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-  cursor: pointer;
-  border: none;
-}
-
-.book-call-btn:hover {
-  background: #c96a1a;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(224, 123, 42, 0.38);
-}
 
 /* Register Interest engagement options */
 .engage-options {
@@ -2747,37 +2738,6 @@ button:focus-visible {
   font-weight: 700;
   flex-shrink: 0;
   margin-top: 2px;
-}
-
-/* Book a Call inline CTA block */
-.book-call-block {
-  background: rgba(224, 123, 42, 0.07);
-  border: 1.5px solid rgba(224, 123, 42, 0.25);
-  border-radius: var(--radius-md);
-  padding: 20px 24px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 24px;
-}
-
-.book-call-block-text {
-  flex: 1;
-  min-width: 180px;
-}
-
-.book-call-block-text strong {
-  display: block;
-  font-size: 0.95rem;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-
-.book-call-block-text span {
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.6;
 }
 
 /* Exposure visit video row — responsive fix */
@@ -2815,14 +2775,4 @@ button:focus-visible {
   .visit-video-wrap {
     width: 100%;
   }
-  .book-call-block {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-}
-
-/* Google Cal scheduling button wrapper */
-.gcal-btn-wrap {
-  margin-top: 20px;
 }
