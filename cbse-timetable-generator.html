@@ -8,36 +8,71 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
+    /* ── LAHI Design System Variables ── */
+    :root {
+      --lahi-saffron: #e07b2a;
+      --lahi-saffron-dark: #c96a1a;
+      --lahi-teal: #894b07;
+      --lahi-border: #e2d9cc;
+      --lahi-radius-sm: 8px;
+      --lahi-radius-md: 14px;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {  background: #f8fafc;; }
+    html { overflow-x: hidden; }
+    body {
+      background: #0f172a;
+      font-family: "DM Sans", Arial, sans-serif;
+      color: #e2e8f0;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
     ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track {  background: #f1f5f9  ;
-                                border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: #1e293b; border-radius: 3px; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-    .hov:hover { background: #fff7ed !important;; }
+
+    .hov:hover { background: rgba(224,123,42,0.15) !important; }
     .pcell { transition: transform .15s, box-shadow .15s; cursor: default; }
-    .pcell:hover { transform: scale(1.05); z-index: 2; position: relative; }
+    .pcell:hover { transform: scale(1.03); z-index: 2; position: relative; }
     .sglow { animation: sg 2.2s ease-in-out infinite; }
     @keyframes sg {
-      0%, 100% { box-shadow: 0 0 7px 2px rgba(249,115,22,.35); }
-      50%       { box-shadow: 0 0 14px 5px rgba(249,115,22,.65); }
+      0%, 100% { box-shadow: 0 0 7px 2px rgba(224,123,42,.4); }
+      50%       { box-shadow: 0 0 16px 6px rgba(224,123,42,.7); }
     }
     .gbtn { transition: all .2s; }
     .gbtn:hover { transform: translateY(-1px); }
-    input[type=color] { -webkit-appearance: none; }
+
+    input[type=color] { -webkit-appearance: none; border: none; cursor: pointer; }
     input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
     input[type=color]::-webkit-color-swatch { border: none; border-radius: 5px; }
     select option { background: #1e293b; color: #e2e8f0; }
 
+    /* Mobile: horizontal scroll for wide tables */
+    .timetable-scroll-wrap {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 8px;
+    }
+    .timetable-scroll-wrap table { min-width: 560px; }
+
+    /* Responsive layouts */
+    @media (max-width: 600px) {
+      body { font-size: 14px; }
+    }
+    @media (max-width: 480px) {
+      body { font-size: 13px; }
+    }
+
     /* ── Print styles ── */
     @media print {
       body { background: #fff !important; color: #000 !important; }
-      /* Hide everything except the timetable table and legend */
-      body > div > div:first-child,   /* header */
-      body > div > div:nth-child(2),  /* tab bar */
-      body > div > div:last-child > div:first-child,  /* chips row */
+      body > div > div:first-child,
+      body > div > div:nth-child(2),
+      body > div > div:last-child > div:first-child,
       button { display: none !important; }
       table { border-collapse: collapse !important; width: 100% !important; font-size: 11px; }
       th, td { border: 1px solid #ccc !important; padding: 4px 6px !important; }
@@ -246,8 +281,8 @@
       color:"#334155", padding:"7px 10px", fontSize:13, width:"100%", boxSizing:"border-box"
     };
     const LS = {
-      color:"#475569", fontSize:11, fontFamily:"'Space Mono',monospace",
-      letterSpacing:"0.06em", marginBottom:5, display:"block"
+      color:"#475569", fontSize:11, fontFamily:"DM Sans,Arial,sans-serif",
+      letterSpacing:"0.04em", marginBottom:5, display:"block"
     };
     const SB = {
       background:"#ffffff", border:"1px solid #e2e8f0", borderRadius:8,
@@ -260,7 +295,7 @@
       return (
         <div style={{ background:"#ffffff", border:"1px solid #1e293b", borderRadius:14, padding:18 }}>
           <div style={{ marginBottom:14 }}>
-            <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#f58220", letterSpacing:"0.12em", marginBottom:3 }}>{title.toUpperCase()}</div>
+            <div style={{ fontFamily:"'Space Mono',monospace", fontSize:10, color:"#e07b2a", letterSpacing:"0.12em", marginBottom:3 }}>{title.toUpperCase()}</div>
             {subtitle && <div style={{ fontSize:11, color:"#475569" }}>{subtitle}</div>}
           </div>
           {children}
@@ -295,7 +330,7 @@
     function Stat({ label, value, accent }) {
       return (
         <div style={{ textAlign:"center" }}>
-          <div style={{ fontFamily:"'Space Mono',monospace", fontSize:17, fontWeight:700, color:accent?"#f97316":"#f8fafc" }}>{value}</div>
+          <div style={{ fontFamily:"'Space Mono',monospace", fontSize:17, fontWeight:700, color:accent?"#e07b2a":"#f8fafc" }}>{value}</div>
           <div style={{ fontSize:10, color:"#fff3e6" }}>{label}</div>
         </div>
       );
@@ -451,10 +486,10 @@
       const breakAfterSet = timetable?.breakAfterSet ?? new Set(config.breaks.map(b=>b.afterPeriod));
 
       return (
-        <div style={{ fontFamily:"'Space Grotesk',sans-serif", minHeight:"100vh", background:"#020617", color:"#334155" }}>
+        <div style={{ fontFamily:"'DM Sans',Arial,sans-serif", minHeight:"100vh", background:"#0f172a", color:"#e2e8f0" }}>
           {/* Header */}
-          <div style={{ background:"linear-gradient(135deg,#f58220 0%,#ff9f43 100%)", borderBottom:"1px solid #1e293b", padding:"14px 24px" }}>
-            <div style={{ maxWidth:1160, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:12 }}>
+          <div style={{ background:"linear-gradient(135deg,#e07b2a 0%,#c96a1a 100%)", borderBottom:"1px solid rgba(255,255,255,0.1)", padding:"14px clamp(16px,4vw,24px)" }}>
+            <div style={{ maxWidth:1160, margin:"0 auto", display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:8 }}>
               <div style={{ display:"flex", alignItems:"center", gap:16 }}>
                 <div>
                   <div style={{ fontFamily:"'Space Mono',monospace", color:"#f58220", fontSize:10, letterSpacing:"0.15em", marginBottom:3 }}>CBSE CLASS 9 · NCrF 2024 · SKILL ED AS DOUBLE BLOCKS</div>
@@ -462,7 +497,7 @@
                   <div style={{ color:"#fff3e6", fontSize:11, marginTop:2 }}>Multiple breaks · Annual hours · Skill periods always paired</div>
                 </div>
               </div>
-              <div style={{ display:"flex", gap:18, alignItems:"center" }}>
+              <div style={{ display:"flex", gap:12, alignItems:"center", flexWrap:"wrap", rowGap:4 }}>
                 <Stat label="Periods/Day" value={config.periodsPerDay} />
                 <Stat label="Period" value={`${config.periodDuration}m`} />
                 <Stat label="Weeks/Yr" value={config.weeksPerYear} />
@@ -474,13 +509,13 @@
 
           {/* Tabs */}
           <div style={{ background:"#ffffff", borderBottom:"1px solid #1e293b" }}>
-            <div style={{ maxWidth:1160, margin:"0 auto", display:"flex", padding:"0 24px" }}>
+            <div style={{ maxWidth:1160, margin:"0 auto", display:"flex", padding:"0 clamp(12px,3vw,24px)", overflowX:"auto" }}>
               {[["config","⚙  Configure"],["timetable","📅  Timetable"]].map(([t,l])=>(
                 <button key={t} className="hov"
                   onClick={()=>setTab(t)}
                   style={{ background:tab===t?"#1e293b":"transparent", border:"none",
-                    borderBottom:tab===t?"2px solid #f97316":"2px solid transparent",
-                    color:tab===t?"#f8fafc":"#64748b", cursor:"pointer",
+                    borderBottom:tab===t?"2px solid #e07b2a":"2px solid transparent",
+                    color:tab===t?"#1a1209":"#64748b", cursor:"pointer",
                     fontFamily:"'Space Grotesk',sans-serif", fontSize:13, fontWeight:500, padding:"11px 20px" }}>
                   {l}
                 </button>
@@ -488,11 +523,11 @@
             </div>
           </div>
 
-          <div style={{ maxWidth:1160, margin:"0 auto", padding:"20px 24px" }}>
+          <div style={{ maxWidth:1160, margin:"0 auto", padding:"clamp(12px,2vw,20px) clamp(12px,3vw,24px)" }}>
 
             {/* ══ CONFIG TAB ══ */}
             {tab === "config" && (
-              <div style={{ display:"grid", gridTemplateColumns:"300px 1fr", gap:20 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"min(300px,100%) 1fr", gap:20 }}>
 
                 {/* Left */}
                 <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
@@ -653,10 +688,10 @@
             {tab === "config" && (
               <div style={{ textAlign:"center", marginTop:22 }}>
                 <button className="gbtn" onClick={generate}
-                  style={{ background:"linear-gradient(135deg,#f58220 0%,#e66f00 100%)", border:"none", borderRadius:12,
+                  style={{ background:"linear-gradient(135deg,#e07b2a 0%,#c96a1a 100%)", border:"none", borderRadius:12,
                     color:"#fff", cursor:"pointer", fontSize:15, fontWeight:700,
-                    fontFamily:"'Space Grotesk',sans-serif", padding:"14px 52px",
-                    letterSpacing:"0.05em", boxShadow:"0 4px 16px rgba(249,115,22,.28)" }}>
+                    fontFamily:"DM Sans,Arial,sans-serif", padding:"14px 52px",
+                    letterSpacing:"0.05em", boxShadow:"0 4px 16px rgba(224,123,42,.35)", width:"100%", maxWidth:360 }}>
                   GENERATE TIMETABLE →
                 </button>
               </div>
@@ -673,15 +708,15 @@
                   <Chip icon="📅" label="Weeks/yr" value={config.weeksPerYear} />
                 </div>
 
-                <div style={{ overflowX:"auto" }}>
-                  <table style={{ borderCollapse:"separate", borderSpacing:3 }}>
+                <div style={{ overflowX:"auto", WebkitOverflowScrolling:"touch", borderRadius:8, width:"100%" }}>
+                  <table style={{ borderCollapse:"separate", borderSpacing:3, minWidth:540 }}>
                     <thead>
                       <tr>
                         <th style={{ background:"#ffffff", border:"1px solid #1e293b", borderRadius:6, width:48 }} />
                         {timetable.slots.map((slot,i)=>[
                           <th key={`p${i}`} style={{ background:"#ffffff", padding:"8px 6px", textAlign:"center",
                             border:"1px solid #1e293b", borderRadius:6, verticalAlign:"top", minWidth:90 }}>
-                            <div style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#f58220", marginBottom:2 }}>P{i+1}</div>
+                            <div style={{ fontFamily:"'Space Mono',monospace", fontSize:9, color:"#e07b2a", marginBottom:2 }}>P{i+1}</div>
                             <div style={{ fontSize:10, color:"#475569" }}>{fmt(slot.start)}</div>
                             <div style={{ fontSize:9, color:"#475569" }}>– {fmt(slot.end)}</div>
                           </th>,
@@ -726,7 +761,7 @@
                                       {sub.name.split(" ").slice(0,2).join(" ")}
                                     </div>
                                     {sub.isSkill && isLeft && (
-                                      <div style={{ fontSize:9, color:"#f58220", fontFamily:"'Space Mono',monospace", marginTop:3 }}>★ SKILL ×2</div>
+                                      <div style={{ fontSize:9, color:"#e07b2a", fontFamily:"DM Sans,Arial,sans-serif", marginTop:3 }}>★ SKILL ×2</div>
                                     )}
                                   </div>
                                 ) : (
@@ -763,14 +798,14 @@
                         borderLeft:`3px solid ${s.color}`, borderRadius:8, padding:"5px 10px" }}>
                         <span style={{ fontSize:12, color:s.color, fontWeight:600 }}>{s.name}</span>
                         <span style={{ fontSize:11, color:"#fff3e6", fontFamily:"'Space Mono',monospace" }}>{annualHrs(s.periodsPerWeek)}h/yr{s.annualHrsTarget ? ` / ${s.annualHrsTarget}h` : ""}</span>
-                        {s.isSkill && <span style={{ fontSize:10, color:"#f58220" }}>★×2</span>}
+                        {s.isSkill && <span style={{ fontSize:10, color:"#e07b2a" }}>★×2</span>}
                       </div>
                     ))}
                   </div>
-                  <div style={{ marginTop:12, padding:"9px 12px", background:"#f9731608",
-                    border:"1px solid #f9731633", borderRadius:8, display:"flex", alignItems:"center", gap:10 }}>
-                    <div style={{ width:10, height:10, borderRadius:"50%", background:"#f97316", flexShrink:0, boxShadow:"0 0 8px #f97316" }} />
-                    <span style={{ fontSize:12, color:"#f58220" }}>
+                  <div style={{ marginTop:12, padding:"9px 12px", background:"rgba(224,123,42,0.06)",
+                    border:"1px solid rgba(224,123,42,0.25)", borderRadius:8, display:"flex", alignItems:"center", gap:10 }}>
+                    <div style={{ width:10, height:10, borderRadius:"50%", background:"#e07b2a", flexShrink:0, boxShadow:"0 0 8px #e07b2a" }} />
+                    <span style={{ fontSize:12, color:"#e07b2a" }}>
                       ★ <strong>Skill Education</strong> always placed as consecutive double periods — supports hands-on project work aligned with LAHI's Learning by Doing model &amp; CBSE NCrF 150 hrs/year allocation
                     </span>
                   </div>
@@ -779,25 +814,25 @@
                 <div style={{ textAlign:"center", marginTop:18, display:"flex", justifyContent:"center", gap:10, flexWrap:"wrap" }}>
                   <button className="gbtn" onClick={generate}
                     style={{ background:"#ffffff", border:"1px solid #e2e8f0", borderRadius:10, color:"#475569",
-                      cursor:"pointer", fontSize:13, fontFamily:"'Space Grotesk',sans-serif", padding:"9px 26px" }}>
+                      cursor:"pointer", fontSize:13, fontFamily:"DM Sans,Arial,sans-serif", padding:"9px 26px" }}>
                     ↺ Regenerate
                   </button>
                   <button className="gbtn" onClick={()=>setTab("config")}
-                    style={{ background:"linear-gradient(135deg,#f58220 0%,#e66f00 100%)", border:"none",
+                    style={{ background:"linear-gradient(135deg,#e07b2a 0%,#c96a1a 100%)", border:"none",
                       borderRadius:10, color:"#fff", cursor:"pointer", fontSize:13, fontWeight:600,
-                      fontFamily:"'Space Grotesk',sans-serif", padding:"9px 26px" }}>
+                      fontFamily:"DM Sans,Arial,sans-serif", padding:"9px 26px" }}>
                     ⚙ Edit Config
                   </button>
                   <button className="gbtn" onClick={() => window.print()}
                     style={{ background:"#ffffff", border:"1px solid #22c55e", borderRadius:10, color:"#22c55e",
                       cursor:"pointer", fontSize:13, fontWeight:600,
-                      fontFamily:"'Space Grotesk',sans-serif", padding:"9px 26px" }}>
+                      fontFamily:"DM Sans,Arial,sans-serif", padding:"9px 26px" }}>
                     🖨 Print Timetable
                   </button>
                   <button className="gbtn" onClick={() => exportTimetablePDF(subjects, config, timetable, subMap, annualHrs)}
                     style={{ background:"linear-gradient(135deg,#6366f1 0%,#4f46e5 100%)", border:"none",
                       borderRadius:10, color:"#fff", cursor:"pointer", fontSize:13, fontWeight:600,
-                      fontFamily:"'Space Grotesk',sans-serif", padding:"9px 26px" }}>
+                      fontFamily:"DM Sans,Arial,sans-serif", padding:"9px 26px" }}>
                     📄 Export PDF
                   </button>
                 </div>
@@ -809,9 +844,9 @@
                 <div style={{ fontSize:48, marginBottom:16 }}>📅</div>
                 <div style={{ fontSize:16, marginBottom:8 }}>No timetable generated yet</div>
                 <button className="gbtn" onClick={generate}
-                  style={{ background:"linear-gradient(135deg,#f58220 0%,#e66f00 100%)", border:"none",
+                  style={{ background:"linear-gradient(135deg,#e07b2a 0%,#c96a1a 100%)", border:"none",
                     borderRadius:10, color:"#fff", cursor:"pointer", fontSize:14, fontWeight:600,
-                    fontFamily:"'Space Grotesk',sans-serif", padding:"12px 36px", marginTop:8 }}>
+                    fontFamily:"DM Sans,Arial,sans-serif", padding:"12px 36px", marginTop:8 }}>
                   Generate Now →
                 </button>
               </div>
