@@ -216,8 +216,24 @@ nav {
   .nav-links {
     display: none;
   }
+  /* Hide desktop CTA group — both buttons live in the mobile overlay instead */
+  .nav-ctas {
+    display: none;
+  }
   .nav-hamburger {
     display: flex;
+  }
+}
+
+/* ── Mobile overlay tweaks for two CTA buttons ── */
+@media (max-width: 480px) {
+  .mobile-nav-overlay a {
+    font-size: clamp(1.2rem, 6vw, 1.5rem);
+  }
+  .mobile-nav-overlay .mobile-cta {
+    padding: 12px 28px;
+    width: 80%;
+    text-align: center;
   }
 }
 
