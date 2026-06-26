@@ -170,7 +170,9 @@ console.log('[LAHI CMS] script.js loaded — initialising CMS module');
 
 // ── Configuration ─────────────────────────────────────────────
 // Google Workspace domain GAS URL — uses JSONP strategy (see loadCMSData)
-const CMS_API_URL        = 'https://script.google.com/a/macros/lendahandindia.org/s/AKfycbyjh_u6yoaHGtheooh62hFG_ztfNkfKQeuPG2FDBPsDmR9I8RLOSHjU0Vz2J9zL_nyh/exec';
+const CMS_API_URL        = 'https://script.google.com/macros/s/AKfycbwdHXBfLPtdxupQVBr6NtZtQQHdt9cMkIX2xi1bqyoaWQdaMSPxZ1P82k8EcgJAiQQy/exec';
+
+
 const FAQ_JSON_URL       = './faq-data.json';
 const RESOURCES_JSON_URL = './resources.json';
 const JSONP_TIMEOUT_MS   = 7000; // 7 s before falling back to local JSON
@@ -246,11 +248,19 @@ function closeTimetableModal() {
 //    3. On both failures → show friendly error message
 // ══════════════════════════════════════════════════════════════
 function loadCMSData() {
-  if (cmsLoaded) {
-    console.log('[LAHI CMS] Already loaded — skipping duplicate call');
-    return;
-  }
-  console.log('[LAHI CMS] Starting data load...');
+
+    fetch("https://script.google.com/macros/s/AKfycbwdHXBfLPtdxupQVBr6NtZtQQHdt9cMkIX2xi1bqyoaWQdaMSPxZ1P82k8EcgJAiQQy/exec").then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      return response.json();
+    }).then(data => {
+      console.log("data loaded here: ", data);
+  }).catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
+  });
+    console.log('[LAHI CMS] Starting data load...');
   console.log('[LAHI CMS] API URL:', CMS_API_URL);
   console.log('[LAHI CMS] Strategy: JSONP first, local JSON fallback');
 
