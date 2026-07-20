@@ -3081,4 +3081,28 @@ button:focus-visible {
   }
 }
 
-/* PARTNER SCHOOLS SECTION — CSS END */         
+/* Desktop — tighter vertical rhythm so the section doesn't feel too spread out */
+@media (min-width: 901px) {
+  .partners-section {
+    padding-top: clamp(32px, 4vw, 56px);
+    padding-bottom: clamp(32px, 4vw, 56px);
+  }
+  .partners-watermark {
+    font-size: clamp(3rem, 9vw, 6.5rem);
+  }
+  .partners-heading-wrap .section-title {
+    margin-bottom: 10px;
+  }
+  .partners-stats {
+    gap: clamp(20px, 4vw, 44px);
+    margin: 18px 0 26px;
+  }
+  .partners-marquee-wrap {
+    gap: 12px;
+  }
+  .partner-marquee-track {
+    gap: 16px;
+  }
+}
+
+/* PARTNER SCHOOLS SECTION — CSS END */
