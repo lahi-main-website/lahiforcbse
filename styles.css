@@ -2997,6 +2997,7 @@ button:focus-visible {
   align-items: center;
   justify-content: center;
   padding: 14px 18px;
+  cursor: pointer;
   transition:
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.35s ease,
@@ -3011,14 +3012,17 @@ button:focus-visible {
     filter 0.35s ease,
     transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.partner-logo-card:hover {
+.partner-logo-card:hover,
+.partner-logo-card:focus-visible {
   transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
   border-color: var(--saffron-light);
+  outline: none;
 }
-.partner-logo-card:hover img {
+.partner-logo-card:hover img,
+.partner-logo-card:focus-visible img {
   filter: grayscale(0) opacity(1);
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 /* Reduced-motion fallback grid — hidden by default, shown only when needed */
@@ -3104,4 +3108,146 @@ button:focus-visible {
     gap: 16px;
   }
 }
+
+/* Partner school logo modal — opens on logo click, closes on outside click / ESC / close button */
+.partner-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 18, 9, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+.partner-modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.partner-modal {
+  position: relative;
+  width: 520px;
+  max-width: 520px;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 40px 32px 32px;
+  text-align: center;
+  transform: scale(0.92) translateY(8px);
+  opacity: 0;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s ease;
+}
+.partner-modal-overlay.is-open .partner-modal {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.partner-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--cream);
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+.partner-modal-close:hover,
+.partner-modal-close:focus-visible {
+  background: var(--warm);
+  color: var(--ink);
+  transform: rotate(90deg);
+  outline: none;
+}
+
+.partner-modal-logo-wrap {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 24px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.partner-modal-logo-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.partner-modal-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.25;
+  margin-bottom: 10px;
+}
+
+.partner-modal-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  background: rgba(224, 123, 42, 0.1);
+  padding: 5px 14px;
+  border-radius: 100px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .partner-modal {
+    width: 90%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .partner-modal {
+    width: 92%;
+    padding: 32px 20px 24px;
+  }
+  .partner-modal-logo-wrap {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 18px;
+  }
+  .partner-modal-name {
+    font-size: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-modal-overlay,
+  .partner-modal {
+    transition: none;
+  }
+}
+
 /* PARTNER SCHOOLS SECTION — CSS END */

@@ -79,6 +79,101 @@
     partnersStatsObserver.observe(partnersStats);
   }
 
+  // ── Partner Schools logo modal (click a logo to view name) ──
+  (function initPartnerModal() {
+    const cards = document.querySelectorAll('.partner-logo-card');
+    if (!cards.length) return;
+
+    // Build modal markup once and append to <body> (keeps existing HTML untouched)
+    const overlay = document.createElement('div');
+    overlay.className = 'partner-modal-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML = `
+      <div class="partner-modal" role="dialog" aria-modal="true" aria-labelledby="partner-modal-name">
+        <button type="button" class="partner-modal-close" aria-label="Close">&times;</button>
+        <div class="partner-modal-logo-wrap">
+          <img class="partner-modal-logo" src="" alt="" />
+        </div>
+        <div class="partner-modal-name" id="partner-modal-name"></div>
+        <span class="partner-modal-badge">Partner School</span>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const modal      = overlay.querySelector('.partner-modal');
+    const closeBtn    = overlay.querySelector('.partner-modal-close');
+    const modalImg    = overlay.querySelector('.partner-modal-logo');
+    const modalName   = overlay.querySelector('.partner-modal-name');
+
+    let lastFocused = null;
+
+    function getFocusable() {
+      return modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    }
+
+    function openModal(card) {
+      const img  = card.querySelector('img');
+      const name = card.dataset.school || (img ? img.alt : '');
+      if (img) {
+        modalImg.src = img.src;
+        modalImg.alt = name;
+      }
+      modalName.textContent = name;
+
+      lastFocused = document.activeElement;
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeModal() {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => openModal(card));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openModal(card);
+        }
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+
+    // Click outside the modal (on the dark overlay) closes it
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeModal();
+    });
+
+    // ESC closes; Tab is trapped within the modal while open
+    document.addEventListener('keydown', (e) => {
+      if (!overlay.classList.contains('is-open')) return;
+      if (e.key === 'Escape') {
+        closeModal();
+        return;
+      }
+      if (e.key === 'Tab') {
+        const focusable = Array.from(getFocusable());
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last  = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  })();
+
   // ── Resource card accordion ──
   document.querySelectorAll('.resource-card-visible').forEach(visible => {
     const card = visible.closest('.resource-card');
