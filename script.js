@@ -65,6 +65,20 @@
     statsObserver.observe(statsSection);
   }
 
+  // ── Partner Schools stat counter animation ──
+  const partnersStats = document.querySelector('.partners-stats');
+  if (partnersStats) {
+    const partnersStatsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.partners-stat-num[data-count]').forEach(animateCounter);
+          partnersStatsObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    partnersStatsObserver.observe(partnersStats);
+  }
+
   // ── Resource card accordion ──
   document.querySelectorAll('.resource-card-visible').forEach(visible => {
     const card = visible.closest('.resource-card');
