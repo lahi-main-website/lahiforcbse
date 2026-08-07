@@ -1850,16 +1850,10 @@
               class="faq-search"
               placeholder="Search FAQs…"
               aria-label="Search frequently asked questions"
-              oninput="filterFAQs()"
             />
           </div>
           <div class="faq-cats" id="faq-cats" role="tablist" aria-label="FAQ categories">
-            <button class="faq-cat active" data-cat="All" onclick="setFAQCat(this)" role="tab" aria-selected="true">All</button>
-            <button class="faq-cat" data-cat="Policy" onclick="setFAQCat(this)" role="tab">Policy</button>
-            <button class="faq-cat" data-cat="Timetable" onclick="setFAQCat(this)" role="tab">Timetable</button>
-            <button class="faq-cat" data-cat="Skill Labs" onclick="setFAQCat(this)" role="tab">Skill Labs</button>
-            <button class="faq-cat" data-cat="Teacher Training" onclick="setFAQCat(this)" role="tab">Teacher Training</button>
-            <button class="faq-cat" data-cat="Assessments" onclick="setFAQCat(this)" role="tab">Assessments</button>
+            <button class="faq-cat active" data-cat="All" role="tab" aria-controls="faq-list" aria-selected="true">All</button>
           </div>
         </div>
 

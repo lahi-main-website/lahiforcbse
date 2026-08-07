@@ -382,6 +382,32 @@ document.addEventListener('DOMContentLoaded', function initCMS() {
     else      console.log('[LAHI CMS] ✓ Found #' + id);
   });
 
+  // ── FAQ controls ───────────────────────────────────────────
+  const faqSearch = document.getElementById('faq-search');
+  const faqCats = document.getElementById('faq-cats');
+  const faqList = document.getElementById('faq-list');
+
+  if (faqSearch) {
+    faqSearch.addEventListener('input', function() {
+      currentSearch = faqSearch.value;
+      renderFAQs();
+    });
+  }
+  if (faqCats) {
+    faqCats.addEventListener('click', function(event) {
+      const button = event.target.closest('.faq-cat');
+      if (!button) return;
+      setFAQCat(button);
+    });
+  }
+  if (faqList) {
+    faqList.addEventListener('click', function(event) {
+      const button = event.target.closest('.faq-q-btn');
+      if (!button) return;
+      toggleFAQItem(button.closest('.faq-item'));
+    });
+  }
+
   // ── Kick off data load ────────────────────────────────────
   loadCMSData();
 });
@@ -413,19 +439,7 @@ function closeTimetableModal() {
 //    3. On both failures → show friendly error message
 // ══════════════════════════════════════════════════════════════
 function loadCMSData() {
-
-    fetch("https://script.google.com/macros/s/AKfycbwdHXBfLPtdxupQVBr6NtZtQQHdt9cMkIX2xi1bqyoaWQdaMSPxZ1P82k8EcgJAiQQy/exec").then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      return response.json();
-    }).then(data => {
-      console.log("data loaded here: ", data);
-  }).catch(error => {
-      console.error('There has been a problem with your fetch operation:', error);
-  });
-    console.log('[LAHI CMS] Starting data load...');
+  console.log('[LAHI CMS] Starting data load...');
   console.log('[LAHI CMS] API URL:', CMS_API_URL);
   console.log('[LAHI CMS] Strategy: JSONP first, local JSON fallback');
 
@@ -494,7 +508,7 @@ function loadCMSData() {
       '| Brochures:', resourcesData.brochures.length);
 
     // Status filter check
-    var activeCheck = allFAQs.filter(function(f) { return f.status && f.status.toLowerCase() === 'active'; });
+    var activeCheck = allFAQs.filter(function(f) { return normalizeText(f.status) === 'active'; });
     console.log('[LAHI CMS] Active FAQs after status filter:', activeCheck.length, '(if 0 but total>0, check Status column)');
 
     if (allFAQs.length > 0 && activeCheck.length === 0) {
@@ -503,6 +517,7 @@ function loadCMSData() {
     }
 
     cmsLoaded = true;
+    renderFAQCategories();
     renderFAQs();
     renderWebinars();
     renderBrochures();
@@ -580,6 +595,7 @@ function loadLocalJSON() {
     }
 
     cmsLoaded = true;
+    renderFAQCategories();
     renderFAQs();
     renderWebinars();
     renderBrochures();
@@ -595,6 +611,39 @@ function loadLocalJSON() {
 // ══════════════════════════════════════════════════════════════
 //  FAQ RENDERING
 // ══════════════════════════════════════════════════════════════
+function renderFAQCategories() {
+  var container = document.getElementById('faq-cats');
+  if (!container) return;
+
+  var categoriesByKey = new Map();
+  allFAQs.forEach(function(faq) {
+    var status = normalizeText(faq && faq.status);
+    var category = String(faq && faq.category || '').trim();
+    if ((!status || status === 'active') && category) {
+      var key = normalizeText(category);
+      if (!categoriesByKey.has(key)) categoriesByKey.set(key, category);
+    }
+  });
+
+  var categories = Array.from(categoriesByKey.values());
+  var currentKey = normalizeText(currentCat);
+  var currentExists = currentKey === 'all' || categories.some(function(category) {
+    return normalizeText(category) === currentKey;
+  });
+  if (!currentExists) currentCat = 'All';
+
+  var buttons = ['All'].concat(categories);
+  container.innerHTML = buttons.map(function(category) {
+    var isActive = normalizeText(category) === normalizeText(currentCat);
+    return '<button class="faq-cat' + (isActive ? ' active' : '') + '"' +
+      ' data-cat="' + escapeHTML(category) + '"' +
+      ' role="tab" aria-controls="faq-list" aria-selected="' + (isActive ? 'true' : 'false') + '">' +
+      escapeHTML(category) + '</button>';
+  }).join('');
+
+  console.log('[LAHI FAQ] Category filters rendered from data:', categories);
+}
+
 function renderFAQs() {
   console.log('[LAHI FAQ] renderFAQs() called');
   console.log('[LAHI FAQ] Total FAQs in memory:', allFAQs.length);
@@ -613,22 +662,28 @@ function renderFAQs() {
   // Hide error state
   if (error) error.style.display = 'none';
 
-  // Filter FAQs
-  var filtered = allFAQs.filter(function(faq) {
+  var normalizedCategory = normalizeText(currentCat);
+  var term = normalizeText(currentSearch);
+
+  // Preserve each record's source index so accordion IDs remain stable after filtering.
+  var filtered = allFAQs.map(function(faq, sourceIndex) {
+    return { faq: faq, sourceIndex: sourceIndex };
+  }).filter(function(record) {
+    var faq = record.faq || {};
     // Status check — only show Active records
-    var statusOk = !faq.status || faq.status.toLowerCase() === 'active';
+    var status = normalizeText(faq.status);
+    var statusOk = !status || status === 'active';
     if (!statusOk) {
       console.log('[LAHI FAQ] Filtered out by status:', faq.question && faq.question.substring(0,40), '— status:', faq.status);
       return false;
     }
     // Category check
-    var matchCat = (currentCat === 'All') || (faq.category === currentCat);
+    var matchCat = normalizedCategory === 'all' || normalizeText(faq.category) === normalizedCategory;
     // Search check
-    var term = currentSearch.toLowerCase().trim();
     var matchSearch = !term
-      || (faq.question && faq.question.toLowerCase().includes(term))
-      || (faq.answer   && faq.answer.toLowerCase().includes(term))
-      || (faq.category && faq.category.toLowerCase().includes(term));
+      || normalizeText(faq.question).includes(term)
+      || normalizeText(faq.answer).includes(term)
+      || normalizeText(faq.category).includes(term);
 
     return matchCat && matchSearch;
   });
@@ -649,15 +704,17 @@ function renderFAQs() {
 
   if (empty) empty.style.display = 'none';
 
-  list.innerHTML = filtered.map(function(faq, i) {
+  list.innerHTML = filtered.map(function(record) {
+    var faq = record.faq || {};
+    var id = record.sourceIndex;
     return (
-      '<div class="faq-item" id="faq-item-' + i + '">' +
-        '<button class="faq-q-btn" onclick="toggleFAQ(' + i + ')" aria-expanded="false">' +
+      '<div class="faq-item" id="faq-item-' + id + '">' +
+        '<button class="faq-q-btn" id="faq-question-' + id + '" aria-expanded="false" aria-controls="faq-answer-' + id + '">' +
           '<span class="faq-q-cat-badge">' + escapeHTML(faq.category || '') + '</span>' +
           '<span class="faq-q-text">'     + escapeHTML(faq.question  || '') + '</span>' +
           '<span class="faq-q-arrow">↓</span>' +
         '</button>' +
-        '<div class="faq-answer" id="faq-ans-' + i + '">' +
+        '<div class="faq-answer" id="faq-answer-' + id + '" role="region" aria-labelledby="faq-question-' + id + '">' +
           '<div class="faq-answer-inner">' + escapeHTML(faq.answer || '') + '</div>' +
         '</div>' +
       '</div>'
@@ -667,9 +724,8 @@ function renderFAQs() {
   console.log('[LAHI FAQ] ✅ Rendered', filtered.length, 'FAQ items into #faq-list');
 }
 
-function toggleFAQ(i) {
-  var item = document.getElementById('faq-item-' + i);
-  if (!item) { console.warn('[LAHI FAQ] toggleFAQ: item not found at index', i); return; }
+function toggleFAQItem(item) {
+  if (!item) return;
   var isOpen = item.classList.contains('open');
   // Close all open items
   document.querySelectorAll('.faq-item.open').forEach(function(el) {
@@ -685,6 +741,7 @@ function toggleFAQ(i) {
   }
 }
 
+// Retained for compatibility with any external integrations that call it.
 function filterFAQs() {
   var searchEl = document.getElementById('faq-search');
   currentSearch = searchEl ? searchEl.value : '';
@@ -693,7 +750,8 @@ function filterFAQs() {
 }
 
 function setFAQCat(btn) {
-  currentCat = btn.dataset.cat;
+  if (!btn) return;
+  currentCat = String(btn.dataset.cat || 'All').trim();
   console.log('[LAHI FAQ] Category changed to:', currentCat);
   document.querySelectorAll('.faq-cat').forEach(function(b) {
     b.classList.remove('active');
@@ -702,6 +760,10 @@ function setFAQCat(btn) {
   btn.classList.add('active');
   btn.setAttribute('aria-selected', 'true');
   renderFAQs();
+}
+
+function normalizeText(value) {
+  return String(value == null ? '' : value).trim().toLocaleLowerCase('en-IN');
 }
 
 function showFAQError() {
