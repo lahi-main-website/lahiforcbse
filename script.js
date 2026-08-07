@@ -121,6 +121,44 @@
     statsObserver.observe(statsSection);
   }
 
+  // ── Policy deadline countdown ──
+  const countdown = document.getElementById('policy-countdown');
+  const countdownTarget = Date.parse('2027-08-30T23:59:00+05:30');
+  let countdownTimer = null;
+
+  function getCountdownParts(now, target) {
+    const remaining = Math.max(0, target - now);
+    return {
+      remaining,
+      days: Math.floor(remaining / 86400000),
+      hours: Math.floor((remaining % 86400000) / 3600000),
+      minutes: Math.floor((remaining % 3600000) / 60000),
+      seconds: Math.floor((remaining % 60000) / 1000),
+    };
+  }
+
+  function updateCountdown() {
+    if (!countdown) return;
+    const parts = getCountdownParts(Date.now(), countdownTarget);
+    const widths = { days: 3, hours: 2, minutes: 2, seconds: 2 };
+    Object.keys(widths).forEach(unit => {
+      const element = countdown.querySelector(`[data-countdown="${unit}"]`);
+      if (element) element.textContent = String(parts[unit]).padStart(widths[unit], '0');
+    });
+
+    if (parts.remaining === 0) {
+      countdown.classList.add('is-expired');
+      const status = document.getElementById('countdown-status');
+      if (status) status.textContent = 'Deadline reached';
+      if (countdownTimer) clearInterval(countdownTimer);
+    }
+  }
+
+  if (countdown) {
+    updateCountdown();
+    if (Date.now() < countdownTarget) countdownTimer = setInterval(updateCountdown, 1000);
+  }
+
   // ── Partner Schools stat counter animation ──
   const partnersStats = document.querySelector('.partners-stats');
   if (partnersStats) {
