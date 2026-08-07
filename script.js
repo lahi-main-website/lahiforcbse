@@ -1,22 +1,78 @@
 // ── Hamburger menu ──
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobile-nav');
-  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-overlay a');
+  const mobileResources = document.querySelector('.mobile-nav-dropdown');
+  const mobileResourcesToggle = document.querySelector('.mobile-dropdown-toggle');
+
+  function closeMobileNav() {
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileNav.classList.remove('open');
+    document.body.style.overflow = '';
+    if (mobileResources && mobileResourcesToggle) {
+      mobileResources.classList.remove('is-open');
+      mobileResourcesToggle.setAttribute('aria-expanded', 'false');
+    }
+  }
  
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
     mobileNav.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', mobileNav.classList.contains('open') ? 'true' : 'false');
     document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
   });
  
   mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileNav.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', closeMobileNav);
   });
- 
+
+  if (mobileResources && mobileResourcesToggle) {
+    mobileResourcesToggle.addEventListener('click', () => {
+      const isOpen = mobileResources.classList.toggle('is-open');
+      mobileResourcesToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+
+  // ── Resources dropdown ──
+  const resourcesDropdown = document.getElementById('resources-dropdown');
+  const resourcesToggle = resourcesDropdown && resourcesDropdown.querySelector('.dropdown-toggle');
+
+  function setResourcesDropdown(open) {
+    if (!resourcesDropdown || !resourcesToggle) return;
+    resourcesDropdown.classList.toggle('is-open', open);
+    resourcesToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  if (resourcesDropdown && resourcesToggle) {
+    resourcesToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setResourcesDropdown(!resourcesDropdown.classList.contains('is-open'));
+    });
+    resourcesDropdown.addEventListener('mouseenter', () => setResourcesDropdown(true));
+    resourcesDropdown.addEventListener('mouseleave', () => {
+      if (!resourcesDropdown.contains(document.activeElement)) setResourcesDropdown(false);
+    });
+    resourcesDropdown.addEventListener('focusin', () => setResourcesDropdown(true));
+    resourcesDropdown.addEventListener('focusout', () => {
+      setTimeout(() => {
+        if (!resourcesDropdown.contains(document.activeElement)) setResourcesDropdown(false);
+      }, 0);
+    });
+    resourcesDropdown.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => setResourcesDropdown(false));
+    });
+    document.addEventListener('click', (event) => {
+      if (!resourcesDropdown.contains(event.target)) setResourcesDropdown(false);
+    });
+    resourcesDropdown.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setResourcesDropdown(false);
+        resourcesToggle.focus();
+      }
+    });
+  }
+
   // ── Scroll reveal ──
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {

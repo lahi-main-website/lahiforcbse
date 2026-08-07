@@ -96,7 +96,8 @@ nav {
   flex-wrap: nowrap;
   min-width: 0;
 }
-.nav-links a {
+.nav-links a,
+.dropdown-toggle {
   text-decoration: none;
   color: var(--muted);
   font-size: clamp(0.72rem, 1vw, 0.83rem);
@@ -104,7 +105,8 @@ nav {
   transition: color 0.2s;
   white-space: nowrap;
 }
-.nav-links a:hover {
+.nav-links a:hover,
+.dropdown-toggle:hover {
   color: var(--teal);
 }
 
@@ -112,17 +114,27 @@ nav {
   position: relative;
 }
 
-.dropdown > a {
+.dropdown-toggle {
   display: flex;
   align-items: center;
   gap: 4px;
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.dropdown-chevron {
+  display: inline-block;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
 }
 
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 8px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-6px);
   list-style: none;
 
   min-width: 160px;
@@ -134,14 +146,31 @@ nav {
 
   opacity: 0;
   visibility: hidden;
-  transition: all .25s ease;
+  transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
   z-index: 999;
 }
 
-.dropdown:hover .dropdown-menu {
+.dropdown::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu,
+.dropdown.is-open .dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
+}
+
+.dropdown:hover .dropdown-chevron,
+.dropdown:focus-within .dropdown-chevron,
+.dropdown.is-open .dropdown-chevron {
+  transform: rotate(180deg);
 }
 
 .dropdown-menu::before {
@@ -182,14 +211,54 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: min(320px, 90vw);
 }
 
-.mobile-sub-nav-link {
+.mobile-nav-overlay .mobile-dropdown-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.mobile-dropdown-toggle span {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.mobile-nav-dropdown.is-open .mobile-dropdown-toggle span {
+  transform: rotate(180deg);
+}
+
+.mobile-dropdown-menu {
+  max-height: 0;
+  overflow: hidden;
+  width: 100%;
+  opacity: 0;
+  transition: max-height 0.25s ease, opacity 0.2s ease;
+}
+
+.mobile-nav-dropdown.is-open .mobile-dropdown-menu {
+  max-height: 150px;
+  opacity: 1;
+}
+
+.mobile-dropdown-menu > a {
+  display: block;
+}
+
+.mobile-nav-overlay .mobile-sub-nav-link {
   text-decoration: none;
   color: var(--muted);
-  font-size: 1rem;
-  margin-top: 8px;
-  padding-left: 20px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 7px;
+  padding: 6px 12px;
+  text-align: center;
   opacity: 0.9;
   transition: color 0.2s ease;
 }
@@ -267,6 +336,8 @@ nav {
   align-items: center;
   justify-content: center;
   gap: 24px;
+  padding: 24px 16px;
+  overflow-y: auto;
 }
 .mobile-nav-overlay.open {
   display: flex;
@@ -284,6 +355,12 @@ nav {
   color: var(--ink);
   text-decoration: none;
   transition: color 0.2s;
+}
+.mobile-nav-overlay button.mobile-nav-link {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 5vw, 1.75rem);
+  font-weight: 700;
+  color: var(--ink);
 }
 .mobile-nav-overlay a:hover {
   color: var(--teal);
@@ -317,13 +394,26 @@ nav {
 
 /* ── Mobile overlay tweaks for two CTA buttons ── */
 @media (max-width: 480px) {
-  .mobile-nav-overlay a {
+  .mobile-nav-overlay a,
+  .mobile-nav-overlay button.mobile-nav-link {
     font-size: clamp(1.2rem, 6vw, 1.5rem);
+  }
+  .mobile-nav-overlay .mobile-sub-nav-link {
+    font-size: 0.9rem;
   }
   .mobile-nav-overlay .mobile-cta {
     padding: 12px 28px;
     width: 80%;
     text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-menu,
+  .dropdown-chevron,
+  .mobile-dropdown-menu,
+  .mobile-dropdown-toggle span {
+    transition: none;
   }
 }
 

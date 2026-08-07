@@ -27,22 +27,29 @@
         <li><a href="#policy">NEP-NCF</a></li>
         <li><a href="#programmes">Programmes</a></li>
         <li><a href="#provides">What We Offer</a></li>
-        <!-- <li><a href="#timetable-gen">Timetable</a></li> -->
         <li><a href="#visit">Exposure Visit</a></li>
-        <li><a href="#faq">FAQs</a></li>
-       <li class="dropdown">
-  <a href="#resources">Resources ▾</a>
-  <ul class="dropdown-menu">
-    <li><a href="#timetable-gen">Timetable</a></li>
-  </ul>
-</li>
+        <li class="dropdown" id="resources-dropdown">
+          <button
+            class="dropdown-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="resources-dropdown-menu"
+          >
+            Resources <span class="dropdown-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <ul class="dropdown-menu" id="resources-dropdown-menu">
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#faq">FAQs</a></li>
+            <li><a href="#timetable-gen">Timetable</a></li>
+          </ul>
+        </li>
         <li><a href="#partners">Partner Schools</a></li>
       </ul>
       <div class="nav-ctas">
         <a href="#register" class="nav-cta">Register Interest</a>
         <a href="https://calendar.app.google/NGyU42gqyEWC4U678" target="_blank" rel="noopener" class="nav-cta nav-cta-book">📅 Book a Call</a>
       </div>
-      <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
     </nav>
@@ -58,13 +65,22 @@
       <a href="#policy" class="mobile-nav-link">NEP–NCF</a>
       <a href="#programmes" class="mobile-nav-link">Programmes</a>
       <a href="#provides" class="mobile-nav-link">What We Offer</a>
-      <!-- <a href="#timetable-gen" class="mobile-nav-link">Timetable</a> -->
       <a href="#visit" class="mobile-nav-link">Exposure Visit</a>
-      <a href="#faq" class="mobile-nav-link">FAQs</a>
-    <div class="mobile-nav-dropdown">
-  <a href="#resources" class="mobile-nav-link">Resources</a>
-  <a href="#timetable-gen" class="mobile-sub-nav-link">📅 Timetable</a>
-</div>
+      <div class="mobile-nav-dropdown">
+        <button
+          class="mobile-nav-link mobile-dropdown-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-resources-menu"
+        >
+          Resources <span aria-hidden="true">⌄</span>
+        </button>
+        <div class="mobile-dropdown-menu" id="mobile-resources-menu">
+          <a href="#resources" class="mobile-sub-nav-link">Resources</a>
+          <a href="#faq" class="mobile-sub-nav-link">FAQs</a>
+          <a href="#timetable-gen" class="mobile-sub-nav-link">Timetable</a>
+        </div>
+      </div>
       <a href="#partners" class="mobile-nav-link">Partner Schools</a>
       <a href="#register" class="mobile-cta mobile-nav-link">Register Interest</a>
       <a href="https://calendar.app.google/NGyU42gqyEWC4U678" target="_blank" rel="noopener" class="mobile-cta mobile-cta-book mobile-nav-link">📅 Book a Call</a>
