@@ -135,6 +135,38 @@
     partnersStatsObserver.observe(partnersStats);
   }
 
+  // ── Programme card accordions ──
+  const programmeCards = document.querySelectorAll('.programme-card');
+
+  function setProgrammeCard(card, open) {
+    const toggle = card.querySelector('.programme-toggle');
+    const details = card.querySelector('.programme-details');
+    if (!toggle || !details) return;
+
+    if (open) {
+      details.hidden = false;
+      requestAnimationFrame(() => card.classList.add('is-expanded'));
+    } else {
+      card.classList.remove('is-expanded');
+      window.setTimeout(() => {
+        if (!card.classList.contains('is-expanded')) details.hidden = true;
+      }, 460);
+    }
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    const label = toggle.querySelector('span:first-child');
+    if (label) label.textContent = open ? 'Read less' : 'Read more';
+  }
+
+  programmeCards.forEach(card => {
+    const toggle = card.querySelector('.programme-toggle');
+    if (!toggle) return;
+    toggle.addEventListener('click', () => {
+      const shouldOpen = !card.classList.contains('is-expanded');
+      programmeCards.forEach(otherCard => setProgrammeCard(otherCard, false));
+      if (shouldOpen) setProgrammeCard(card, true);
+    });
+  });
+
   // ── Partner Schools logo modal (click a logo to view name) ──
   (function initPartnerModal() {
     const cards = document.querySelectorAll('.partner-logo-card');

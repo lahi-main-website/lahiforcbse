@@ -1052,6 +1052,56 @@ section {
   color: var(--muted);
   font-style: var(--font-display);
 }
+.programme-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 22px;
+  background: rgba(137, 75, 7, 0.035);
+  border: 0;
+  border-top: 0;
+  color: var(--teal);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: left;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.programme-toggle:hover {
+  background: rgba(137, 75, 7, 0.09);
+}
+.programme-toggle-icon {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  transition: transform 0.3s ease, background 0.2s ease, color 0.2s ease;
+}
+.programme-card.is-expanded .programme-toggle-icon {
+  transform: rotate(180deg);
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+}
+.programme-details {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease, opacity 0.25s ease;
+}
+.programme-card.is-expanded .programme-details {
+  max-height: 1800px;
+  opacity: 1;
+}
+.programme-details[hidden] {
+  display: none;
+}
 .programme-body {
   padding: 18px 22px;
   flex: 1;
@@ -3359,6 +3409,13 @@ button:focus-visible {
   color: var(--ink);
   transform: rotate(90deg);
   outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .programme-details,
+  .programme-toggle-icon {
+    transition: none;
+  }
 }
 
 .partner-modal-logo-wrap {
