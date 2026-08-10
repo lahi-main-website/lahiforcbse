@@ -1053,9 +1053,20 @@ section {
 }
 .programmes-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 22px;
   margin-top: 44px;
+  align-items: start;
+}
+.programme-card {
+  grid-column: span 2;
+}
+/* Centre an incomplete final row: one card alone or two cards as a pair. */
+.programme-card:nth-child(3n + 1):last-child {
+  grid-column: 3 / span 2;
+}
+.programme-card:nth-child(3n + 1):nth-last-child(2) {
+  grid-column: 2 / span 2;
 }
 .programme-card {
   background: var(--surface);
@@ -1222,9 +1233,26 @@ section {
   color: var(--teal);
   font-weight: 600;
 }
+.programme-placeholder-body {
+  min-height: 88px;
+  background: linear-gradient(135deg, rgba(224, 123, 42, 0.05), rgba(137, 75, 7, 0.04));
+}
+.programme-placeholder-body p {
+  margin: 0;
+  font-style: italic;
+}
 @media (max-width: 960px) {
   .programmes-grid {
     grid-template-columns: 1fr 1fr;
+  }
+  .programme-card:nth-child(3n + 1):last-child,
+  .programme-card:nth-child(3n + 1):nth-last-child(2) {
+    grid-column: auto;
+  }
+  .programme-card:nth-child(odd):last-child {
+    grid-column: 1 / -1;
+    width: calc((100% - 22px) / 2);
+    justify-self: center;
   }
 }
 @media (max-width: 600px) {
@@ -1233,6 +1261,11 @@ section {
   }
   .programme-card-img {
     height: 120px;
+  }
+  .programme-card,
+  .programme-card:nth-child(odd):last-child {
+    grid-column: auto;
+    width: 100%;
   }
 }
 
