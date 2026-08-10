@@ -417,7 +417,6 @@ let allFAQs       = [];
 let currentCat    = 'All';
 let currentSearch = '';
 let resourcesData = { webinars: [], brochures: [] };
-let cmsLoaded     = false;
 
 // ══════════════════════════════════════════════════════════════
 //  BOOT — single DOMContentLoaded listener
@@ -478,7 +477,8 @@ document.addEventListener('DOMContentLoaded', function initCMS() {
     });
   }
 
-  // ── Kick off data load ────────────────────────────────────
+  // ── Kick off independent FAQ and resource data loads ─────
+  loadFAQData();
   loadCMSData();
 });
 
@@ -503,15 +503,15 @@ function closeTimetableModal() {
 
 // ══════════════════════════════════════════════════════════════
 //  CMS DATA LOADER
-//  Strategy:
+//  FAQs always come from faq-data.json. Resource strategy:
 //    1. JSONP → Google Apps Script (handles Workspace /a/macros/ domain)
-//    2. On failure/timeout → local faq-data.json + resources.json
-//    3. On both failures → show friendly error message
+//    2. On failure/timeout → local resources.json
+//    3. On both failures → show friendly resource error messages
 // ══════════════════════════════════════════════════════════════
 function loadCMSData() {
-  console.log('[LAHI CMS] Starting data load...');
+  console.log('[LAHI CMS] Starting resource data load...');
   console.log('[LAHI CMS] API URL:', CMS_API_URL);
-  console.log('[LAHI CMS] Strategy: JSONP first, local JSON fallback');
+  console.log('[LAHI CMS] Resource strategy: JSONP first, resources.json fallback');
 
   var callbackName = '__gasCallback_' + Date.now();
   var settled      = false;
@@ -523,8 +523,8 @@ function loadCMSData() {
     jsonpURL.searchParams.set('callback', callbackName);
     console.log('[LAHI CMS] JSONP URL:', jsonpURL.toString());
   } catch (urlErr) {
-    console.error('[LAHI CMS] Invalid API URL — falling back to local JSON immediately:', urlErr.message);
-    loadLocalJSON();
+    console.error('[LAHI CMS] Invalid API URL — falling back to local resources immediately:', urlErr.message);
+    loadLocalResources();
     return;
   }
 
@@ -532,9 +532,9 @@ function loadCMSData() {
   var timeoutTimer = setTimeout(function() {
     if (settled) return;
     settled = true;
-    console.warn('[LAHI CMS] JSONP timed out after ' + JSONP_TIMEOUT_MS + 'ms — falling back to local JSON');
+    console.warn('[LAHI CMS] JSONP timed out after ' + JSONP_TIMEOUT_MS + 'ms — falling back to local resources');
     cleanup();
-    loadLocalJSON();
+    loadLocalResources();
   }, JSONP_TIMEOUT_MS);
 
   // Register global callback that GAS will call
@@ -549,16 +549,13 @@ function loadCMSData() {
     // Validate response structure
     if (!data || typeof data !== 'object') {
       console.error('[LAHI CMS] Invalid response — not an object. Value:', data);
-      loadLocalJSON();
+      loadLocalResources();
       return;
     }
     if (data.error) {
       console.error('[LAHI CMS] GAS returned error:', data.error);
-      loadLocalJSON();
+      loadLocalResources();
       return;
-    }
-    if (!Array.isArray(data.faq)) {
-      console.warn('[LAHI CMS] data.faq is not an array:', typeof data.faq, '— will use []');
     }
     if (!Array.isArray(data.webinars)) {
       console.warn('[LAHI CMS] data.webinars is not an array:', typeof data.webinars, '— will use []');
@@ -567,28 +564,14 @@ function loadCMSData() {
       console.warn('[LAHI CMS] data.brochures is not an array:', typeof data.brochures, '— will use []');
     }
 
-    allFAQs = Array.isArray(data.faq) ? data.faq : [];
     resourcesData = {
       webinars:  Array.isArray(data.webinars)  ? data.webinars  : [],
       brochures: Array.isArray(data.brochures) ? data.brochures : []
     };
 
-    console.log('[LAHI CMS] Data from GAS — FAQs:', allFAQs.length,
-      '| Webinars:', resourcesData.webinars.length,
+    console.log('[LAHI CMS] Resource data from GAS — Webinars:', resourcesData.webinars.length,
       '| Brochures:', resourcesData.brochures.length);
 
-    // Status filter check
-    var activeCheck = allFAQs.filter(function(f) { return normalizeText(f.status) === 'active'; });
-    console.log('[LAHI CMS] Active FAQs after status filter:', activeCheck.length, '(if 0 but total>0, check Status column)');
-
-    if (allFAQs.length > 0 && activeCheck.length === 0) {
-      console.error('[LAHI CMS] ⚠ All FAQs filtered out by status! Check the "Status" column in Google Sheet — values must be exactly "Active"');
-      console.log('[LAHI CMS] Sample status values from sheet:', allFAQs.slice(0,3).map(function(f){return f.status;}));
-    }
-
-    cmsLoaded = true;
-    renderFAQCategories();
-    renderFAQs();
     renderWebinars();
     renderBrochures();
     console.log('[LAHI CMS] lastUpdated from GAS:', data.lastUpdated || 'not provided');
@@ -602,9 +585,9 @@ function loadCMSData() {
     settled = true;
     clearTimeout(timeoutTimer);
     cleanup();
-    console.warn('[LAHI CMS] JSONP script tag failed to load (network/CORS/auth block) — falling back to local JSON');
+    console.warn('[LAHI CMS] JSONP script tag failed to load (network/CORS/auth block) — falling back to local resources');
     console.warn('[LAHI CMS] Script error event:', e);
-    loadLocalJSON();
+    loadLocalResources();
   };
   document.head.appendChild(scriptEl);
   console.log('[LAHI CMS] JSONP script tag injected into <head>');
@@ -618,64 +601,69 @@ function loadCMSData() {
   }
 }
 
-// ── Local JSON fallback ───────────────────────────────────────
-function loadLocalJSON() {
-  console.log('[LAHI CMS] Loading from local JSON files...');
+// ── Authoritative local FAQ data ──────────────────────────────
+function loadFAQData() {
+  console.log('[LAHI FAQ] Loading authoritative local FAQ data...');
   console.log('[LAHI CMS] FAQ URL:', FAQ_JSON_URL);
+  fetch(FAQ_JSON_URL)
+    .then(function(r) {
+      console.log('[LAHI FAQ] faq-data.json HTTP status:', r.status, r.ok ? 'OK' : 'FAIL');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(faqData) {
+      if (!Array.isArray(faqData)) {
+        throw new TypeError('faq-data.json must contain a JSON array');
+      }
+
+      allFAQs = faqData;
+      console.log('[LAHI FAQ] ✅ Local FAQ data loaded — FAQs:', allFAQs.length);
+
+      if (allFAQs.length === 0) {
+        console.warn('[LAHI FAQ] ⚠ FAQ array is empty — check faq-data.json');
+      }
+
+      renderFAQCategories();
+      renderFAQs();
+    })
+    .catch(function(err) {
+      console.error('[LAHI FAQ] ❌ faq-data.json failed to load:', err.message);
+      showFAQError();
+    });
+}
+
+// ── Local resource fallback ───────────────────────────────────
+function loadLocalResources() {
+  console.log('[LAHI CMS] Loading resources from local JSON...');
   console.log('[LAHI CMS] Resources URL:', RESOURCES_JSON_URL);
 
-  Promise.all([
-    fetch(FAQ_JSON_URL)
-      .then(function(r) {
-        console.log('[LAHI CMS] faq-data.json HTTP status:', r.status, r.ok ? 'OK' : 'FAIL');
-        return r.ok ? r.json() : [];
-      })
-      .catch(function(err) {
-        console.error('[LAHI CMS] faq-data.json fetch error:', err.message);
-        return [];
-      }),
-    fetch(RESOURCES_JSON_URL)
-      .then(function(r) {
-        console.log('[LAHI CMS] resources.json HTTP status:', r.status, r.ok ? 'OK' : 'FAIL');
-        return r.ok ? r.json() : {};
-      })
-      .catch(function(err) {
-        console.error('[LAHI CMS] resources.json fetch error:', err.message);
-        return {};
-      })
-  ]).then(function(results) {
-    var faqData = results[0];
-    var resData = results[1];
+  fetch(RESOURCES_JSON_URL)
+    .then(function(r) {
+      console.log('[LAHI CMS] resources.json HTTP status:', r.status, r.ok ? 'OK' : 'FAIL');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(resData) {
+      if (!resData || typeof resData !== 'object' || Array.isArray(resData)) {
+        throw new TypeError('resources.json must contain a JSON object');
+      }
 
-    console.log('[LAHI CMS] Local FAQ data type:', typeof faqData, '| isArray:', Array.isArray(faqData));
-    console.log('[LAHI CMS] Local resources data type:', typeof resData);
+      resourcesData = {
+        webinars:  Array.isArray(resData.webinars)  ? resData.webinars  : [],
+        brochures: Array.isArray(resData.brochures) ? resData.brochures : []
+      };
 
-    allFAQs = Array.isArray(faqData) ? faqData : [];
-    resourcesData = {
-      webinars:  Array.isArray(resData.webinars)  ? resData.webinars  : [],
-      brochures: Array.isArray(resData.brochures) ? resData.brochures : []
-    };
+      console.log('[LAHI CMS] ✅ Local resources loaded — Webinars:', resourcesData.webinars.length,
+        '| Brochures:', resourcesData.brochures.length);
 
-    console.log('[LAHI CMS] ✅ Local JSON loaded — FAQs:', allFAQs.length,
-      '| Webinars:', resourcesData.webinars.length,
-      '| Brochures:', resourcesData.brochures.length);
-
-    if (allFAQs.length === 0) {
-      console.warn('[LAHI CMS] ⚠ FAQ array is empty from local JSON — check faq-data.json exists and is valid');
-    }
-
-    cmsLoaded = true;
-    renderFAQCategories();
-    renderFAQs();
-    renderWebinars();
-    renderBrochures();
-
-  }).catch(function(err) {
-    console.error('[LAHI CMS] ❌ Both GAS and local JSON failed:', err.message);
-    showFAQError();
-    showWebinarError();
-    showBrochureError();
-  });
+      renderWebinars();
+      renderBrochures();
+    })
+    .catch(function(err) {
+      console.error('[LAHI CMS] ❌ resources.json failed to load:', err.message);
+      showWebinarError();
+      showBrochureError();
+    });
 }
 
 // ══════════════════════════════════════════════════════════════
