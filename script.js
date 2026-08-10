@@ -123,7 +123,7 @@
 
   // ── Policy deadline countdown ──
   const countdown = document.getElementById('policy-countdown');
-  const countdownTarget = Date.parse('2027-08-30T23:59:00+05:30');
+  const countdownTarget = Date.parse('2027-08-22T23:59:00+05:30');
   let countdownTimer = null;
 
   function getCountdownParts(now, target) {
