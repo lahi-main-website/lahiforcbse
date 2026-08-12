@@ -837,6 +837,21 @@ function showFAQError() {
 // ══════════════════════════════════════════════════════════════
 //  WEBINAR RENDERING
 // ══════════════════════════════════════════════════════════════
+var LOCAL_WEBINAR_THUMBNAILS = {
+  'thumb1.jpg': './assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools.png',
+  'thumb2.jpg': './assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools (1).png',
+  'thumb3.jpg': './assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools (2).png'
+};
+
+function resolveWebinarThumbnail(thumbnail) {
+  var source = String(thumbnail || '').trim();
+  if (!source) return '';
+
+  var pathWithoutQuery = source.split(/[?#]/)[0];
+  var fileName = pathWithoutQuery.split('/').pop().toLowerCase();
+  return LOCAL_WEBINAR_THUMBNAILS[fileName] || source;
+}
+
 function renderWebinars() {
   console.log('[LAHI Webinars] renderWebinars() called');
   var container = document.getElementById('webinar-cards');
@@ -853,16 +868,15 @@ function renderWebinars() {
   }
 
   container.innerHTML = webinars.map(function(w) {
-    var thumbHtml = w.thumbnail
-      ? '<img src="' + escapeHTML(w.thumbnail) + '" alt="' + escapeHTML(w.title || '') + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />'
+    var thumbnail = resolveWebinarThumbnail(w.thumbnail);
+    var thumbHtml = thumbnail
+      ? '<img src="' + escapeHTML(thumbnail) + '" alt="' + escapeHTML(w.title || '') + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />'
       : '<div class="webinar-thumb-placeholder"><div class="webinar-play-icon">▶</div><span class="webinar-thumb-label">Webinar Recording</span></div>';
 
     return (
       '<div class="webinar-card">' +
         '<div class="webinar-thumb">' + thumbHtml + '</div>' +
         '<div class="webinar-body">' +
-          '<div class="webinar-title">' + escapeHTML(w.title       || '') + '</div>' +
-          '<div class="webinar-desc">'  + escapeHTML(w.description || '') + '</div>' +
           '<a href="' + escapeHTML(w.recordingLink || '#') + '" target="_blank" rel="noopener" class="webinar-watch-btn">▶ Watch Recording</a>' +
         '</div>' +
       '</div>'
