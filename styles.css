@@ -1285,7 +1285,14 @@ section {
     grid-template-columns: 1fr;
   }
   .programme-card-img {
-    height: 120px;
+    height: auto;
+  }
+  .programme-card-img img {
+    height: auto;
+    object-fit: contain;
+  }
+  .programme-card:hover .programme-card-img img {
+    transform: none;
   }
   .programme-card,
   .programme-card:nth-child(odd):last-child {
