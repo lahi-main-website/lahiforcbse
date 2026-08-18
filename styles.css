@@ -702,6 +702,11 @@ section {
     width: 100%;
   }
 }
+@media (min-width: 901px) {
+  #home {
+    min-height: auto;
+  }
+}
 @media (max-width: 600px) {
   .hero-actions a,
   .hero-actions .btn-primary,
