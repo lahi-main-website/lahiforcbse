@@ -327,21 +327,12 @@
     const designation = document.getElementById('designation').value.trim();
     const school      = document.getElementById('school-name').value.trim();
     const city        = document.getElementById('city').value.trim();
-    const state       = document.getElementById('state').value.trim();
+    const stateField  = document.getElementById('state');
+    const state       = stateField ? stateField.value.trim() : '';
     const mobile      = document.getElementById('mobile').value.trim();
     const email       = document.getElementById('email').value.trim();
     const interest    = document.getElementById('interest').value.trim();
     const message     = document.getElementById('message').value.trim();
-    const visitRadio  = document.querySelector('input[name="visit-interest"]:checked');
-    const visit       = visitRadio ? visitRadio.value : '';
- 
-    const visitMap = {
-      'yes':   "Yes, I'm interested",
-      'maybe': 'Possibly — tell me more',
-      'no':    'Not this time'
-    };
-    const visitValue = visitMap[visit] || '';
- 
     if (!name || !school || !mobile || !email || !city) {
       alert('Please fill in all required fields (Name, School, City, Mobile, Email).');
       return;
@@ -359,7 +350,6 @@
       'entry.330010300':  email,
       'entry.1586340247': interest,
       'entry.1715431669': message,
-      'entry.423992715':  visitValue,
       'fvv': '1',
       'fbzx': '5975148213623573533'
     };
