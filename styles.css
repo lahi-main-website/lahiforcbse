@@ -2933,9 +2933,14 @@ button:focus-visible {
 
 /* Brochure cards */
 .brochure-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  --brochure-gap: clamp(16px, 2vw, 20px);
+  gap: var(--brochure-gap);
+  width: 100%;
+  margin-inline: auto;
 }
 
 .brochure-card {
@@ -2949,6 +2954,10 @@ button:focus-visible {
   gap: 12px;
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.2s, transform 0.2s;
+  flex: 0 1 100%;
+  width: 100%;
+  max-width: 360px;
+  min-width: 0;
 }
 
 .brochure-card:hover {
@@ -3052,7 +3061,6 @@ button:focus-visible {
   }
   .webinar-card { padding: 6px; }
   .webinar-body { padding: 8px 2px 2px; }
-  .brochure-grid { grid-template-columns: 1fr 1fr; }
   .res-tabs { gap: 6px; }
   .res-tab { font-size: 0.78rem; padding: 8px 12px; }
   .faq-q-btn { padding: 14px 16px; }
@@ -3060,8 +3068,31 @@ button:focus-visible {
   .faq-controls { gap: 12px; }
 }
 
-@media (max-width: 400px) {
-  .brochure-grid { grid-template-columns: 1fr; }
+@media (min-width: 600px) {
+  .brochure-card {
+    flex-basis: calc((100% - var(--brochure-gap)) / 2);
+    width: auto;
+    max-width: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .brochure-card {
+    flex-basis: calc((100% - var(--brochure-gap) - var(--brochure-gap)) / 3);
+  }
+}
+
+@media (min-width: 1280px) {
+  .brochure-grid {
+    width: clamp(1160px, 80vw, 1440px);
+    margin-left: 50%;
+    margin-right: 0;
+    transform: translateX(-50%);
+  }
+
+  .brochure-card {
+    flex-basis: calc((100% - var(--brochure-gap) - var(--brochure-gap) - var(--brochure-gap) - var(--brochure-gap)) / 5);
+  }
 }
 
 /* Floating WhatsApp chat launcher */
