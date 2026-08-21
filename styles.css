@@ -328,16 +328,24 @@ nav {
 .mobile-nav-overlay {
   display: none;
   position: fixed;
-  inset: 0;
+  top: 68px;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  height: calc(100vh - 68px);
+  height: calc(100dvh - 68px);
   z-index: 250;
   background: rgba(250, 247, 242, 0.97);
   backdrop-filter: blur(16px);
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
-  padding: 24px 16px;
+  justify-content: flex-start;
+  gap: clamp(14px, 2.5vh, 24px);
+  gap: clamp(14px, 2.5dvh, 24px);
+  padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 .mobile-nav-overlay.open {
   display: flex;
@@ -346,6 +354,7 @@ nav {
   height: 40px;
   width: auto;
   border-radius: 4px;
+  margin-top: auto;
   margin-bottom: 8px;
 }
 .mobile-nav-overlay a {
@@ -375,6 +384,7 @@ nav {
 .mobile-nav-overlay .mobile-cta-book {
   background: var(--saffron);
   margin-top: 4px;
+  margin-bottom: auto;
 }
 .mobile-nav-overlay .mobile-cta-book:hover {
   background: #c96a1a;
