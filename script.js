@@ -401,6 +401,44 @@ const CMS_API_URL        = 'https://script.google.com/macros/s/AKfycbwdHXBfLPtdx
 const FAQ_JSON_URL       = './faq-data.json';
 const RESOURCES_JSON_URL = './resources.json';
 const JSONP_TIMEOUT_MS   = 7000; // 7 s before falling back to local JSON
+const BROCHURE_DISPLAY_CONFIG = Object.freeze([
+  Object.freeze({
+    title: 'CSL',
+    description: 'Composite Skill Lab model and implementation support for schools.',
+    aliases: ['csl', 'cbse vocational guide', 'cbse skill education brochure'],
+    fallbackFileURL: 'https://drive.google.com/file/d/1LzEohWU76m0J8wdRooUPH7Z73lX3q6ev/view?usp=sharing',
+    icon: '🧰'
+  }),
+  Object.freeze({
+    title: 'Teacher Training',
+    description: 'Teacher training for Kaushal Bodh and Kaushal Vikas.',
+    aliases: ['teacher training', 'teacher manual'],
+    fallbackFileURL: 'https://drive.google.com/file/d/1LzEohWU76m0J8wdRooUPH7Z73lX3q6ev/view?usp=sharing',
+    icon: '👩‍🏫'
+  }),
+  Object.freeze({
+    title: 'Karigar',
+    description: 'Hands-on, skill-based learning through the Karigar School of Applied Learning.',
+    aliases: ['karigar', 'karigar programme brochure'],
+    fallbackFileURL: './assets/brochures/karigar-brochure.pdf',
+    forceFallbackFileURL: true,
+    icon: '🏫'
+  }),
+  Object.freeze({
+    title: 'SOW',
+    description: 'Mobile skill education through hands-on, experiential learning.',
+    aliases: ['sow', 'scope of work (sow)'],
+    fallbackFileURL: 'https://drive.google.com/file/d/14t1x4ae4fEfa-8Ojczp48-315IMwWnci/view?usp=sharing',
+    icon: '🛻'
+  }),
+  Object.freeze({
+    title: 'Internships',
+    description: 'Real-world exposure through structured student internships.',
+    aliases: ['internships', 'internship'],
+    fallbackFileURL: 'https://drive.google.com/file/d/18l_X1CnciIEJ38PprdzZFAqvK_1OrKnR/view?usp=sharing',
+    icon: '👷🏼‍♀️'
+  })
+]);
 
 // ── Global state ──────────────────────────────────────────────
 let allFAQs       = [];
@@ -894,7 +932,7 @@ function renderBrochures() {
   var errEl     = document.getElementById('brochure-error');
   if (!container) { console.error('[LAHI Brochures] ❌ #brochure-cards not found!'); return; }
 
-  var brochures = resourcesData.brochures || [];
+  var brochures = buildDisplayBrochures(resourcesData.brochures || []);
   console.log('[LAHI Brochures] Count:', brochures.length);
 
   if (brochures.length === 0) {
@@ -921,6 +959,30 @@ function renderBrochures() {
 
   if (errEl) errEl.style.display = 'none';
   console.log('[LAHI Brochures] ✅ Rendered', brochures.length, 'brochure cards');
+}
+
+function buildDisplayBrochures(sourceBrochures) {
+  var available = Array.isArray(sourceBrochures) ? sourceBrochures : [];
+
+  return BROCHURE_DISPLAY_CONFIG.map(function(config) {
+    var source = available.find(function(brochure) {
+      var sourceTitle = normalizeText(brochure && brochure.title);
+      return config.aliases.some(function(alias) {
+        return sourceTitle === normalizeText(alias);
+      });
+    }) || {};
+
+    return {
+      title: config.title,
+      description: config.description,
+      fileURL: config.forceFallbackFileURL
+        ? config.fallbackFileURL
+        : (source.fileURL || config.fallbackFileURL),
+      type: source.type || 'PDF',
+      icon: source.icon || config.icon,
+      status: source.status || 'Active'
+    };
+  });
 }
 
 function showBrochureError() {
