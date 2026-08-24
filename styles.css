@@ -125,8 +125,11 @@ nav {
 }
 
 .dropdown-chevron {
-  display: inline-block;
-  font-size: 0.9rem;
+  display: block;
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  transform: rotate(180deg);
   transition: transform 0.2s ease;
 }
 
@@ -137,7 +140,7 @@ nav {
   transform: translateX(-50%) translateY(-6px);
   list-style: none;
 
-  min-width: 160px;
+  min-width: 218px;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -170,7 +173,7 @@ nav {
 .dropdown:hover .dropdown-chevron,
 .dropdown:focus-within .dropdown-chevron,
 .dropdown.is-open .dropdown-chevron {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 
 .dropdown-menu::before {
@@ -200,6 +203,7 @@ nav {
   color: var(--ink);
   text-decoration: none;
   transition: all .2s ease;
+  white-space: nowrap;
 }
 
 .dropdown-menu li a:hover {
@@ -224,13 +228,17 @@ nav {
   cursor: pointer;
 }
 
-.mobile-dropdown-toggle span {
-  display: inline-block;
+.mobile-dropdown-chevron {
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  transform: rotate(180deg);
   transition: transform 0.2s ease;
 }
 
-.mobile-nav-dropdown.is-open .mobile-dropdown-toggle span {
-  transform: rotate(180deg);
+.mobile-nav-dropdown.is-open .mobile-dropdown-chevron {
+  transform: rotate(0deg);
 }
 
 .mobile-dropdown-menu {
@@ -297,6 +305,10 @@ nav {
   box-shadow: 0 5px 18px rgba(224, 123, 42, 0.4) !important;
 }
 
+.mobile-header-cta {
+  display: none;
+}
+
 .nav-hamburger {
   display: none;
   flex-direction: column;
@@ -350,13 +362,6 @@ nav {
 .mobile-nav-overlay.open {
   display: flex;
 }
-.mobile-nav-overlay .mobile-logo-img {
-  height: 40px;
-  width: auto;
-  border-radius: 4px;
-  margin-top: auto;
-  margin-bottom: 8px;
-}
 .mobile-nav-overlay a {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 5vw, 1.75rem);
@@ -397,13 +402,36 @@ nav {
   .nav-ctas {
     display: none;
   }
+  .mobile-header-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+  }
   .nav-hamburger {
     display: flex;
+  }
+
+  .mobile-nav-overlay > .mobile-nav-link:first-child {
+    margin-top: clamp(10px, 3.5vh, 36px);
   }
 }
 
 /* ── Mobile overlay tweaks for two CTA buttons ── */
 @media (max-width: 480px) {
+  nav {
+    gap: 7px;
+  }
+  .nav-logo img {
+    height: 34px;
+  }
+  .mobile-header-cta {
+    padding: 7px 10px;
+    font-size: 0.72rem !important;
+  }
+  .nav-hamburger {
+    padding: 7px;
+  }
   .mobile-nav-overlay a,
   .mobile-nav-overlay button.mobile-nav-link {
     font-size: clamp(1.2rem, 6vw, 1.5rem);
@@ -418,11 +446,21 @@ nav {
   }
 }
 
+@media (max-width: 350px) {
+  .nav-logo img {
+    height: 30px;
+  }
+  .mobile-header-cta {
+    padding: 7px 8px;
+    font-size: 0.68rem !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dropdown-menu,
   .dropdown-chevron,
   .mobile-dropdown-menu,
-  .mobile-dropdown-toggle span {
+  .mobile-dropdown-chevron {
     transition: none;
   }
 }
