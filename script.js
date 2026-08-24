@@ -1043,3 +1043,325 @@ function escapeHTML(str) {
 }
 
 console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLoaded');
+
+// ══════════════════════════════════════════════════════════════
+//  GALLERIES
+//  Replace media, titles, and captions here when final assets arrive.
+// ══════════════════════════════════════════════════════════════
+(function initGalleryDemos() {
+  var galleryRoots = document.querySelectorAll('[data-gallery-variant]');
+  if (!galleryRoots.length) return;
+
+  var galleryMedia = [
+    {
+      type: 'image',
+      src: './assets/p1.jpg',
+      poster: './assets/p1.jpg',
+      title: 'Learning From the Living World',
+      caption: 'Students turn observation, care, and patience into practical horticulture skills.',
+      category: 'Gardening & Nursery',
+      alt: 'Students learning plant care in a school garden'
+    },
+    {
+      type: 'image',
+      src: './assets/p2.JPG',
+      poster: './assets/p2.JPG',
+      title: 'Making With Purpose',
+      caption: 'Every project starts with a real problem and ends with something students can proudly call their own.',
+      category: 'Applied Learning',
+      alt: 'Students working together on a practical outdoor project'
+    },
+    {
+      type: 'image',
+      src: './assets/p3.JPG',
+      poster: './assets/p3.JPG',
+      title: 'From Ingredients to Enterprise',
+      caption: 'Food processing lessons combine science, safety, teamwork, and an early understanding of enterprise.',
+      category: 'Food Processing',
+      alt: 'Students and an instructor taking part in a food processing activity'
+    },
+    {
+      type: 'image',
+      src: './assets/p4.jpg',
+      poster: './assets/p4.jpg',
+      title: 'Ideas Worth Showcasing',
+      caption: 'Young makers explain their work, build confidence, and learn through the questions of their peers.',
+      category: 'Student Projects',
+      alt: 'Students presenting a project they created'
+    },
+    {
+      type: 'image',
+      src: './assets/p5.jpg',
+      poster: './assets/p5.jpg',
+      title: 'Circuits, Curiosity, Confidence',
+      caption: 'A structured workspace gives students the freedom to test, troubleshoot, and try again.',
+      category: 'Electrical Skills',
+      alt: 'A student working carefully with electrical components'
+    },
+    {
+      type: 'image',
+      src: './assets/p7.jpg',
+      poster: './assets/p7.jpg',
+      title: 'Skills Rooted in Context',
+      caption: 'Learning connects classroom concepts with the materials, tools, and opportunities around students.',
+      category: 'Sustainable Practice',
+      alt: 'Students learning practical plant-care techniques with an instructor'
+    },
+    {
+      type: 'image',
+      src: './assets/p8.jpg',
+      poster: './assets/p8.jpg',
+      title: 'Precision Through Practice',
+      caption: 'Safe, repeated practice helps learners move from unfamiliar tools to capable hands.',
+      category: 'Workshop Skills',
+      alt: 'A student using workshop tools with protective equipment'
+    },
+    {
+      type: 'image',
+      src: './assets/p9.jpg',
+      poster: './assets/p9.jpg',
+      title: 'Science You Can Hold',
+      caption: 'Hands-on experiments make abstract ideas visible, memorable, and relevant.',
+      category: 'Experiential Science',
+      alt: 'Students carrying out a hands-on science activity'
+    },
+    {
+      type: 'image',
+      src: './assets/p10.jpg',
+      poster: './assets/p10.jpg',
+      title: 'Built by Young Hands',
+      caption: 'Workshop projects develop measurement, problem-solving, and respect for the making process.',
+      category: 'Fabrication',
+      alt: 'Students completing a fabrication project in a workshop'
+    },
+    {
+      type: 'image',
+      src: './assets/p11.jpg',
+      poster: './assets/p11.jpg',
+      title: 'Focus in the Workshop',
+      caption: 'Students discover that craftsmanship grows from attention, discipline, and patience.',
+      category: 'Tool Skills',
+      alt: 'A student concentrating on a workshop task'
+    },
+    {
+      type: 'image',
+      src: './assets/p12.jpg',
+      poster: './assets/p12.jpg',
+      title: 'Confidence in the Details',
+      caption: 'Small, carefully completed tasks build the confidence to take on more ambitious challenges.',
+      category: 'Making & Repair',
+      alt: 'A student completing a detailed hands-on task'
+    },
+    {
+      type: 'image',
+      src: './assets/p13.jpeg',
+      poster: './assets/p13.jpeg',
+      title: 'Learning Beyond the Campus',
+      caption: 'Real workplaces help students understand responsibility, routines, and possible futures.',
+      category: 'Student Internship',
+      alt: 'A student intern gaining experience at a local workplace'
+    },
+    {
+      type: 'image',
+      src: './assets/p15.jpg',
+      poster: './assets/p15.jpg',
+      title: 'Growing Together',
+      caption: 'Collaborative projects teach students to share responsibility and learn from one another.',
+      category: 'Team Learning',
+      alt: 'A group of students collaborating on an outdoor activity'
+    }
+  ];
+
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function imageMarkup(item, className) {
+    return '<img class="' + className + '" src="' + escapeHTML(item.poster || item.src) + '" alt="' +
+      escapeHTML(item.alt) + '" loading="lazy" decoding="async" />';
+  }
+
+  function normalizedIndex(index, length) {
+    return (index + length) % length;
+  }
+
+  function setLiveStatus(element, item, index, total) {
+    if (element) element.textContent = item.title + ', item ' + (index + 1) + ' of ' + total;
+  }
+
+  function addSwipe(element, onPrevious, onNext) {
+    var startX = null;
+    var startY = null;
+
+    element.addEventListener('pointerdown', function(event) {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      startX = event.clientX;
+      startY = event.clientY;
+    });
+
+    element.addEventListener('pointerup', function(event) {
+      if (startX === null || startY === null) return;
+      var deltaX = event.clientX - startX;
+      var deltaY = event.clientY - startY;
+      startX = null;
+      startY = null;
+      if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+      if (deltaX > 0) onPrevious();
+      else onNext();
+    });
+
+    element.addEventListener('pointercancel', function() {
+      startX = null;
+      startY = null;
+    });
+  }
+
+  function renderCinematic(root) {
+    var itemIndexes = [0, 2, 3, 7, 11, 12, 4, 8];
+    var activeIndex = 0;
+    var autoplayDuration = 5000;
+    var autoplayFrame = null;
+    var autoplayStartedAt = 0;
+    var autoplayElapsed = 0;
+    var pauseReasons = new Set();
+
+    root.innerHTML =
+      '<div class="gallery-cinema-frame">' +
+        '<div class="gallery-cinema-stage" tabindex="0" role="group" aria-roledescription="slide"></div>' +
+        '<button type="button" class="gallery-arrow gallery-stage-arrow gallery-stage-arrow-prev" data-gallery-prev aria-label="Previous gallery item">&#8592;</button>' +
+        '<button type="button" class="gallery-arrow gallery-stage-arrow gallery-stage-arrow-next" data-gallery-next aria-label="Next gallery item">&#8594;</button>' +
+        '<div class="gallery-cinema-progress" aria-hidden="true"><span></span></div>' +
+      '</div>' +
+      '<h3 class="gallery-cinema-title"></h3>' +
+      '<div class="gallery-filmstrip" role="tablist" aria-label="Choose a gallery item">' +
+        itemIndexes.map(function(mediaIndex, index) {
+          var item = galleryMedia[mediaIndex];
+          return '<button type="button" class="gallery-filmstrip-item" data-gallery-select="' + index +
+            '" role="tab" aria-label="Show ' + escapeHTML(item.title) + '">' +
+              imageMarkup(item, 'gallery-filmstrip-image') +
+            '</button>';
+        }).join('') +
+      '</div>' +
+      '<p class="gallery-sr-only" aria-live="polite"></p>';
+
+    var stage = root.querySelector('.gallery-cinema-stage');
+    var mediaTitle = root.querySelector('.gallery-cinema-title');
+    var progress = root.querySelector('.gallery-cinema-progress span');
+    var status = root.querySelector('[aria-live]');
+    var tabs = Array.from(root.querySelectorAll('[data-gallery-select]'));
+
+    function currentTime() {
+      return window.performance && typeof window.performance.now === 'function'
+        ? window.performance.now()
+        : Date.now();
+    }
+
+    function cancelAutoplayFrame() {
+      if (autoplayFrame !== null) {
+        window.cancelAnimationFrame(autoplayFrame);
+        autoplayFrame = null;
+      }
+    }
+
+    function tickAutoplay(timestamp) {
+      if (pauseReasons.size || prefersReducedMotion.matches || document.hidden) {
+        autoplayFrame = null;
+        return;
+      }
+      var elapsed = autoplayElapsed + (timestamp - autoplayStartedAt);
+      var fraction = Math.min(elapsed / autoplayDuration, 1);
+      progress.style.width = (fraction * 100) + '%';
+      if (fraction >= 1) {
+        autoplayElapsed = 0;
+        autoplayStartedAt = timestamp;
+        progress.style.width = '0%';
+        update(activeIndex + 1, true, false);
+      }
+      autoplayFrame = window.requestAnimationFrame(tickAutoplay);
+    }
+
+    function restartAutoplay() {
+      cancelAutoplayFrame();
+      autoplayElapsed = 0;
+      progress.style.width = '0%';
+      if (pauseReasons.size || prefersReducedMotion.matches || document.hidden) return;
+      autoplayStartedAt = currentTime();
+      autoplayFrame = window.requestAnimationFrame(tickAutoplay);
+    }
+
+    function pauseAutoplay(reason) {
+      if (pauseReasons.has(reason)) return;
+      if (!pauseReasons.size && autoplayFrame !== null) {
+        autoplayElapsed = Math.min(
+          autoplayElapsed + (currentTime() - autoplayStartedAt),
+          autoplayDuration
+        );
+      }
+      pauseReasons.add(reason);
+      cancelAutoplayFrame();
+    }
+
+    function resumeAutoplay(reason) {
+      pauseReasons.delete(reason);
+      if (pauseReasons.size || prefersReducedMotion.matches || document.hidden) return;
+      autoplayStartedAt = currentTime();
+      autoplayFrame = window.requestAnimationFrame(tickAutoplay);
+    }
+
+    function update(nextIndex, announce, resetTimer) {
+      activeIndex = normalizedIndex(nextIndex, itemIndexes.length);
+      var mediaIndex = itemIndexes[activeIndex];
+      var item = galleryMedia[mediaIndex];
+      stage.setAttribute('aria-label', item.title + ', slide ' + (activeIndex + 1) + ' of ' + itemIndexes.length);
+      stage.innerHTML = imageMarkup(item, 'gallery-cinema-image');
+      mediaTitle.textContent = item.title;
+      tabs.forEach(function(tab, index) {
+        var selected = index === activeIndex;
+        tab.classList.toggle('is-active', selected);
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        tab.tabIndex = selected ? 0 : -1;
+      });
+      if (announce) setLiveStatus(status, item, activeIndex, itemIndexes.length);
+      if (resetTimer) restartAutoplay();
+    }
+
+    function previous() { update(activeIndex - 1, true, true); }
+    function next() { update(activeIndex + 1, true, true); }
+
+    root.querySelector('[data-gallery-prev]').addEventListener('click', previous);
+    root.querySelector('[data-gallery-next]').addEventListener('click', next);
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() { update(Number(tab.dataset.gallerySelect), true, true); });
+    });
+    stage.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); previous(); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); next(); }
+    });
+    addSwipe(stage, previous, next);
+    root.addEventListener('mouseenter', function() { pauseAutoplay('hover'); });
+    root.addEventListener('mouseleave', function() { resumeAutoplay('hover'); });
+    root.addEventListener('focusin', function() { pauseAutoplay('focus'); });
+    root.addEventListener('focusout', function() {
+      window.setTimeout(function() {
+        if (!root.contains(document.activeElement)) resumeAutoplay('focus');
+      }, 0);
+    });
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) pauseAutoplay('visibility');
+      else resumeAutoplay('visibility');
+    });
+    if (typeof prefersReducedMotion.addEventListener === 'function') {
+      prefersReducedMotion.addEventListener('change', function(event) {
+        if (event.matches) {
+          cancelAutoplayFrame();
+          progress.style.width = '0%';
+        } else {
+          restartAutoplay();
+        }
+      });
+    }
+    update(0, false, false);
+    restartAutoplay();
+  }
+
+  galleryRoots.forEach(function(root) {
+    if (root.dataset.galleryVariant === 'cinematic') renderCinematic(root);
+  });
+})();
