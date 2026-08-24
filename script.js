@@ -4,6 +4,7 @@
   const mobileLinks = document.querySelectorAll('.mobile-nav-overlay a');
   const mobileResources = document.querySelector('.mobile-nav-dropdown');
   const mobileResourcesToggle = document.querySelector('.mobile-dropdown-toggle');
+  const mobileHeaderCta = document.querySelector('.mobile-header-cta');
 
   function closeMobileNav() {
     hamburger.classList.remove('open');
@@ -26,6 +27,10 @@
   mobileLinks.forEach(link => {
     link.addEventListener('click', closeMobileNav);
   });
+
+  if (mobileHeaderCta) {
+    mobileHeaderCta.addEventListener('click', closeMobileNav);
+  }
 
   if (mobileResources && mobileResourcesToggle) {
     mobileResourcesToggle.addEventListener('click', () => {
@@ -1169,13 +1174,179 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
       caption: 'Collaborative projects teach students to share responsibility and learn from one another.',
       category: 'Team Learning',
       alt: 'A group of students collaborating on an outdoor activity'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: '0jzWxqdk1Qo',
+      sourceUrl: 'https://youtube.com/shorts/0jzWxqdk1Qo',
+      src: 'https://www.youtube-nocookie.com/embed/0jzWxqdk1Qo',
+      poster: 'https://i.ytimg.com/vi/0jzWxqdk1Qo/hqdefault.jpg',
+      title: 'CSL Video 1',
+      orientation: 'portrait',
+      alt: 'Preview of CSL Video 1'
+    },
+    {
+      type: 'video',
+      platform: 'instagram',
+      reelCode: 'Db2KxLbiFFk',
+      sourceUrl: 'https://www.instagram.com/reel/Db2KxLbiFFk/',
+      poster: './assets/p1.png',
+      title: 'CSL Video 2',
+      orientation: 'portrait',
+      alt: 'Preview of CSL Video 2'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'vCq1w-m0In4',
+      sourceUrl: 'https://youtu.be/vCq1w-m0In4',
+      src: 'https://www.youtube-nocookie.com/embed/vCq1w-m0In4',
+      poster: 'https://i.ytimg.com/vi/vCq1w-m0In4/hqdefault.jpg',
+      title: 'KB Teacher Training Program 1',
+      orientation: 'landscape',
+      alt: 'Preview of KB Teacher Training Program 1'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'dsgbCsgRWcg',
+      sourceUrl: 'https://youtu.be/dsgbCsgRWcg',
+      src: 'https://www.youtube-nocookie.com/embed/dsgbCsgRWcg',
+      poster: 'https://i.ytimg.com/vi/dsgbCsgRWcg/hqdefault.jpg',
+      title: 'KB Teacher Training Program 2',
+      orientation: 'landscape',
+      alt: 'Preview of KB Teacher Training Program 2'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'T0u5P6yb1G0',
+      sourceUrl: 'https://youtu.be/T0u5P6yb1G0',
+      src: 'https://www.youtube-nocookie.com/embed/T0u5P6yb1G0',
+      poster: 'https://i.ytimg.com/vi/T0u5P6yb1G0/hqdefault.jpg',
+      title: 'KV Teacher Training Program',
+      orientation: 'landscape',
+      alt: 'Preview of KV Teacher Training Program'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'xQKVwnJ4UPA',
+      sourceUrl: 'https://youtu.be/xQKVwnJ4UPA',
+      src: 'https://www.youtube-nocookie.com/embed/xQKVwnJ4UPA',
+      poster: 'https://i.ytimg.com/vi/xQKVwnJ4UPA/hqdefault.jpg',
+      title: 'Aarya Patil',
+      orientation: 'portrait',
+      alt: 'Preview of Aarya Patil student byte'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'HYRw98unH98',
+      sourceUrl: 'https://youtu.be/HYRw98unH98',
+      src: 'https://www.youtube-nocookie.com/embed/HYRw98unH98',
+      poster: 'https://i.ytimg.com/vi/HYRw98unH98/hqdefault.jpg',
+      title: 'Riyansh Karsagavkar',
+      orientation: 'portrait',
+      alt: 'Preview of Riyansh Karsagavkar student byte'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'SbG2NpBurIA',
+      sourceUrl: 'https://youtu.be/SbG2NpBurIA',
+      src: 'https://www.youtube-nocookie.com/embed/SbG2NpBurIA',
+      poster: 'https://i.ytimg.com/vi/SbG2NpBurIA/hqdefault.jpg',
+      title: 'Daivik Koshik',
+      orientation: 'portrait',
+      alt: 'Preview of Daivik Koshik student byte'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'GR7xn-VknVY',
+      sourceUrl: 'https://youtu.be/GR7xn-VknVY',
+      src: 'https://www.youtube-nocookie.com/embed/GR7xn-VknVY',
+      poster: 'https://i.ytimg.com/vi/GR7xn-VknVY/hqdefault.jpg',
+      title: 'Ayush Karle',
+      orientation: 'portrait',
+      alt: 'Preview of Ayush Karle student byte'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'RA8UBBWijow',
+      sourceUrl: 'https://youtu.be/RA8UBBWijow',
+      src: 'https://www.youtube-nocookie.com/embed/RA8UBBWijow',
+      poster: 'https://i.ytimg.com/vi/RA8UBBWijow/hqdefault.jpg',
+      title: 'Aarna Jain',
+      orientation: 'portrait',
+      alt: 'Preview of Aarna Jain student byte'
+    },
+    {
+      type: 'video',
+      platform: 'instagram',
+      reelCode: 'DcDJDIaCs8V',
+      sourceUrl: 'https://www.instagram.com/reel/DcDJDIaCs8V/',
+      poster: './assets/new1.png',
+      title: 'Independence Day Reel',
+      orientation: 'portrait',
+      alt: 'Preview of the Independence Day reel'
+    }
+  ];
+
+  var galleryAlbums = [
+    {
+      id: 'school-ready',
+      title: 'Is Your School Ready',
+      coverIndex: 13,
+      itemIndexes: [13]
+    },
+    {
+      id: 'cbse-ready',
+      title: 'CBSE Schools, Are You Ready?',
+      coverIndex: 14,
+      itemIndexes: [14]
+    },
+    {
+      id: 'july-training',
+      title: 'July Teacher Training',
+      coverIndex: 15,
+      itemIndexes: [15, 16, 17]
+    },
+    {
+      id: 'student-bytes',
+      title: 'GG International School Student Bytes',
+      coverIndex: 18,
+      itemIndexes: [18, 19, 20, 21, 22]
+    },
+    {
+      id: 'events',
+      title: 'Events & Celebrations',
+      coverIndex: 23,
+      itemIndexes: [23]
     }
   ];
 
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var viewer = createGalleryViewer();
+
   function imageMarkup(item, className) {
     return '<img class="' + className + '" src="' + escapeHTML(item.poster || item.src) + '" alt="' +
       escapeHTML(item.alt) + '" loading="lazy" decoding="async" />';
+  }
+
+  function playMarkup(item) {
+    if (item.type !== 'video') return '';
+    return '<span class="gallery-play" aria-hidden="true"><span></span></span>';
+  }
+
+  function galleryChevronMarkup() {
+    return '<svg class="gallery-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">' +
+      '<rect width="256" height="256" fill="none"></rect>' +
+      '<polyline points="96 48 176 128 96 208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>' +
+    '</svg>';
   }
 
   function normalizedIndex(index, length) {
@@ -1361,7 +1532,288 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     restartAutoplay();
   }
 
+  function renderAlbums(root) {
+    root.innerHTML =
+      '<div class="gallery-album-grid">' +
+        galleryAlbums.map(function(album, index) {
+          var cover = galleryMedia[album.coverIndex];
+          return '<button type="button" class="gallery-album-card gallery-album-card-' + (index + 1) +
+            '" data-gallery-album="' + escapeHTML(album.id) + '" aria-label="Open ' + escapeHTML(album.title) + ' album">' +
+              imageMarkup(cover, 'gallery-album-cover') +
+              '<span class="gallery-album-shade" aria-hidden="true"></span>' +
+              '<strong class="gallery-album-title">' + escapeHTML(album.title) + '</strong>' +
+            '</button>';
+        }).join('') +
+      '</div>';
+
+    root.addEventListener('click', function(event) {
+      var trigger = event.target.closest('[data-gallery-album]');
+      if (!trigger || !root.contains(trigger)) return;
+      var album = galleryAlbums.find(function(candidate) {
+        return candidate.id === trigger.dataset.galleryAlbum;
+      });
+      if (album) viewer.open(album, 0, trigger);
+    });
+  }
+
+  function createGalleryViewer() {
+    var overlay = document.createElement('div');
+    overlay.className = 'gallery-viewer';
+    overlay.hidden = true;
+    overlay.innerHTML =
+      '<div class="gallery-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="gallery-viewer-title">' +
+        '<div class="gallery-viewer-topbar">' +
+          '<h2 id="gallery-viewer-title"></h2>' +
+          '<button type="button" class="gallery-viewer-close" aria-label="Close album viewer">' +
+            '<svg class="gallery-close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">' +
+              '<rect width="256" height="256" fill="none"></rect>' +
+              '<line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>' +
+              '<line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>' +
+            '</svg>' +
+          '</button>' +
+        '</div>' +
+        '<div class="gallery-viewer-media-shell">' +
+          '<button type="button" class="gallery-arrow gallery-viewer-side-arrow gallery-viewer-side-prev" data-viewer-prev aria-label="Previous album item">' + galleryChevronMarkup() + '</button>' +
+          '<div class="gallery-viewer-media-stack">' +
+            '<div class="gallery-viewer-media-frame">' +
+              '<div class="gallery-viewer-stage" role="group" aria-roledescription="slide"></div>' +
+            '</div>' +
+            '<h3 class="gallery-viewer-media-title"></h3>' +
+          '</div>' +
+          '<button type="button" class="gallery-arrow gallery-viewer-side-arrow gallery-viewer-side-next" data-viewer-next aria-label="Next album item">' + galleryChevronMarkup() + '</button>' +
+        '</div>' +
+        '<div class="gallery-viewer-filmstrip" role="tablist" aria-label="Choose an album item"></div>' +
+        '<p class="gallery-sr-only" aria-live="polite"></p>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    var dialog = overlay.querySelector('.gallery-viewer-dialog');
+    var closeButton = overlay.querySelector('.gallery-viewer-close');
+    var title = overlay.querySelector('#gallery-viewer-title');
+    var stage = overlay.querySelector('.gallery-viewer-stage');
+    var mediaTitle = overlay.querySelector('.gallery-viewer-media-title');
+    var filmstrip = overlay.querySelector('.gallery-viewer-filmstrip');
+    var status = overlay.querySelector('[aria-live]');
+    var currentAlbum = null;
+    var activeIndex = 0;
+    var lastFocused = null;
+    var previousOverflow = '';
+    var closeTimer = null;
+    var activeYouTubePlayer = null;
+    var playerRequestId = 0;
+    var youtubeApiPromise = null;
+
+    function loadYouTubeApi() {
+      if (window.YT && typeof window.YT.Player === 'function') {
+        return Promise.resolve(window.YT);
+      }
+      if (youtubeApiPromise) return youtubeApiPromise;
+
+      youtubeApiPromise = new Promise(function(resolve, reject) {
+        var previousReady = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function() {
+          if (typeof previousReady === 'function') previousReady();
+          resolve(window.YT);
+        };
+
+        var existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+        if (existingScript) return;
+
+        var script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.async = true;
+        script.addEventListener('error', function() {
+          youtubeApiPromise = null;
+          reject(new Error('YouTube IFrame API failed to load'));
+        });
+        document.head.appendChild(script);
+      });
+      return youtubeApiPromise;
+    }
+
+    function clearActivePlayer() {
+      playerRequestId += 1;
+      if (activeYouTubePlayer && typeof activeYouTubePlayer.destroy === 'function') {
+        try { activeYouTubePlayer.destroy(); } catch (error) { /* iframe replacement still stops playback */ }
+      }
+      activeYouTubePlayer = null;
+      stage.innerHTML = '';
+    }
+
+    function renderYouTube(item, requestId) {
+      var videoUrl = new URL(item.src);
+      videoUrl.searchParams.set('autoplay', '1');
+      videoUrl.searchParams.set('playsinline', '1');
+      videoUrl.searchParams.set('rel', '0');
+      videoUrl.searchParams.set('enablejsapi', '1');
+      if (window.location && /^https?:$/.test(window.location.protocol)) {
+        videoUrl.searchParams.set('origin', window.location.origin);
+      }
+
+      var playerId = 'gallery-youtube-player-' + requestId;
+      stage.innerHTML = '<iframe id="' + playerId + '" src="' + escapeHTML(videoUrl.toString()) +
+        '" title="' + escapeHTML(item.title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+        'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+      var iframe = stage.querySelector('iframe');
+
+      loadYouTubeApi().then(function(YT) {
+        if (requestId !== playerRequestId || !iframe || !iframe.isConnected) return;
+        activeYouTubePlayer = new YT.Player(iframe, {
+          events: {
+            onReady: function(event) {
+              if (requestId === playerRequestId) event.target.playVideo();
+            },
+            onAutoplayBlocked: function(event) {
+              if (requestId !== playerRequestId) return;
+              event.target.mute();
+              event.target.playVideo();
+              dialog.classList.add('used-muted-fallback');
+            }
+          }
+        });
+      }).catch(function() {
+        // The iframe remains fully usable if the optional control API is unavailable.
+      });
+    }
+
+    function renderInstagram(item) {
+      var embedUrl = 'https://www.instagram.com/reel/' + encodeURIComponent(item.reelCode) + '/embed/?autoplay=1';
+      stage.innerHTML = '<iframe class="gallery-instagram-frame" src="' + embedUrl + '" title="' +
+        escapeHTML(item.title) + '" allow="autoplay; encrypted-media; picture-in-picture" ' +
+        'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+    }
+
+    function renderStage(announce) {
+      var mediaIndex = currentAlbum.itemIndexes[activeIndex];
+      var item = galleryMedia[mediaIndex];
+      clearActivePlayer();
+      var requestId = playerRequestId;
+
+      stage.setAttribute('aria-label', item.title + ', item ' + (activeIndex + 1) + ' of ' + currentAlbum.itemIndexes.length);
+      stage.classList.toggle('is-portrait', item.orientation === 'portrait');
+      dialog.classList.toggle('is-portrait', item.orientation === 'portrait');
+      dialog.classList.remove('used-muted-fallback');
+      mediaTitle.textContent = item.title;
+
+      if (item.platform === 'youtube') renderYouTube(item, requestId);
+      else if (item.platform === 'instagram') renderInstagram(item);
+      else stage.innerHTML = imageMarkup(item, 'gallery-viewer-image');
+
+      Array.from(filmstrip.querySelectorAll('[data-viewer-select]')).forEach(function(tab, index) {
+        var selected = index === activeIndex;
+        tab.classList.toggle('is-active', selected);
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        tab.tabIndex = selected ? 0 : -1;
+        if (selected) tab.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
+      });
+
+      var hasMultipleItems = currentAlbum.itemIndexes.length > 1;
+      dialog.classList.toggle('has-single-item', !hasMultipleItems);
+      if (announce) setLiveStatus(status, item, activeIndex, currentAlbum.itemIndexes.length);
+    }
+
+    function select(index, announce) {
+      if (!currentAlbum) return;
+      activeIndex = normalizedIndex(index, currentAlbum.itemIndexes.length);
+      renderStage(announce);
+    }
+
+    function open(album, startIndex, trigger) {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      currentAlbum = album;
+      activeIndex = normalizedIndex(startIndex || 0, album.itemIndexes.length);
+      lastFocused = trigger || document.activeElement;
+      previousOverflow = document.body.style.overflow;
+      title.textContent = album.title;
+      filmstrip.innerHTML = album.itemIndexes.map(function(mediaIndex, index) {
+        var item = galleryMedia[mediaIndex];
+        return '<button type="button" class="gallery-viewer-thumb" data-viewer-select="' + index +
+          '" role="tab" aria-label="Show ' + escapeHTML(item.title) + '">' +
+            imageMarkup(item, 'gallery-viewer-thumb-image') + playMarkup(item) +
+          '</button>';
+      }).join('');
+      renderStage(false);
+
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      window.requestAnimationFrame(function() {
+        overlay.classList.add('is-open');
+        closeButton.focus();
+      });
+    }
+
+    function close() {
+      if (overlay.hidden) return;
+      clearActivePlayer();
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = previousOverflow;
+      closeTimer = window.setTimeout(function() {
+        overlay.hidden = true;
+        stage.innerHTML = '';
+        filmstrip.innerHTML = '';
+        currentAlbum = null;
+        closeTimer = null;
+        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      }, prefersReducedMotion.matches ? 0 : 220);
+    }
+
+    closeButton.addEventListener('click', close);
+    overlay.querySelector('[data-viewer-prev]').addEventListener('click', function() { select(activeIndex - 1, true); });
+    overlay.querySelector('[data-viewer-next]').addEventListener('click', function() { select(activeIndex + 1, true); });
+    filmstrip.addEventListener('click', function(event) {
+      var tab = event.target.closest('[data-viewer-select]');
+      if (tab) select(Number(tab.dataset.viewerSelect), true);
+    });
+    overlay.addEventListener('click', function(event) {
+      if (
+        event.target === overlay ||
+        event.target === dialog ||
+        event.target.classList.contains('gallery-viewer-media-shell') ||
+        event.target.classList.contains('gallery-viewer-media-stack')
+      ) close();
+    });
+    addSwipe(stage, function() { select(activeIndex - 1, true); }, function() { select(activeIndex + 1, true); });
+    document.addEventListener('keydown', function(event) {
+      if (overlay.hidden) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close();
+        return;
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        select(activeIndex - 1, true);
+        return;
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        select(activeIndex + 1, true);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      var focusable = Array.from(dialog.querySelectorAll(
+        'button:not([disabled]):not([tabindex="-1"]), a[href], iframe, [tabindex]:not([tabindex="-1"])'
+      ));
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    return { open: open, close: close };
+  }
+
   galleryRoots.forEach(function(root) {
     if (root.dataset.galleryVariant === 'cinematic') renderCinematic(root);
+    if (root.dataset.galleryVariant === 'albums') renderAlbums(root);
   });
 })();
