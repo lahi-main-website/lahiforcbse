@@ -14,6 +14,19 @@
     <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet" />
   </head>
   <body>
+    <svg class="direction-icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="direction-arrow-left" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="216" y1="128" x2="40" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+        <polyline points="112 56 40 128 112 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+      </symbol>
+      <symbol id="direction-arrow-right" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></line>
+        <polyline points="144 56 216 128 144 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"></polyline>
+      </symbol>
+    </svg>
+
     <!-- NAV -->
     <nav>
       <a href="#" class="nav-logo">
@@ -1997,33 +2010,7 @@
       </div><!-- /section-inner -->
     </section>
 
-    <!-- GALLERIES -->
-    <section
-      id="gallery-cinematic"
-      class="gallery-section gallery-cinematic-section"
-      aria-labelledby="gallery-cinematic-title"
-    >
-      <div class="section-inner">
-        <div class="gallery-heading-row">
-          <div>
-            <div class="section-label reveal">Gallery</div>
-            <h2 class="section-title reveal" id="gallery-cinematic-title">
-              Learning in <span class="it">Action</span>
-            </h2>
-          </div>
-          <p class="section-desc reveal">
-            Step inside classrooms where curiosity becomes capability through
-            practical, hands-on learning.
-          </p>
-        </div>
-        <div
-          class="gallery-demo gallery-cinematic reveal"
-          data-gallery-variant="cinematic"
-          aria-label="Cinematic learning gallery"
-        ></div>
-      </div>
-    </section>
-
+    <!-- MEDIA GALLERY -->
     <section
       id="gallery-mosaic"
       class="gallery-section gallery-albums-section"
