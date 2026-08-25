@@ -417,7 +417,9 @@ const BROCHURE_DISPLAY_CONFIG = Object.freeze([
     title: 'CSL',
     description: 'Composite Skill Lab model and implementation support for schools.',
     aliases: ['csl', 'cbse vocational guide', 'cbse skill education brochure'],
-    fallbackFileURL: 'https://drive.google.com/file/d/1LzEohWU76m0J8wdRooUPH7Z73lX3q6ev/view?usp=sharing',
+    fallbackFileURL: './assets/brochures/CSL%20Flier%2001.pdf',
+    forceFallbackFileURL: true,
+    type: 'PDF',
     icon: '🧰'
   }),
   Object.freeze({
@@ -954,9 +956,11 @@ function renderBrochures() {
 
   container.innerHTML = brochures.map(function(b) {
     var isPlaceholder = !b.fileURL || b.fileURL === '#';
+    var fileType = String(b.type || '').trim().toUpperCase();
+    var downloadLabel = fileType ? '↓ Download ' + escapeHTML(fileType) : '↓ Download';
     var btnHtml = isPlaceholder
       ? '<span class="brochure-dl-btn" style="opacity:0.5;cursor:default;" title="Coming soon">⏳ Coming Soon</span>'
-      : '<a href="' + escapeHTML(b.fileURL) + '" target="_blank" rel="noopener" class="brochure-dl-btn" download>↓ Download PDF</a>';
+      : '<a href="' + escapeHTML(b.fileURL) + '" target="_blank" rel="noopener" class="brochure-dl-btn" download>' + downloadLabel + '</a>';
 
     return (
       '<div class="brochure-card">' +
@@ -989,7 +993,7 @@ function buildDisplayBrochures(sourceBrochures) {
       fileURL: config.forceFallbackFileURL
         ? config.fallbackFileURL
         : (source.fileURL || config.fallbackFileURL),
-      type: source.type || 'PDF',
+      type: config.type || source.type || 'PDF',
       icon: source.icon || config.icon,
       status: source.status || 'Active'
     };
