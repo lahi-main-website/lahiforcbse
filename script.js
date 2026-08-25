@@ -11,6 +11,23 @@ function directionIconMarkup(direction, className) {
   const mobileResources = document.querySelector('.mobile-nav-dropdown');
   const mobileResourcesToggle = document.querySelector('.mobile-dropdown-toggle');
   const mobileHeaderCta = document.querySelector('.mobile-header-cta');
+  const visitRegisterCta = document.getElementById('visit-register-cta');
+  const implementationRegisterCta = document.getElementById('implementation-register-cta');
+  const conversationRegisterCta = document.getElementById('conversation-register-cta');
+  const mobileRegisterTarget = window.matchMedia('(max-width: 860px)');
+
+  function syncResponsiveRegisterTargets(event) {
+    [visitRegisterCta, implementationRegisterCta, conversationRegisterCta].forEach(function(cta) {
+      if (cta) cta.setAttribute('href', event.matches ? '#register-form' : '#register');
+    });
+  }
+
+  syncResponsiveRegisterTargets(mobileRegisterTarget);
+  if (typeof mobileRegisterTarget.addEventListener === 'function') {
+    mobileRegisterTarget.addEventListener('change', syncResponsiveRegisterTargets);
+  } else {
+    mobileRegisterTarget.addListener(syncResponsiveRegisterTargets);
+  }
 
   function closeMobileNav() {
     hamburger.classList.remove('open');
