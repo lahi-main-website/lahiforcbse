@@ -56,6 +56,16 @@ body {
   display: block;
   flex: 0 0 auto;
 }
+.up-right-arrow-icon {
+  width: 1.1em;
+  height: 1.1em;
+}
+.down-arrow-icon {
+  width: 1.05em;
+  height: 1.05em;
+  transform: rotate(180deg);
+  transform-origin: center;
+}
 img {
   display: block;
   max-width: 100%;
@@ -1231,10 +1241,16 @@ section {
   flex-shrink: 0;
   border: 1px solid var(--border);
   border-radius: 50%;
+  transform: rotate(180deg);
+  transform-origin: center;
   transition: transform 0.3s ease, background 0.2s ease, color 0.2s ease;
 }
+.programme-toggle-icon .toggle-arrow-icon {
+  width: 14px;
+  height: 14px;
+}
 .programme-card.is-expanded .programme-toggle-icon {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
   background: var(--teal);
   border-color: var(--teal);
   color: white;
@@ -1980,10 +1996,13 @@ section {
 }
 .resource-arrow {
   transition: transform 0.3s ease;
-  display: inline-block;
+  width: 1em;
+  height: 1em;
+  transform: rotate(180deg);
+  transform-origin: center;
 }
 .resource-card.is-open .resource-arrow {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
 }
 .resource-expand {
   max-height: 0;
@@ -2865,12 +2884,18 @@ button:focus-visible {
   justify-content: center;
   font-size: 0.75rem;
   color: var(--muted);
+  transform: rotate(180deg);
+  transform-origin: center;
   transition: transform 0.3s ease, background 0.2s, border-color 0.2s;
   margin-top: 1px;
 }
+.faq-q-arrow .toggle-arrow-icon {
+  width: 12px;
+  height: 12px;
+}
 
 .faq-item.open .faq-q-arrow {
-  transform: rotate(180deg);
+  transform: rotate(0deg);
   background: var(--teal);
   border-color: var(--teal);
   color: white;

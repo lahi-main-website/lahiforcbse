@@ -56,6 +56,17 @@
     }
     .gbtn { transition: all .2s; }
     .gbtn:hover { transform: translateY(-1px); }
+    .gbtn-with-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .gbtn-arrow-icon {
+      width: 1.1em;
+      height: 1.1em;
+      flex: 0 0 auto;
+    }
 
     input[type=color] { -webkit-appearance: none; border: none; cursor: pointer; }
     input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
@@ -303,6 +314,16 @@
     };
 
     // ── Small components ────────────────────────────────────────────────────────
+    function RightArrowIcon() {
+      return (
+        <svg className="gbtn-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+          <rect width="256" height="256" fill="none" />
+          <line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24" />
+          <polyline points="144 56 216 128 144 200" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24" />
+        </svg>
+      );
+    }
+
     function Panel({ title, subtitle, children }) {
       return (
         <div style={{ background:"#ffffff", border:"1px solid var(--lahi-border)", borderRadius:14, padding:18, boxShadow:"var(--lahi-shadow-sm)" }}>
@@ -699,12 +720,13 @@
 
             {tab === "config" && (
               <div style={{ textAlign:"center", marginTop:22 }}>
-                <button className="gbtn" onClick={generate}
+                <button className="gbtn gbtn-with-icon" onClick={generate}
                   style={{ background:"linear-gradient(135deg,var(--lahi-saffron) 0%,var(--lahi-saffron-dark) 100%)", border:"none", borderRadius:12,
                     color:"#fff", cursor:"pointer", fontSize:15, fontWeight:700,
                     fontFamily:"DM Sans,Arial,sans-serif", padding:"14px 52px",
                     letterSpacing:"0.05em", boxShadow:"0 4px 16px rgba(224,123,42,.35)", width:"100%", maxWidth:360 }}>
-                  GENERATE TIMETABLE →
+                  <span>GENERATE TIMETABLE</span>
+                  <RightArrowIcon />
                 </button>
               </div>
             )}
@@ -855,11 +877,12 @@
               <div style={{ textAlign:"center", paddingTop:80, color:"var(--lahi-muted)" }}>
                 <div style={{ fontSize:48, marginBottom:16 }}>📅</div>
                 <div style={{ fontSize:16, marginBottom:8 }}>No timetable generated yet</div>
-                <button className="gbtn" onClick={generate}
+                <button className="gbtn gbtn-with-icon" onClick={generate}
                   style={{ background:"linear-gradient(135deg,var(--lahi-saffron) 0%,var(--lahi-saffron-dark) 100%)", border:"none",
                     borderRadius:10, color:"#fff", cursor:"pointer", fontSize:14, fontWeight:600,
                     fontFamily:"DM Sans,Arial,sans-serif", padding:"12px 36px", marginTop:8 }}>
-                  Generate Now →
+                  <span>Generate Now</span>
+                  <RightArrowIcon />
                 </button>
               </div>
             )}

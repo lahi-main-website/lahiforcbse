@@ -811,7 +811,7 @@ function renderFAQs() {
         '<button class="faq-q-btn" id="faq-question-' + id + '" aria-expanded="false" aria-controls="faq-answer-' + id + '">' +
           '<span class="faq-q-cat-badge">' + escapeHTML(faq.category || '') + '</span>' +
           '<span class="faq-q-text">'     + escapeHTML(faq.question  || '') + '</span>' +
-          '<span class="faq-q-arrow">↓</span>' +
+          '<span class="faq-q-arrow" aria-hidden="true">' + directionIconMarkup('up', 'toggle-arrow-icon') + '</span>' +
         '</button>' +
         '<div class="faq-answer" id="faq-answer-' + id + '" role="region" aria-labelledby="faq-question-' + id + '">' +
           '<div class="faq-answer-inner">' + escapeHTML(faq.answer || '') + '</div>' +
@@ -957,10 +957,11 @@ function renderBrochures() {
   container.innerHTML = brochures.map(function(b) {
     var isPlaceholder = !b.fileURL || b.fileURL === '#';
     var fileType = String(b.type || '').trim().toUpperCase();
-    var downloadLabel = fileType ? '↓ Download ' + escapeHTML(fileType) : '↓ Download';
+    var downloadLabel = fileType ? 'Download ' + escapeHTML(fileType) : 'Download';
+    var downloadIcon = directionIconMarkup('up', 'down-arrow-icon');
     var btnHtml = isPlaceholder
       ? '<span class="brochure-dl-btn" style="opacity:0.5;cursor:default;" title="Coming soon">⏳ Coming Soon</span>'
-      : '<a href="' + escapeHTML(b.fileURL) + '" target="_blank" rel="noopener" class="brochure-dl-btn" download>' + downloadLabel + '</a>';
+      : '<a href="' + escapeHTML(b.fileURL) + '" target="_blank" rel="noopener" class="brochure-dl-btn" download>' + downloadIcon + '<span>' + downloadLabel + '</span></a>';
 
     return (
       '<div class="brochure-card">' +
