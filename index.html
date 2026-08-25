@@ -67,7 +67,7 @@
         <a href="#register" class="nav-cta">Register Interest</a>
         <a href="https://calendar.app.google/NGyU42gqyEWC4U678" target="_blank" rel="noopener" class="nav-cta nav-cta-book">📅 Book a Call</a>
       </div>
-      <a href="#register" class="nav-cta mobile-header-cta">Register Interest</a>
+      <a href="#register-form" class="nav-cta mobile-header-cta">Register Interest</a>
       <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
@@ -101,7 +101,7 @@
         </div>
       </div>
       <a href="#partners" class="mobile-nav-link">Partner Schools</a>
-      <a href="#register" class="mobile-cta mobile-nav-link">Register Interest</a>
+      <a href="#register-form" class="mobile-cta mobile-nav-link">Register Interest</a>
       <a href="https://calendar.app.google/NGyU42gqyEWC4U678" target="_blank" rel="noopener" class="mobile-cta mobile-cta-book mobile-nav-link">📅 Book a Call</a>
     </div>
 
@@ -1558,15 +1558,21 @@
             </p>
             <ul class="engage-options">
               <li>
-                <span class="engage-arrow">→</span>
+                <span class="engage-arrow" aria-hidden="true">
+                  <svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-right"></use></svg>
+                </span>
                 Experience a live session through Skills on Wheels at your school
               </li>
               <li>
-                <span class="engage-arrow">→</span>
+                <span class="engage-arrow" aria-hidden="true">
+                  <svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-right"></use></svg>
+                </span>
                 Visit a Kaarigar lab with your school team (leaders, teachers, coordinators)
               </li>
               <li>
-                <span class="engage-arrow">→</span>
+                <span class="engage-arrow" aria-hidden="true">
+                  <svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-right"></use></svg>
+                </span>
                 Explore a phased implementation approach tailored to your context
               </li>
 
@@ -1609,23 +1615,9 @@
               </div>
             </div>
 
-            <!-- Skills on Wheels Video -->
-            <div style="margin-top: 28px;">
-              <p style="font-size: 0.85rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;">Skills on Wheels</p>
-              <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-                <iframe
-                  src="https://www.youtube.com/embed/2PyL_oxm9Ho"
-                  title="Skills on Wheels"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;"
-                ></iframe>
-              </div>
-            </div>
           </div>
 
-          <div class="register-form-wrap reveal">
+          <div class="register-form-wrap reveal" id="register-form">
             <div id="form-container">
               <div class="form-title">Tell us about your school</div>
               <div class="form-row">
@@ -1688,20 +1680,26 @@
               </div>
               <div class="form-group">
                 <label>What are you most interested in?</label>
-                <select id="interest">
-                  <option value="">Select an option</option>
-                  <option>Composite Skill Lab Free consultation</option>
-                  <option> End to end skill implementation support</option>
-                  <option>General partnership discussion</option>
-                  <option>Internship for students</option>
-                  <option>Karigar exposure visit for teachers/students</option>
-                  <option>Teacher training for Kaushal Bodh(6th to 8th)/Kaushal Vikas(9th grade)  
-                  </option>
-                  <option>Request a sample timetable</option>
-                  <option>Request case studies</option>
-                  <option>Request Skills on Wheels for teachers and students</option>
-                  <option>Multiple of the above</option>
-                </select>
+                <div class="form-select-control">
+                  <select id="interest">
+                    <option value="">Select an option</option>
+                    <option>Composite Skill Lab Free consultation</option>
+                    <option> End to end skill implementation support</option>
+                    <option>General partnership discussion</option>
+                    <option>Internship for students</option>
+                    <option>Karigar exposure visit for teachers/students</option>
+                    <option>Teacher training for Kaushal Bodh(6th to 8th)/Kaushal Vikas(9th grade)
+                    </option>
+                    <option>Request a sample timetable</option>
+                    <option>Request case studies</option>
+                    <option>Request Skills on Wheels for teachers and students</option>
+                    <option>Multiple of the above</option>
+                  </select>
+                  <svg class="form-select-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+                    <rect width="256" height="256" fill="none" />
+                    <polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+                  </svg>
+                </div>
               </div>
               <div class="form-group">
                 <label
@@ -1713,7 +1711,8 @@
                 ></textarea>
               </div>
               <button class="form-submit" onclick="submitForm()">
-                Submit Interest →
+                Submit Interest
+                <svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-right"></use></svg>
               </button>
               <p class="form-note">
                 By submitting, you agree to be contacted by Lend A Hand India's team. Your
@@ -1733,6 +1732,20 @@
                 schools@lendahandindia.org · 020-25630092
               </p>
             </div>
+          </div>
+        </div>
+
+        <div class="register-feature-video reveal">
+          <p class="register-feature-video-title">Skills on Wheels</p>
+          <div class="register-feature-video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/2PyL_oxm9Ho"
+              title="Skills on Wheels"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
       </div>
