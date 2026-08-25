@@ -1,22 +1,89 @@
+function directionIconMarkup(direction, className) {
+  return '<svg class="direction-icon ' + (className || '') + '" viewBox="0 0 256 256" aria-hidden="true" focusable="false">' +
+    '<use href="#direction-arrow-' + direction + '"></use>' +
+    '</svg>';
+}
+
 // ── Hamburger menu ──
   const hamburger = document.getElementById('hamburger');
   const mobileNav = document.getElementById('mobile-nav');
-  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-overlay a');
+  const mobileResources = document.querySelector('.mobile-nav-dropdown');
+  const mobileResourcesToggle = document.querySelector('.mobile-dropdown-toggle');
+  const mobileHeaderCta = document.querySelector('.mobile-header-cta');
+
+  function closeMobileNav() {
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    mobileNav.classList.remove('open');
+    document.body.style.overflow = '';
+    if (mobileResources && mobileResourcesToggle) {
+      mobileResources.classList.remove('is-open');
+      mobileResourcesToggle.setAttribute('aria-expanded', 'false');
+    }
+  }
  
   hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('open');
     mobileNav.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', mobileNav.classList.contains('open') ? 'true' : 'false');
     document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
   });
  
   mobileLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileNav.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    link.addEventListener('click', closeMobileNav);
   });
- 
+
+  if (mobileHeaderCta) {
+    mobileHeaderCta.addEventListener('click', closeMobileNav);
+  }
+
+  if (mobileResources && mobileResourcesToggle) {
+    mobileResourcesToggle.addEventListener('click', () => {
+      const isOpen = mobileResources.classList.toggle('is-open');
+      mobileResourcesToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
+
+  // ── Resources dropdown ──
+  const resourcesDropdown = document.getElementById('resources-dropdown');
+  const resourcesToggle = resourcesDropdown && resourcesDropdown.querySelector('.dropdown-toggle');
+
+  function setResourcesDropdown(open) {
+    if (!resourcesDropdown || !resourcesToggle) return;
+    resourcesDropdown.classList.toggle('is-open', open);
+    resourcesToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  if (resourcesDropdown && resourcesToggle) {
+    resourcesToggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setResourcesDropdown(!resourcesDropdown.classList.contains('is-open'));
+    });
+    resourcesDropdown.addEventListener('mouseenter', () => setResourcesDropdown(true));
+    resourcesDropdown.addEventListener('mouseleave', () => {
+      if (!resourcesDropdown.contains(document.activeElement)) setResourcesDropdown(false);
+    });
+    resourcesDropdown.addEventListener('focusin', () => setResourcesDropdown(true));
+    resourcesDropdown.addEventListener('focusout', () => {
+      setTimeout(() => {
+        if (!resourcesDropdown.contains(document.activeElement)) setResourcesDropdown(false);
+      }, 0);
+    });
+    resourcesDropdown.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => setResourcesDropdown(false));
+    });
+    document.addEventListener('click', (event) => {
+      if (!resourcesDropdown.contains(event.target)) setResourcesDropdown(false);
+    });
+    resourcesDropdown.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setResourcesDropdown(false);
+        resourcesToggle.focus();
+      }
+    });
+  }
+
   // ── Scroll reveal ──
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
@@ -65,6 +132,44 @@
     statsObserver.observe(statsSection);
   }
 
+  // ── Policy deadline countdown ──
+  const countdown = document.getElementById('policy-countdown');
+  const countdownTarget = Date.parse('2027-08-22T23:59:00+05:30');
+  let countdownTimer = null;
+
+  function getCountdownParts(now, target) {
+    const remaining = Math.max(0, target - now);
+    return {
+      remaining,
+      days: Math.floor(remaining / 86400000),
+      hours: Math.floor((remaining % 86400000) / 3600000),
+      minutes: Math.floor((remaining % 3600000) / 60000),
+      seconds: Math.floor((remaining % 60000) / 1000),
+    };
+  }
+
+  function updateCountdown() {
+    if (!countdown) return;
+    const parts = getCountdownParts(Date.now(), countdownTarget);
+    const widths = { days: 3, hours: 2, minutes: 2, seconds: 2 };
+    Object.keys(widths).forEach(unit => {
+      const element = countdown.querySelector(`[data-countdown="${unit}"]`);
+      if (element) element.textContent = String(parts[unit]).padStart(widths[unit], '0');
+    });
+
+    if (parts.remaining === 0) {
+      countdown.classList.add('is-expired');
+      const status = document.getElementById('countdown-status');
+      if (status) status.textContent = 'Deadline reached';
+      if (countdownTimer) clearInterval(countdownTimer);
+    }
+  }
+
+  if (countdown) {
+    updateCountdown();
+    if (Date.now() < countdownTarget) countdownTimer = setInterval(updateCountdown, 1000);
+  }
+
   // ── Partner Schools stat counter animation ──
   const partnersStats = document.querySelector('.partners-stats');
   if (partnersStats) {
@@ -78,6 +183,38 @@
     }, { threshold: 0.3 });
     partnersStatsObserver.observe(partnersStats);
   }
+
+  // ── Programme card accordions ──
+  const programmeCards = document.querySelectorAll('.programme-card');
+
+  function setProgrammeCard(card, open) {
+    const toggle = card.querySelector('.programme-toggle');
+    const details = card.querySelector('.programme-details');
+    if (!toggle || !details) return;
+
+    if (open) {
+      details.hidden = false;
+      requestAnimationFrame(() => card.classList.add('is-expanded'));
+    } else {
+      card.classList.remove('is-expanded');
+      window.setTimeout(() => {
+        if (!card.classList.contains('is-expanded')) details.hidden = true;
+      }, 460);
+    }
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    const label = toggle.querySelector('span:first-child');
+    if (label) label.textContent = open ? 'Read less' : 'Read more';
+  }
+
+  programmeCards.forEach(card => {
+    const toggle = card.querySelector('.programme-toggle');
+    if (!toggle) return;
+    toggle.addEventListener('click', () => {
+      const shouldOpen = !card.classList.contains('is-expanded');
+      programmeCards.forEach(otherCard => setProgrammeCard(otherCard, false));
+      if (shouldOpen) setProgrammeCard(card, true);
+    });
+  });
 
   // ── Partner Schools logo modal (click a logo to view name) ──
   (function initPartnerModal() {
@@ -201,21 +338,12 @@
     const designation = document.getElementById('designation').value.trim();
     const school      = document.getElementById('school-name').value.trim();
     const city        = document.getElementById('city').value.trim();
-    const state       = document.getElementById('state').value.trim();
+    const stateField  = document.getElementById('state');
+    const state       = stateField ? stateField.value.trim() : '';
     const mobile      = document.getElementById('mobile').value.trim();
     const email       = document.getElementById('email').value.trim();
     const interest    = document.getElementById('interest').value.trim();
     const message     = document.getElementById('message').value.trim();
-    const visitRadio  = document.querySelector('input[name="visit-interest"]:checked');
-    const visit       = visitRadio ? visitRadio.value : '';
- 
-    const visitMap = {
-      'yes':   "Yes, I'm interested",
-      'maybe': 'Possibly — tell me more',
-      'no':    'Not this time'
-    };
-    const visitValue = visitMap[visit] || '';
- 
     if (!name || !school || !mobile || !email || !city) {
       alert('Please fill in all required fields (Name, School, City, Mobile, Email).');
       return;
@@ -233,7 +361,6 @@
       'entry.330010300':  email,
       'entry.1586340247': interest,
       'entry.1715431669': message,
-      'entry.423992715':  visitValue,
       'fvv': '1',
       'fbzx': '5975148213623573533'
     };
@@ -285,13 +412,52 @@ const CMS_API_URL        = 'https://script.google.com/macros/s/AKfycbwdHXBfLPtdx
 const FAQ_JSON_URL       = './faq-data.json';
 const RESOURCES_JSON_URL = './resources.json';
 const JSONP_TIMEOUT_MS   = 7000; // 7 s before falling back to local JSON
+const BROCHURE_DISPLAY_CONFIG = Object.freeze([
+  Object.freeze({
+    title: 'CSL',
+    description: 'Composite Skill Lab model and implementation support for schools.',
+    aliases: ['csl', 'cbse vocational guide', 'cbse skill education brochure'],
+    fallbackFileURL: './assets/brochures/CSL%20Flier%2001.pdf',
+    forceFallbackFileURL: true,
+    type: 'PDF',
+    icon: '🧰'
+  }),
+  Object.freeze({
+    title: 'Teacher Training',
+    description: 'Teacher training for Kaushal Bodh and Kaushal Vikas.',
+    aliases: ['teacher training', 'teacher manual'],
+    fallbackFileURL: 'https://drive.google.com/file/d/1LzEohWU76m0J8wdRooUPH7Z73lX3q6ev/view?usp=sharing',
+    icon: '👩‍🏫'
+  }),
+  Object.freeze({
+    title: 'Karigar',
+    description: 'Hands-on, skill-based learning through the Karigar School of Applied Learning.',
+    aliases: ['karigar', 'karigar programme brochure'],
+    fallbackFileURL: './assets/brochures/karigar-brochure.pdf',
+    forceFallbackFileURL: true,
+    icon: '🏫'
+  }),
+  Object.freeze({
+    title: 'SOW',
+    description: 'Mobile skill education through hands-on, experiential learning.',
+    aliases: ['sow', 'scope of work (sow)'],
+    fallbackFileURL: 'https://drive.google.com/file/d/14t1x4ae4fEfa-8Ojczp48-315IMwWnci/view?usp=sharing',
+    icon: '🛻'
+  }),
+  Object.freeze({
+    title: 'Internships',
+    description: 'Real-world exposure through structured student internships.',
+    aliases: ['internships', 'internship'],
+    fallbackFileURL: 'https://drive.google.com/file/d/18l_X1CnciIEJ38PprdzZFAqvK_1OrKnR/view?usp=sharing',
+    icon: '👷🏼‍♀️'
+  })
+]);
 
 // ── Global state ──────────────────────────────────────────────
 let allFAQs       = [];
 let currentCat    = 'All';
 let currentSearch = '';
 let resourcesData = { webinars: [], brochures: [] };
-let cmsLoaded     = false;
 
 // ══════════════════════════════════════════════════════════════
 //  BOOT — single DOMContentLoaded listener
@@ -326,7 +492,34 @@ document.addEventListener('DOMContentLoaded', function initCMS() {
     else      console.log('[LAHI CMS] ✓ Found #' + id);
   });
 
-  // ── Kick off data load ────────────────────────────────────
+  // ── FAQ controls ───────────────────────────────────────────
+  const faqSearch = document.getElementById('faq-search');
+  const faqCats = document.getElementById('faq-cats');
+  const faqList = document.getElementById('faq-list');
+
+  if (faqSearch) {
+    faqSearch.addEventListener('input', function() {
+      currentSearch = faqSearch.value;
+      renderFAQs();
+    });
+  }
+  if (faqCats) {
+    faqCats.addEventListener('click', function(event) {
+      const button = event.target.closest('.faq-cat');
+      if (!button) return;
+      setFAQCat(button);
+    });
+  }
+  if (faqList) {
+    faqList.addEventListener('click', function(event) {
+      const button = event.target.closest('.faq-q-btn');
+      if (!button) return;
+      toggleFAQItem(button.closest('.faq-item'));
+    });
+  }
+
+  // ── Kick off independent FAQ and resource data loads ─────
+  loadFAQData();
   loadCMSData();
 });
 
@@ -351,27 +544,15 @@ function closeTimetableModal() {
 
 // ══════════════════════════════════════════════════════════════
 //  CMS DATA LOADER
-//  Strategy:
+//  FAQs always come from faq-data.json. Resource strategy:
 //    1. JSONP → Google Apps Script (handles Workspace /a/macros/ domain)
-//    2. On failure/timeout → local faq-data.json + resources.json
-//    3. On both failures → show friendly error message
+//    2. On failure/timeout → local resources.json
+//    3. On both failures → show friendly resource error messages
 // ══════════════════════════════════════════════════════════════
 function loadCMSData() {
-
-    fetch("https://script.google.com/macros/s/AKfycbwdHXBfLPtdxupQVBr6NtZtQQHdt9cMkIX2xi1bqyoaWQdaMSPxZ1P82k8EcgJAiQQy/exec").then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      return response.json();
-    }).then(data => {
-      console.log("data loaded here: ", data);
-  }).catch(error => {
-      console.error('There has been a problem with your fetch operation:', error);
-  });
-    console.log('[LAHI CMS] Starting data load...');
+  console.log('[LAHI CMS] Starting resource data load...');
   console.log('[LAHI CMS] API URL:', CMS_API_URL);
-  console.log('[LAHI CMS] Strategy: JSONP first, local JSON fallback');
+  console.log('[LAHI CMS] Resource strategy: JSONP first, resources.json fallback');
 
   var callbackName = '__gasCallback_' + Date.now();
   var settled      = false;
@@ -383,8 +564,8 @@ function loadCMSData() {
     jsonpURL.searchParams.set('callback', callbackName);
     console.log('[LAHI CMS] JSONP URL:', jsonpURL.toString());
   } catch (urlErr) {
-    console.error('[LAHI CMS] Invalid API URL — falling back to local JSON immediately:', urlErr.message);
-    loadLocalJSON();
+    console.error('[LAHI CMS] Invalid API URL — falling back to local resources immediately:', urlErr.message);
+    loadLocalResources();
     return;
   }
 
@@ -392,9 +573,9 @@ function loadCMSData() {
   var timeoutTimer = setTimeout(function() {
     if (settled) return;
     settled = true;
-    console.warn('[LAHI CMS] JSONP timed out after ' + JSONP_TIMEOUT_MS + 'ms — falling back to local JSON');
+    console.warn('[LAHI CMS] JSONP timed out after ' + JSONP_TIMEOUT_MS + 'ms — falling back to local resources');
     cleanup();
-    loadLocalJSON();
+    loadLocalResources();
   }, JSONP_TIMEOUT_MS);
 
   // Register global callback that GAS will call
@@ -409,16 +590,13 @@ function loadCMSData() {
     // Validate response structure
     if (!data || typeof data !== 'object') {
       console.error('[LAHI CMS] Invalid response — not an object. Value:', data);
-      loadLocalJSON();
+      loadLocalResources();
       return;
     }
     if (data.error) {
       console.error('[LAHI CMS] GAS returned error:', data.error);
-      loadLocalJSON();
+      loadLocalResources();
       return;
-    }
-    if (!Array.isArray(data.faq)) {
-      console.warn('[LAHI CMS] data.faq is not an array:', typeof data.faq, '— will use []');
     }
     if (!Array.isArray(data.webinars)) {
       console.warn('[LAHI CMS] data.webinars is not an array:', typeof data.webinars, '— will use []');
@@ -427,27 +605,14 @@ function loadCMSData() {
       console.warn('[LAHI CMS] data.brochures is not an array:', typeof data.brochures, '— will use []');
     }
 
-    allFAQs = Array.isArray(data.faq) ? data.faq : [];
     resourcesData = {
       webinars:  Array.isArray(data.webinars)  ? data.webinars  : [],
       brochures: Array.isArray(data.brochures) ? data.brochures : []
     };
 
-    console.log('[LAHI CMS] Data from GAS — FAQs:', allFAQs.length,
-      '| Webinars:', resourcesData.webinars.length,
+    console.log('[LAHI CMS] Resource data from GAS — Webinars:', resourcesData.webinars.length,
       '| Brochures:', resourcesData.brochures.length);
 
-    // Status filter check
-    var activeCheck = allFAQs.filter(function(f) { return f.status && f.status.toLowerCase() === 'active'; });
-    console.log('[LAHI CMS] Active FAQs after status filter:', activeCheck.length, '(if 0 but total>0, check Status column)');
-
-    if (allFAQs.length > 0 && activeCheck.length === 0) {
-      console.error('[LAHI CMS] ⚠ All FAQs filtered out by status! Check the "Status" column in Google Sheet — values must be exactly "Active"');
-      console.log('[LAHI CMS] Sample status values from sheet:', allFAQs.slice(0,3).map(function(f){return f.status;}));
-    }
-
-    cmsLoaded = true;
-    renderFAQs();
     renderWebinars();
     renderBrochures();
     console.log('[LAHI CMS] lastUpdated from GAS:', data.lastUpdated || 'not provided');
@@ -461,9 +626,9 @@ function loadCMSData() {
     settled = true;
     clearTimeout(timeoutTimer);
     cleanup();
-    console.warn('[LAHI CMS] JSONP script tag failed to load (network/CORS/auth block) — falling back to local JSON');
+    console.warn('[LAHI CMS] JSONP script tag failed to load (network/CORS/auth block) — falling back to local resources');
     console.warn('[LAHI CMS] Script error event:', e);
-    loadLocalJSON();
+    loadLocalResources();
   };
   document.head.appendChild(scriptEl);
   console.log('[LAHI CMS] JSONP script tag injected into <head>');
@@ -477,68 +642,107 @@ function loadCMSData() {
   }
 }
 
-// ── Local JSON fallback ───────────────────────────────────────
-function loadLocalJSON() {
-  console.log('[LAHI CMS] Loading from local JSON files...');
+// ── Authoritative local FAQ data ──────────────────────────────
+function loadFAQData() {
+  console.log('[LAHI FAQ] Loading authoritative local FAQ data...');
   console.log('[LAHI CMS] FAQ URL:', FAQ_JSON_URL);
+  fetch(FAQ_JSON_URL)
+    .then(function(r) {
+      console.log('[LAHI FAQ] faq-data.json HTTP status:', r.status, r.ok ? 'OK' : 'FAIL');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(faqData) {
+      if (!Array.isArray(faqData)) {
+        throw new TypeError('faq-data.json must contain a JSON array');
+      }
+
+      allFAQs = faqData;
+      console.log('[LAHI FAQ] ✅ Local FAQ data loaded — FAQs:', allFAQs.length);
+
+      if (allFAQs.length === 0) {
+        console.warn('[LAHI FAQ] ⚠ FAQ array is empty — check faq-data.json');
+      }
+
+      renderFAQCategories();
+      renderFAQs();
+    })
+    .catch(function(err) {
+      console.error('[LAHI FAQ] ❌ faq-data.json failed to load:', err.message);
+      showFAQError();
+    });
+}
+
+// ── Local resource fallback ───────────────────────────────────
+function loadLocalResources() {
+  console.log('[LAHI CMS] Loading resources from local JSON...');
   console.log('[LAHI CMS] Resources URL:', RESOURCES_JSON_URL);
 
-  Promise.all([
-    fetch(FAQ_JSON_URL)
-      .then(function(r) {
-        console.log('[LAHI CMS] faq-data.json HTTP status:', r.status, r.ok ? 'OK' : 'FAIL');
-        return r.ok ? r.json() : [];
-      })
-      .catch(function(err) {
-        console.error('[LAHI CMS] faq-data.json fetch error:', err.message);
-        return [];
-      }),
-    fetch(RESOURCES_JSON_URL)
-      .then(function(r) {
-        console.log('[LAHI CMS] resources.json HTTP status:', r.status, r.ok ? 'OK' : 'FAIL');
-        return r.ok ? r.json() : {};
-      })
-      .catch(function(err) {
-        console.error('[LAHI CMS] resources.json fetch error:', err.message);
-        return {};
-      })
-  ]).then(function(results) {
-    var faqData = results[0];
-    var resData = results[1];
+  fetch(RESOURCES_JSON_URL)
+    .then(function(r) {
+      console.log('[LAHI CMS] resources.json HTTP status:', r.status, r.ok ? 'OK' : 'FAIL');
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(resData) {
+      if (!resData || typeof resData !== 'object' || Array.isArray(resData)) {
+        throw new TypeError('resources.json must contain a JSON object');
+      }
 
-    console.log('[LAHI CMS] Local FAQ data type:', typeof faqData, '| isArray:', Array.isArray(faqData));
-    console.log('[LAHI CMS] Local resources data type:', typeof resData);
+      resourcesData = {
+        webinars:  Array.isArray(resData.webinars)  ? resData.webinars  : [],
+        brochures: Array.isArray(resData.brochures) ? resData.brochures : []
+      };
 
-    allFAQs = Array.isArray(faqData) ? faqData : [];
-    resourcesData = {
-      webinars:  Array.isArray(resData.webinars)  ? resData.webinars  : [],
-      brochures: Array.isArray(resData.brochures) ? resData.brochures : []
-    };
+      console.log('[LAHI CMS] ✅ Local resources loaded — Webinars:', resourcesData.webinars.length,
+        '| Brochures:', resourcesData.brochures.length);
 
-    console.log('[LAHI CMS] ✅ Local JSON loaded — FAQs:', allFAQs.length,
-      '| Webinars:', resourcesData.webinars.length,
-      '| Brochures:', resourcesData.brochures.length);
-
-    if (allFAQs.length === 0) {
-      console.warn('[LAHI CMS] ⚠ FAQ array is empty from local JSON — check faq-data.json exists and is valid');
-    }
-
-    cmsLoaded = true;
-    renderFAQs();
-    renderWebinars();
-    renderBrochures();
-
-  }).catch(function(err) {
-    console.error('[LAHI CMS] ❌ Both GAS and local JSON failed:', err.message);
-    showFAQError();
-    showWebinarError();
-    showBrochureError();
-  });
+      renderWebinars();
+      renderBrochures();
+    })
+    .catch(function(err) {
+      console.error('[LAHI CMS] ❌ resources.json failed to load:', err.message);
+      showWebinarError();
+      showBrochureError();
+    });
 }
 
 // ══════════════════════════════════════════════════════════════
 //  FAQ RENDERING
 // ══════════════════════════════════════════════════════════════
+function renderFAQCategories() {
+  var container = document.getElementById('faq-cats');
+  if (!container) return;
+
+  var categoriesByKey = new Map();
+  allFAQs.forEach(function(faq) {
+    var status = normalizeText(faq && faq.status);
+    var category = String(faq && faq.category || '').trim();
+    if ((!status || status === 'active') && category) {
+      var key = normalizeText(category);
+      if (!categoriesByKey.has(key)) categoriesByKey.set(key, category);
+    }
+  });
+
+  var categories = Array.from(categoriesByKey.values());
+  var currentKey = normalizeText(currentCat);
+  var currentExists = currentKey === 'all' || categories.some(function(category) {
+    return normalizeText(category) === currentKey;
+  });
+  if (!currentExists) currentCat = 'All';
+
+  var buttons = ['All'].concat(categories);
+  container.innerHTML = buttons.map(function(category) {
+    var isActive = normalizeText(category) === normalizeText(currentCat);
+    return '<button class="faq-cat' + (isActive ? ' active' : '') + '"' +
+      ' data-cat="' + escapeHTML(category) + '"' +
+      ' role="tab" aria-controls="faq-list" aria-selected="' + (isActive ? 'true' : 'false') + '">' +
+      escapeHTML(category) + '</button>';
+  }).join('');
+
+  console.log('[LAHI FAQ] Category filters rendered from data:', categories);
+}
+
 function renderFAQs() {
   console.log('[LAHI FAQ] renderFAQs() called');
   console.log('[LAHI FAQ] Total FAQs in memory:', allFAQs.length);
@@ -557,22 +761,28 @@ function renderFAQs() {
   // Hide error state
   if (error) error.style.display = 'none';
 
-  // Filter FAQs
-  var filtered = allFAQs.filter(function(faq) {
+  var normalizedCategory = normalizeText(currentCat);
+  var term = normalizeText(currentSearch);
+
+  // Preserve each record's source index so accordion IDs remain stable after filtering.
+  var filtered = allFAQs.map(function(faq, sourceIndex) {
+    return { faq: faq, sourceIndex: sourceIndex };
+  }).filter(function(record) {
+    var faq = record.faq || {};
     // Status check — only show Active records
-    var statusOk = !faq.status || faq.status.toLowerCase() === 'active';
+    var status = normalizeText(faq.status);
+    var statusOk = !status || status === 'active';
     if (!statusOk) {
       console.log('[LAHI FAQ] Filtered out by status:', faq.question && faq.question.substring(0,40), '— status:', faq.status);
       return false;
     }
     // Category check
-    var matchCat = (currentCat === 'All') || (faq.category === currentCat);
+    var matchCat = normalizedCategory === 'all' || normalizeText(faq.category) === normalizedCategory;
     // Search check
-    var term = currentSearch.toLowerCase().trim();
     var matchSearch = !term
-      || (faq.question && faq.question.toLowerCase().includes(term))
-      || (faq.answer   && faq.answer.toLowerCase().includes(term))
-      || (faq.category && faq.category.toLowerCase().includes(term));
+      || normalizeText(faq.question).includes(term)
+      || normalizeText(faq.answer).includes(term)
+      || normalizeText(faq.category).includes(term);
 
     return matchCat && matchSearch;
   });
@@ -593,15 +803,17 @@ function renderFAQs() {
 
   if (empty) empty.style.display = 'none';
 
-  list.innerHTML = filtered.map(function(faq, i) {
+  list.innerHTML = filtered.map(function(record) {
+    var faq = record.faq || {};
+    var id = record.sourceIndex;
     return (
-      '<div class="faq-item" id="faq-item-' + i + '">' +
-        '<button class="faq-q-btn" onclick="toggleFAQ(' + i + ')" aria-expanded="false">' +
+      '<div class="faq-item" id="faq-item-' + id + '">' +
+        '<button class="faq-q-btn" id="faq-question-' + id + '" aria-expanded="false" aria-controls="faq-answer-' + id + '">' +
           '<span class="faq-q-cat-badge">' + escapeHTML(faq.category || '') + '</span>' +
           '<span class="faq-q-text">'     + escapeHTML(faq.question  || '') + '</span>' +
-          '<span class="faq-q-arrow">↓</span>' +
+          '<span class="faq-q-arrow" aria-hidden="true">' + directionIconMarkup('up', 'toggle-arrow-icon') + '</span>' +
         '</button>' +
-        '<div class="faq-answer" id="faq-ans-' + i + '">' +
+        '<div class="faq-answer" id="faq-answer-' + id + '" role="region" aria-labelledby="faq-question-' + id + '">' +
           '<div class="faq-answer-inner">' + escapeHTML(faq.answer || '') + '</div>' +
         '</div>' +
       '</div>'
@@ -611,9 +823,8 @@ function renderFAQs() {
   console.log('[LAHI FAQ] ✅ Rendered', filtered.length, 'FAQ items into #faq-list');
 }
 
-function toggleFAQ(i) {
-  var item = document.getElementById('faq-item-' + i);
-  if (!item) { console.warn('[LAHI FAQ] toggleFAQ: item not found at index', i); return; }
+function toggleFAQItem(item) {
+  if (!item) return;
   var isOpen = item.classList.contains('open');
   // Close all open items
   document.querySelectorAll('.faq-item.open').forEach(function(el) {
@@ -629,6 +840,7 @@ function toggleFAQ(i) {
   }
 }
 
+// Retained for compatibility with any external integrations that call it.
 function filterFAQs() {
   var searchEl = document.getElementById('faq-search');
   currentSearch = searchEl ? searchEl.value : '';
@@ -637,7 +849,8 @@ function filterFAQs() {
 }
 
 function setFAQCat(btn) {
-  currentCat = btn.dataset.cat;
+  if (!btn) return;
+  currentCat = String(btn.dataset.cat || 'All').trim();
   console.log('[LAHI FAQ] Category changed to:', currentCat);
   document.querySelectorAll('.faq-cat').forEach(function(b) {
     b.classList.remove('active');
@@ -646,6 +859,10 @@ function setFAQCat(btn) {
   btn.classList.add('active');
   btn.setAttribute('aria-selected', 'true');
   renderFAQs();
+}
+
+function normalizeText(value) {
+  return String(value == null ? '' : value).trim().toLocaleLowerCase('en-IN');
 }
 
 function showFAQError() {
@@ -661,6 +878,21 @@ function showFAQError() {
 // ══════════════════════════════════════════════════════════════
 //  WEBINAR RENDERING
 // ══════════════════════════════════════════════════════════════
+var LOCAL_WEBINAR_THUMBNAILS = {
+  'thumb1.jpg': './assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools.png',
+  'thumb2.jpg': './assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools (1).png',
+  'thumb3.jpg': './assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools (2).png'
+};
+
+function resolveWebinarThumbnail(thumbnail) {
+  var source = String(thumbnail || '').trim();
+  if (!source) return '';
+
+  var pathWithoutQuery = source.split(/[?#]/)[0];
+  var fileName = pathWithoutQuery.split('/').pop().toLowerCase();
+  return LOCAL_WEBINAR_THUMBNAILS[fileName] || source;
+}
+
 function renderWebinars() {
   console.log('[LAHI Webinars] renderWebinars() called');
   var container = document.getElementById('webinar-cards');
@@ -677,16 +909,15 @@ function renderWebinars() {
   }
 
   container.innerHTML = webinars.map(function(w) {
-    var thumbHtml = w.thumbnail
-      ? '<img src="' + escapeHTML(w.thumbnail) + '" alt="' + escapeHTML(w.title || '') + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />'
+    var thumbnail = resolveWebinarThumbnail(w.thumbnail);
+    var thumbHtml = thumbnail
+      ? '<img src="' + escapeHTML(thumbnail) + '" alt="' + escapeHTML(w.title || '') + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;" />'
       : '<div class="webinar-thumb-placeholder"><div class="webinar-play-icon">▶</div><span class="webinar-thumb-label">Webinar Recording</span></div>';
 
     return (
       '<div class="webinar-card">' +
         '<div class="webinar-thumb">' + thumbHtml + '</div>' +
         '<div class="webinar-body">' +
-          '<div class="webinar-title">' + escapeHTML(w.title       || '') + '</div>' +
-          '<div class="webinar-desc">'  + escapeHTML(w.description || '') + '</div>' +
           '<a href="' + escapeHTML(w.recordingLink || '#') + '" target="_blank" rel="noopener" class="webinar-watch-btn">▶ Watch Recording</a>' +
         '</div>' +
       '</div>'
@@ -714,7 +945,7 @@ function renderBrochures() {
   var errEl     = document.getElementById('brochure-error');
   if (!container) { console.error('[LAHI Brochures] ❌ #brochure-cards not found!'); return; }
 
-  var brochures = resourcesData.brochures || [];
+  var brochures = buildDisplayBrochures(resourcesData.brochures || []);
   console.log('[LAHI Brochures] Count:', brochures.length);
 
   if (brochures.length === 0) {
@@ -725,9 +956,12 @@ function renderBrochures() {
 
   container.innerHTML = brochures.map(function(b) {
     var isPlaceholder = !b.fileURL || b.fileURL === '#';
+    var fileType = String(b.type || '').trim().toUpperCase();
+    var downloadLabel = fileType ? 'Download ' + escapeHTML(fileType) : 'Download';
+    var downloadIcon = directionIconMarkup('up', 'down-arrow-icon');
     var btnHtml = isPlaceholder
       ? '<span class="brochure-dl-btn" style="opacity:0.5;cursor:default;" title="Coming soon">⏳ Coming Soon</span>'
-      : '<a href="' + escapeHTML(b.fileURL) + '" target="_blank" rel="noopener" class="brochure-dl-btn" download>↓ Download PDF</a>';
+      : '<a href="' + escapeHTML(b.fileURL) + '" target="_blank" rel="noopener" class="brochure-dl-btn" download>' + downloadIcon + '<span>' + downloadLabel + '</span></a>';
 
     return (
       '<div class="brochure-card">' +
@@ -741,6 +975,30 @@ function renderBrochures() {
 
   if (errEl) errEl.style.display = 'none';
   console.log('[LAHI Brochures] ✅ Rendered', brochures.length, 'brochure cards');
+}
+
+function buildDisplayBrochures(sourceBrochures) {
+  var available = Array.isArray(sourceBrochures) ? sourceBrochures : [];
+
+  return BROCHURE_DISPLAY_CONFIG.map(function(config) {
+    var source = available.find(function(brochure) {
+      var sourceTitle = normalizeText(brochure && brochure.title);
+      return config.aliases.some(function(alias) {
+        return sourceTitle === normalizeText(alias);
+      });
+    }) || {};
+
+    return {
+      title: config.title,
+      description: config.description,
+      fileURL: config.forceFallbackFileURL
+        ? config.fallbackFileURL
+        : (source.fileURL || config.fallbackFileURL),
+      type: config.type || source.type || 'PDF',
+      icon: source.icon || config.icon,
+      status: source.status || 'Active'
+    };
+  });
 }
 
 function showBrochureError() {
@@ -801,3 +1059,507 @@ function escapeHTML(str) {
 }
 
 console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLoaded');
+
+// ══════════════════════════════════════════════════════════════
+//  MEDIA GALLERY
+//  Replace video records and titles here when final media changes.
+// ══════════════════════════════════════════════════════════════
+(function initMediaGallery() {
+  var albumRoots = document.querySelectorAll('[data-gallery-variant="albums"]');
+  if (!albumRoots.length) return;
+
+  var galleryMedia = [
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: '0jzWxqdk1Qo',
+      sourceUrl: 'https://youtube.com/shorts/0jzWxqdk1Qo',
+      src: 'https://www.youtube-nocookie.com/embed/0jzWxqdk1Qo',
+      poster: 'https://i.ytimg.com/vi/0jzWxqdk1Qo/hqdefault.jpg',
+      title: 'CSL Video 1',
+      orientation: 'portrait',
+      alt: 'Preview of CSL Video 1'
+    },
+    {
+      type: 'video',
+      platform: 'instagram',
+      reelCode: 'Db2KxLbiFFk',
+      sourceUrl: 'https://www.instagram.com/reel/Db2KxLbiFFk/',
+      poster: './assets/p1.png',
+      title: 'CSL Video 2',
+      orientation: 'portrait',
+      alt: 'Preview of CSL Video 2'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'vCq1w-m0In4',
+      sourceUrl: 'https://youtu.be/vCq1w-m0In4',
+      src: 'https://www.youtube-nocookie.com/embed/vCq1w-m0In4',
+      poster: 'https://i.ytimg.com/vi/vCq1w-m0In4/hqdefault.jpg',
+      title: 'KB Teacher Training Program 1',
+      orientation: 'landscape',
+      alt: 'Preview of KB Teacher Training Program 1'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'dsgbCsgRWcg',
+      sourceUrl: 'https://youtu.be/dsgbCsgRWcg',
+      src: 'https://www.youtube-nocookie.com/embed/dsgbCsgRWcg',
+      poster: 'https://i.ytimg.com/vi/dsgbCsgRWcg/hqdefault.jpg',
+      title: 'KB Teacher Training Program 2',
+      orientation: 'landscape',
+      alt: 'Preview of KB Teacher Training Program 2'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'T0u5P6yb1G0',
+      sourceUrl: 'https://youtu.be/T0u5P6yb1G0',
+      src: 'https://www.youtube-nocookie.com/embed/T0u5P6yb1G0',
+      poster: 'https://i.ytimg.com/vi/T0u5P6yb1G0/hqdefault.jpg',
+      title: 'KV Teacher Training Program',
+      orientation: 'landscape',
+      alt: 'Preview of KV Teacher Training Program'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'xQKVwnJ4UPA',
+      sourceUrl: 'https://youtu.be/xQKVwnJ4UPA',
+      src: 'https://www.youtube-nocookie.com/embed/xQKVwnJ4UPA',
+      poster: 'https://i.ytimg.com/vi/xQKVwnJ4UPA/hqdefault.jpg',
+      title: 'Aarya Patil',
+      orientation: 'portrait',
+      alt: 'Preview of Aarya Patil student byte'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'HYRw98unH98',
+      sourceUrl: 'https://youtu.be/HYRw98unH98',
+      src: 'https://www.youtube-nocookie.com/embed/HYRw98unH98',
+      poster: 'https://i.ytimg.com/vi/HYRw98unH98/hqdefault.jpg',
+      title: 'Riyansh Karsagavkar',
+      orientation: 'portrait',
+      alt: 'Preview of Riyansh Karsagavkar student byte'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'SbG2NpBurIA',
+      sourceUrl: 'https://youtu.be/SbG2NpBurIA',
+      src: 'https://www.youtube-nocookie.com/embed/SbG2NpBurIA',
+      poster: 'https://i.ytimg.com/vi/SbG2NpBurIA/hqdefault.jpg',
+      title: 'Daivik Koshik',
+      orientation: 'portrait',
+      alt: 'Preview of Daivik Koshik student byte'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'GR7xn-VknVY',
+      sourceUrl: 'https://youtu.be/GR7xn-VknVY',
+      src: 'https://www.youtube-nocookie.com/embed/GR7xn-VknVY',
+      poster: 'https://i.ytimg.com/vi/GR7xn-VknVY/hqdefault.jpg',
+      title: 'Ayush Karle',
+      orientation: 'portrait',
+      alt: 'Preview of Ayush Karle student byte'
+    },
+    {
+      type: 'video',
+      platform: 'youtube',
+      videoId: 'RA8UBBWijow',
+      sourceUrl: 'https://youtu.be/RA8UBBWijow',
+      src: 'https://www.youtube-nocookie.com/embed/RA8UBBWijow',
+      poster: 'https://i.ytimg.com/vi/RA8UBBWijow/hqdefault.jpg',
+      title: 'Aarna Jain',
+      orientation: 'portrait',
+      alt: 'Preview of Aarna Jain student byte'
+    },
+    {
+      type: 'video',
+      platform: 'instagram',
+      reelCode: 'DcDJDIaCs8V',
+      sourceUrl: 'https://www.instagram.com/reel/DcDJDIaCs8V/',
+      poster: './assets/new1.png',
+      title: 'Independence Day Reel',
+      orientation: 'portrait',
+      alt: 'Preview of the Independence Day reel'
+    }
+  ];
+
+  var galleryAlbums = [
+    {
+      id: 'school-ready',
+      title: 'Is Your School Ready',
+      coverIndex: 0,
+      itemIndexes: [0]
+    },
+    {
+      id: 'cbse-ready',
+      title: 'CBSE Schools, Are You Ready?',
+      coverIndex: 1,
+      itemIndexes: [1]
+    },
+    {
+      id: 'july-training',
+      title: 'July Teacher Training',
+      coverIndex: 2,
+      itemIndexes: [2, 3, 4]
+    },
+    {
+      id: 'student-bytes',
+      title: 'GG International School Student Bytes',
+      coverIndex: 5,
+      itemIndexes: [5, 6, 7, 8, 9]
+    },
+    {
+      id: 'events',
+      title: 'Events & Celebrations',
+      coverIndex: 10,
+      itemIndexes: [10]
+    }
+  ];
+
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var viewer = createGalleryViewer();
+
+  function imageMarkup(item, className) {
+    return '<img class="' + className + '" src="' + escapeHTML(item.poster || item.src) + '" alt="' +
+      escapeHTML(item.alt) + '" loading="lazy" decoding="async" />';
+  }
+
+  function playMarkup(item) {
+    if (item.type !== 'video') return '';
+    return '<span class="gallery-play" aria-hidden="true"><span></span></span>';
+  }
+
+  function galleryLeftArrowMarkup() {
+    return directionIconMarkup('left', 'gallery-chevron');
+  }
+
+  function galleryRightArrowMarkup() {
+    return directionIconMarkup('right', 'gallery-chevron');
+  }
+
+  function normalizedIndex(index, length) {
+    return (index + length) % length;
+  }
+
+  function setLiveStatus(element, item, index, total) {
+    if (element) element.textContent = item.title + ', item ' + (index + 1) + ' of ' + total;
+  }
+
+  function addSwipe(element, onPrevious, onNext) {
+    var startX = null;
+    var startY = null;
+
+    element.addEventListener('pointerdown', function(event) {
+      if (event.pointerType === 'mouse' && event.button !== 0) return;
+      startX = event.clientX;
+      startY = event.clientY;
+    });
+
+    element.addEventListener('pointerup', function(event) {
+      if (startX === null || startY === null) return;
+      var deltaX = event.clientX - startX;
+      var deltaY = event.clientY - startY;
+      startX = null;
+      startY = null;
+      if (Math.abs(deltaX) < 48 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+      if (deltaX > 0) onPrevious();
+      else onNext();
+    });
+
+    element.addEventListener('pointercancel', function() {
+      startX = null;
+      startY = null;
+    });
+  }
+
+  function renderAlbums(root) {
+    root.innerHTML =
+      '<div class="gallery-album-grid">' +
+        galleryAlbums.map(function(album, index) {
+          var cover = galleryMedia[album.coverIndex];
+          return '<button type="button" class="gallery-album-card gallery-album-card-' + (index + 1) +
+            '" data-gallery-album="' + escapeHTML(album.id) + '" aria-label="Open ' + escapeHTML(album.title) + ' album">' +
+              imageMarkup(cover, 'gallery-album-cover') +
+              '<span class="gallery-album-shade" aria-hidden="true"></span>' +
+              '<strong class="gallery-album-title">' + escapeHTML(album.title) + '</strong>' +
+            '</button>';
+        }).join('') +
+      '</div>';
+
+    root.addEventListener('click', function(event) {
+      var trigger = event.target.closest('[data-gallery-album]');
+      if (!trigger || !root.contains(trigger)) return;
+      var album = galleryAlbums.find(function(candidate) {
+        return candidate.id === trigger.dataset.galleryAlbum;
+      });
+      if (album) viewer.open(album, 0, trigger);
+    });
+  }
+
+  function createGalleryViewer() {
+    var overlay = document.createElement('div');
+    overlay.className = 'gallery-viewer';
+    overlay.hidden = true;
+    overlay.innerHTML =
+      '<div class="gallery-viewer-dialog" role="dialog" aria-modal="true" aria-labelledby="gallery-viewer-title">' +
+        '<div class="gallery-viewer-topbar">' +
+          '<h2 id="gallery-viewer-title"></h2>' +
+          '<button type="button" class="gallery-viewer-close" aria-label="Close album viewer">' +
+            '<svg class="gallery-close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">' +
+              '<rect width="256" height="256" fill="none"></rect>' +
+              '<line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>' +
+              '<line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>' +
+            '</svg>' +
+          '</button>' +
+        '</div>' +
+        '<div class="gallery-viewer-media-shell">' +
+          '<button type="button" class="gallery-arrow gallery-viewer-side-arrow gallery-viewer-side-prev" data-viewer-prev aria-label="Previous album item">' + galleryLeftArrowMarkup() + '</button>' +
+          '<div class="gallery-viewer-media-stack">' +
+            '<div class="gallery-viewer-media-frame">' +
+              '<div class="gallery-viewer-stage" role="group" aria-roledescription="slide"></div>' +
+            '</div>' +
+            '<h3 class="gallery-viewer-media-title"></h3>' +
+          '</div>' +
+          '<button type="button" class="gallery-arrow gallery-viewer-side-arrow gallery-viewer-side-next" data-viewer-next aria-label="Next album item">' + galleryRightArrowMarkup() + '</button>' +
+        '</div>' +
+        '<div class="gallery-viewer-filmstrip" role="tablist" aria-label="Choose an album item"></div>' +
+        '<p class="gallery-sr-only" aria-live="polite"></p>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    var dialog = overlay.querySelector('.gallery-viewer-dialog');
+    var closeButton = overlay.querySelector('.gallery-viewer-close');
+    var title = overlay.querySelector('#gallery-viewer-title');
+    var stage = overlay.querySelector('.gallery-viewer-stage');
+    var mediaTitle = overlay.querySelector('.gallery-viewer-media-title');
+    var filmstrip = overlay.querySelector('.gallery-viewer-filmstrip');
+    var status = overlay.querySelector('[aria-live]');
+    var currentAlbum = null;
+    var activeIndex = 0;
+    var lastFocused = null;
+    var previousOverflow = '';
+    var closeTimer = null;
+    var activeYouTubePlayer = null;
+    var playerRequestId = 0;
+    var youtubeApiPromise = null;
+
+    function loadYouTubeApi() {
+      if (window.YT && typeof window.YT.Player === 'function') {
+        return Promise.resolve(window.YT);
+      }
+      if (youtubeApiPromise) return youtubeApiPromise;
+
+      youtubeApiPromise = new Promise(function(resolve, reject) {
+        var previousReady = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = function() {
+          if (typeof previousReady === 'function') previousReady();
+          resolve(window.YT);
+        };
+
+        var existingScript = document.querySelector('script[src="https://www.youtube.com/iframe_api"]');
+        if (existingScript) return;
+
+        var script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.async = true;
+        script.addEventListener('error', function() {
+          youtubeApiPromise = null;
+          reject(new Error('YouTube IFrame API failed to load'));
+        });
+        document.head.appendChild(script);
+      });
+      return youtubeApiPromise;
+    }
+
+    function clearActivePlayer() {
+      playerRequestId += 1;
+      if (activeYouTubePlayer && typeof activeYouTubePlayer.destroy === 'function') {
+        try { activeYouTubePlayer.destroy(); } catch (error) { /* iframe replacement still stops playback */ }
+      }
+      activeYouTubePlayer = null;
+      stage.innerHTML = '';
+    }
+
+    function renderYouTube(item, requestId) {
+      var videoUrl = new URL(item.src);
+      videoUrl.searchParams.set('autoplay', '1');
+      videoUrl.searchParams.set('playsinline', '1');
+      videoUrl.searchParams.set('rel', '0');
+      videoUrl.searchParams.set('enablejsapi', '1');
+      if (window.location && /^https?:$/.test(window.location.protocol)) {
+        videoUrl.searchParams.set('origin', window.location.origin);
+      }
+
+      var playerId = 'gallery-youtube-player-' + requestId;
+      stage.innerHTML = '<iframe id="' + playerId + '" src="' + escapeHTML(videoUrl.toString()) +
+        '" title="' + escapeHTML(item.title) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+        'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+      var iframe = stage.querySelector('iframe');
+
+      loadYouTubeApi().then(function(YT) {
+        if (requestId !== playerRequestId || !iframe || !iframe.isConnected) return;
+        activeYouTubePlayer = new YT.Player(iframe, {
+          events: {
+            onReady: function(event) {
+              if (requestId === playerRequestId) event.target.playVideo();
+            },
+            onAutoplayBlocked: function(event) {
+              if (requestId !== playerRequestId) return;
+              event.target.mute();
+              event.target.playVideo();
+              dialog.classList.add('used-muted-fallback');
+            }
+          }
+        });
+      }).catch(function() {
+        // The iframe remains fully usable if the optional control API is unavailable.
+      });
+    }
+
+    function renderInstagram(item) {
+      var embedUrl = 'https://www.instagram.com/reel/' + encodeURIComponent(item.reelCode) + '/embed/?autoplay=1';
+      stage.innerHTML = '<iframe class="gallery-instagram-frame" src="' + embedUrl + '" title="' +
+        escapeHTML(item.title) + '" allow="autoplay; encrypted-media; picture-in-picture" ' +
+        'referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+    }
+
+    function renderStage(announce) {
+      var mediaIndex = currentAlbum.itemIndexes[activeIndex];
+      var item = galleryMedia[mediaIndex];
+      clearActivePlayer();
+      var requestId = playerRequestId;
+
+      stage.setAttribute('aria-label', item.title + ', item ' + (activeIndex + 1) + ' of ' + currentAlbum.itemIndexes.length);
+      stage.classList.toggle('is-portrait', item.orientation === 'portrait');
+      dialog.classList.toggle('is-portrait', item.orientation === 'portrait');
+      dialog.classList.remove('used-muted-fallback');
+      mediaTitle.textContent = item.title;
+
+      if (item.platform === 'youtube') renderYouTube(item, requestId);
+      else if (item.platform === 'instagram') renderInstagram(item);
+      else stage.innerHTML = imageMarkup(item, 'gallery-viewer-image');
+
+      Array.from(filmstrip.querySelectorAll('[data-viewer-select]')).forEach(function(tab, index) {
+        var selected = index === activeIndex;
+        tab.classList.toggle('is-active', selected);
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        tab.tabIndex = selected ? 0 : -1;
+        if (selected) tab.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
+      });
+
+      var hasMultipleItems = currentAlbum.itemIndexes.length > 1;
+      dialog.classList.toggle('has-single-item', !hasMultipleItems);
+      if (announce) setLiveStatus(status, item, activeIndex, currentAlbum.itemIndexes.length);
+    }
+
+    function select(index, announce) {
+      if (!currentAlbum) return;
+      activeIndex = normalizedIndex(index, currentAlbum.itemIndexes.length);
+      renderStage(announce);
+    }
+
+    function open(album, startIndex, trigger) {
+      if (closeTimer) {
+        window.clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      currentAlbum = album;
+      activeIndex = normalizedIndex(startIndex || 0, album.itemIndexes.length);
+      lastFocused = trigger || document.activeElement;
+      previousOverflow = document.body.style.overflow;
+      title.textContent = album.title;
+      filmstrip.innerHTML = album.itemIndexes.map(function(mediaIndex, index) {
+        var item = galleryMedia[mediaIndex];
+        return '<button type="button" class="gallery-viewer-thumb" data-viewer-select="' + index +
+          '" role="tab" aria-label="Show ' + escapeHTML(item.title) + '">' +
+            imageMarkup(item, 'gallery-viewer-thumb-image') + playMarkup(item) +
+          '</button>';
+      }).join('');
+      renderStage(false);
+
+      overlay.hidden = false;
+      document.body.style.overflow = 'hidden';
+      window.requestAnimationFrame(function() {
+        overlay.classList.add('is-open');
+        closeButton.focus();
+      });
+    }
+
+    function close() {
+      if (overlay.hidden) return;
+      clearActivePlayer();
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = previousOverflow;
+      closeTimer = window.setTimeout(function() {
+        overlay.hidden = true;
+        stage.innerHTML = '';
+        filmstrip.innerHTML = '';
+        currentAlbum = null;
+        closeTimer = null;
+        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      }, prefersReducedMotion.matches ? 0 : 220);
+    }
+
+    closeButton.addEventListener('click', close);
+    overlay.querySelector('[data-viewer-prev]').addEventListener('click', function() { select(activeIndex - 1, true); });
+    overlay.querySelector('[data-viewer-next]').addEventListener('click', function() { select(activeIndex + 1, true); });
+    filmstrip.addEventListener('click', function(event) {
+      var tab = event.target.closest('[data-viewer-select]');
+      if (tab) select(Number(tab.dataset.viewerSelect), true);
+    });
+    overlay.addEventListener('click', function(event) {
+      if (
+        event.target === overlay ||
+        event.target === dialog ||
+        event.target.classList.contains('gallery-viewer-media-shell') ||
+        event.target.classList.contains('gallery-viewer-media-stack')
+      ) close();
+    });
+    addSwipe(stage, function() { select(activeIndex - 1, true); }, function() { select(activeIndex + 1, true); });
+    document.addEventListener('keydown', function(event) {
+      if (overlay.hidden) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        close();
+        return;
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        select(activeIndex - 1, true);
+        return;
+      }
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        select(activeIndex + 1, true);
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      var focusable = Array.from(dialog.querySelectorAll(
+        'button:not([disabled]):not([tabindex="-1"]), a[href], iframe, [tabindex]:not([tabindex="-1"])'
+      ));
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    return { open: open, close: close };
+  }
+
+  albumRoots.forEach(function(root) {
+    renderAlbums(root);
+  });
+})();

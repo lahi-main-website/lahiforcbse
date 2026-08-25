@@ -14,6 +14,29 @@
     <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet" />
   </head>
   <body>
+    <svg class="direction-icon-sprite" aria-hidden="true" focusable="false">
+      <symbol id="direction-arrow-left" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="216" y1="128" x2="40" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
+        <polyline points="112 56 40 128 112 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
+      <symbol id="direction-arrow-right" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
+        <polyline points="144 56 216 128 144 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
+      <symbol id="direction-arrow-up" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="128" y1="216" x2="128" y2="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
+        <polyline points="56 112 128 40 200 112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
+      <symbol id="direction-arrow-up-right" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="64" y1="192" x2="192" y2="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
+        <polyline points="88 64 192 64 192 168" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
+    </svg>
+
     <!-- NAV -->
     <nav>
       <a href="#" class="nav-logo">
@@ -27,38 +50,68 @@
         <li><a href="#policy">NEP-NCF</a></li>
         <li><a href="#programmes">Programmes</a></li>
         <li><a href="#provides">What We Offer</a></li>
-        <li><a href="#timetable-gen">Timetable</a></li>
         <li><a href="#visit">Exposure Visit</a></li>
-        <li><a href="#faq">FAQs</a></li>
-        <li><a href="#resources">Resources</a></li>
+        <li><a href="#gallery-mosaic">Gallery</a></li>
+        <li class="dropdown" id="resources-dropdown">
+          <button
+            class="dropdown-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="resources-dropdown-menu"
+          >
+            Resources
+            <svg class="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+              <rect width="256" height="256" fill="none" />
+              <polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+            </svg>
+          </button>
+          <ul class="dropdown-menu" id="resources-dropdown-menu">
+            <li><a href="#resources">Resources &amp; Circulars</a></li>
+            <li><a href="#faq">FAQs</a></li>
+            <li><a href="#timetable-gen">Timetable</a></li>
+          </ul>
+        </li>
         <li><a href="#partners">Partner Schools</a></li>
       </ul>
       <div class="nav-ctas">
         <a href="#register" class="nav-cta">Register Interest</a>
         <a href="https://calendar.app.google/NGyU42gqyEWC4U678" target="_blank" rel="noopener" class="nav-cta nav-cta-book">📅 Book a Call</a>
       </div>
-      <button class="nav-hamburger" id="hamburger" aria-label="Open menu">
+      <a href="#register-form" class="nav-cta mobile-header-cta">Register Interest</a>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
     </nav>
 
     <!-- MOBILE NAV OVERLAY -->
     <div class="mobile-nav-overlay" id="mobile-nav">
-      <img
-        src="./assets/logo-lahi.png"
-        alt="LAHI Logo"
-        class="mobile-logo-img"
-      />
       <a href="#about" class="mobile-nav-link">About LAHI</a>
       <a href="#policy" class="mobile-nav-link">NEP–NCF</a>
       <a href="#programmes" class="mobile-nav-link">Programmes</a>
       <a href="#provides" class="mobile-nav-link">What We Offer</a>
-      <a href="#timetable-gen" class="mobile-nav-link">Timetable</a>
       <a href="#visit" class="mobile-nav-link">Exposure Visit</a>
-      <a href="#faq" class="mobile-nav-link">FAQs</a>
-      <a href="#resources" class="mobile-nav-link">Resources</a>
+      <a href="#gallery-mosaic" class="mobile-nav-link">Gallery</a>
+      <div class="mobile-nav-dropdown">
+        <button
+          class="mobile-nav-link mobile-dropdown-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="mobile-resources-menu"
+        >
+          Resources
+          <svg class="mobile-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+            <rect width="256" height="256" fill="none" />
+            <polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+          </svg>
+        </button>
+        <div class="mobile-dropdown-menu" id="mobile-resources-menu">
+          <a href="#resources" class="mobile-sub-nav-link">Resources &amp; Circulars</a>
+          <a href="#faq" class="mobile-sub-nav-link">FAQs</a>
+          <a href="#timetable-gen" class="mobile-sub-nav-link">Timetable</a>
+        </div>
+      </div>
       <a href="#partners" class="mobile-nav-link">Partner Schools</a>
-      <a href="#register" class="mobile-cta mobile-nav-link">Register Interest</a>
+      <a href="#register-form" class="mobile-cta mobile-nav-link">Register Interest</a>
       <a href="https://calendar.app.google/NGyU42gqyEWC4U678" target="_blank" rel="noopener" class="mobile-cta mobile-cta-book mobile-nav-link">📅 Book a Call</a>
     </div>
 
@@ -93,8 +146,10 @@
           </p>
 
           <div class="hero-actions hero-actions-animate">
-            <a href="#register" class="btn-primary">Start the Conversation ↗</a>
-            <a href="#visit" class="btn-secondary">📅 Join Exposure Visit</a>
+            <a href="#register" class="btn-primary">
+              Start the Conversation
+              <svg class="direction-icon up-right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up-right"></use></svg>
+            </a>
           </div>
 
           <div class="hero-stats hero-stats-animate">
@@ -115,11 +170,11 @@
 
         <div
           class="hero-right"
-          aria-label="Students engaged in hands-on skill education"
+          aria-label="Teacher training for Kaushal Bodh and Kaushal Vikas"
         >
           <img
-            src="./assets/FROM POLICY TO PRACTICE.jpg"
-            alt="Students engaged in hands-on skill education"
+            src="./assets/posters/teacher-training-poster.jpg"
+            alt="Teacher training for Kaushal Bodh and Kaushal Vikas"
             class="hero-image"
             style="max-width: 80%; height: auto;"
           />
@@ -134,12 +189,12 @@
     </section>
 
     <!-- PHOTO GALLERY STRIP -->
-    <div class="photo-gallery-strip">
+    <!-- <div class="photo-gallery-strip">
       <img src="./assets/p2.JPG" alt="Gardening & Nursery activity" />
       <img src="./assets/p11.jpg" alt="Food Processing lab session" />
       <img src="./assets/p4.jpg" alt="Students showcase electronics project" />
       <img src="./assets/p5.jpg" alt="Electrical lab — soldering session" />
-    </div>
+    </div> -->
 
     <!-- ABOUT LAHI -->
     <section id="about">
@@ -201,6 +256,12 @@
                 </p>
               </div>
             </div>
+             <div class="highlight-card">
+              <div class="highlight-icon">📋</div>
+              <div class="highlight-body">
+                <h4>Recognised by CBSE as an Institution of Eminence.</h4>
+              </div>
+            </div>
             <div class="highlight-card">
               <div class="highlight-icon">🏛️</div>
               <div class="highlight-body">
@@ -220,21 +281,9 @@
             <div class="highlight-card">
               <div class="highlight-icon">🏫</div>
               <div class="highlight-body">
-                <h4>Deep Experience Across Schools</h4>
+                <h4>Deep Experience &amp; Teacher-Led Implementation</h4>
                 <p>
-                  Worked across CBSE, state boards, government and private schools—directly with 150+ schools and reaching 16,000+ schools through state partnerships. Enabled large-scale implementation of vocational education and initiatives like Atal Tinkering Labs.
-                </p>
-              </div>
-            </div>
-            <div class="highlight-card">
-              <div class="highlight-icon">🔄</div>
-              <div class="highlight-body">
-                <h4>Sustainable, Teacher-Led Implementation</h4>
-                <p>
-                  Lend A Hand India supports the full implementation journey—curriculum,
-                  training, classroom delivery, and monitoring—while building
-                  teacher capability to ensure long-term, independent execution
-                  by the school.
+                  Worked across CBSE, state boards, government and private schools - directly with 20,000+ schools in more than 20+ states &amp; UTs. LAHI supports the full implementation journey while building teacher capacity for sustainable, long-term execution.
                 </p>
               </div>
             </div>
@@ -248,8 +297,37 @@
       <div class="section-inner">
         <div class="section-label reveal">Policy Context</div>
         <h2 class="section-title reveal">
-          NEP–NCF is no longer optional <span class="it">for CBSE schools</span>
+          Skill Education is no longer optional <span class="it">for CBSE schools</span>
         </h2>
+        <div
+          class="policy-countdown reveal"
+          id="policy-countdown"
+          role="timer"
+          aria-label="Time remaining until 22 August 2027 at 11:59 PM India Standard Time"
+        >
+          <p class="countdown-kicker">Aug-2027 is closer than you think</p>
+          <div class="countdown-units" aria-hidden="true">
+            <div class="countdown-unit">
+              <span class="countdown-value" data-countdown="days">000</span>
+              <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="countdown-value" data-countdown="hours">00</span>
+              <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="countdown-value" data-countdown="minutes">00</span>
+              <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-unit">
+              <span class="countdown-value" data-countdown="seconds">00</span>
+              <span class="countdown-label">Seconds</span>
+            </div>
+          </div>
+          <p class="countdown-status" id="countdown-status">
+            Plan your Composite Skill Lab before the deadline (22nd August 2027)
+          </p>
+        </div>
         <p class="section-desc reveal">
           Here's what is changing—and what it means for your school.
         </p>
@@ -260,32 +338,32 @@
               <div class="tag">NEP 2020 — Mandate</div>
               <h4>110 Hours of Skill Education Required</h4>
               <p>
-                Minimum 110 hours per year per grade (6–10) is expected—this
-                needs structured timetabling and delivery.
+                Grades 6–10 require 110 annual skill-education hours with
+                structured timetabling.
               </p>
             </div>
             <div class="circular-card">
               <div class="tag">NCF 2023 — Framework</div>
               <h4>Structured Skill Education Starts from Grade 6</h4>
               <p>
-                Kaushal Bodh (6–8) and multi-sector modules (9–10) are now part
-                of the core learning framework.
+                The framework includes Kaushal Bodh (6–8) and multi-sector
+                modules (9–10).
               </p>
             </div>
             <div class="circular-card">
               <div class="tag">CBSE Circular — Affiliation</div>
               <h4>Now Part of CBSE Evaluation</h4>
               <p>
-                Skill education is increasingly linked to affiliation and
-                inspections—schools will be assessed on implementation.
+                Affiliation and inspections now assess schools’ skill-education
+                implementation.
               </p>
             </div>
             <div class="circular-card">
               <div class="tag">Classes 11–12 — Internship</div>
               <h4>Per NEP2020, Internship Becomes Essential (11–12)</h4>
               <p>
-                Work-based learning and internships are expected to connect
-                classroom learning with real-world exposure.
+                Internships connect classroom learning with real-world
+                experience.
               </p>
             </div>
           </div>
@@ -293,7 +371,8 @@
             <h3>What This Means for Your School</h3>
             <ul>
               <li>
-                Skill education needs to be timetabled—not treated as an add-on
+                Skill education needs to be formally timetabled and delivered
+                consistently—not treated as an occasional add-on
               </li>
               <li>Schools need trained teachers, not ad-hoc allocation</li>
               <li>A composite skill lab that enables multi-sector delivery</li>
@@ -321,7 +400,8 @@
             </p>
             <div style="margin-top: 24px;">
               <a href="#register" class="btn-primary" style="display: inline-flex;">
-                Talk to Lend A Hand India about Implementation ↗
+                Talk to Lend A Hand India about Implementation
+                <svg class="direction-icon up-right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up-right"></use></svg>
               </a>
             </div>
           </div>
@@ -344,7 +424,7 @@
 
         <div class="programmes-grid">
           <!-- Kaushal Bodh Card -->
-          <div class="programme-card reveal">
+          <article class="programme-card reveal">
             <div class="programme-card-img">
               <img
                 src="./assets/p9.jpg"
@@ -356,6 +436,10 @@
               <h3>Kaushal Bodh</h3>
               <div class="hindi">Kaushal Bodh — Awareness Through Skill</div>
             </div>
+            <button class="programme-toggle" id="programme-toggle-kaushal-bodh" type="button" aria-expanded="false" aria-controls="programme-details-kaushal-bodh">
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+            </button>
+            <div class="programme-details" id="programme-details-kaushal-bodh" role="region" aria-labelledby="programme-toggle-kaushal-bodh" hidden>
             <div class="programme-body">
               <p>
                 An exploratory, hands-on programme that introduces students to the world of work through structured activities across life forms, machines &amp; materials, and human services—building curiosity, practical thinking, and real-life connections.
@@ -467,10 +551,11 @@
                 >📚 Supplementary project guides · Teacher guides · Toolkit</span
               >
             </div>
-          </div>
+            </div>
+          </article>
 
           <!-- Kaushal Vikas Card -->
-          <div class="programme-card reveal">
+          <article class="programme-card reveal">
             <div class="programme-card-img">
               <img
                 src="./assets/p8.jpg"
@@ -482,6 +567,10 @@
               <h3>Kaushal Vikas</h3>
               <div class="hindi">Kaushal Vikas — Skill Development</div>
             </div>
+            <button class="programme-toggle" id="programme-toggle-kaushal-vikas" type="button" aria-expanded="false" aria-controls="programme-details-kaushal-vikas">
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+            </button>
+            <div class="programme-details" id="programme-details-kaushal-vikas" role="region" aria-labelledby="programme-toggle-kaushal-vikas" hidden>
             <div class="programme-body">
               <p>
                 Multi-sector skill education aligned to NSQF Level 1–2, introducing students to real-world vocational pathways. Each grade covers three sector modules, delivered through structured, hands-on learning using NCERT's curriculum and teaching-learning materials.
@@ -615,10 +704,11 @@
                 >📚 Set of 3 Student Books + 3 Trainer Guides per grade</span
               >
             </div>
-          </div>
+            </div>
+          </article>
 
           <!-- Internship Card -->
-          <div class="programme-card reveal">
+          <article class="programme-card reveal">
             <div class="programme-card-img">
               <img
                 src="./assets/p13.jpeg"
@@ -630,6 +720,10 @@
               <h3>Internship & Pathways</h3>
               <div class="hindi">Work-Based Learning & Career Exposure</div>
             </div>
+            <button class="programme-toggle" id="programme-toggle-internship" type="button" aria-expanded="false" aria-controls="programme-details-internship">
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+            </button>
+            <div class="programme-details" id="programme-details-internship" role="region" aria-labelledby="programme-toggle-internship" hidden>
             <div class="programme-body">
               <p>
                 A structured internship programme for Grades 11–12 that enables students to experience the world of work and bridge the gap between school and careers.
@@ -718,7 +812,104 @@
             <div class="programme-footer">
               <span>🔗 Linked to Kaarigar's network of industry &amp; alumni, internship playbook and platform</span>
             </div>
-          </div>
+            </div>
+          </article>
+
+          <!-- Karigar School of Applied Learning Card -->
+          <article class="programme-card reveal">
+            <div class="programme-card-img">
+              <img
+                src="./assets/p12.jpg"
+                alt="Student developing woodworking skills through hands-on learning at Karigar"
+              />
+            </div>
+            <div class="programme-header">
+              <!-- <div class="programme-grade"></div> -->
+              <h3>Karigar School of Applied Learning</h3>
+              <div class="hindi">Bringing Skill Education to Life</div>
+            </div>
+            <button class="programme-toggle" id="programme-toggle-karigar" type="button" aria-expanded="false" aria-controls="programme-details-karigar">
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+            </button>
+            <div class="programme-details" id="programme-details-karigar" role="region" aria-labelledby="programme-toggle-karigar" hidden>
+              <div class="programme-body">
+                <p>
+                  An experiential learning programme that enables schools to witness how NEP-aligned skill education is implemented through hands-on learning, industry-inspired labs, and practical vocational experiences—making skill education engaging, relevant, and future-ready.
+                </p>
+                <p>
+                  <strong style="font-size: 0.82rem; color: var(--ink)">Sample Activity Areas:</strong>
+                </p>
+                <div class="sectors-list">
+                  <span class="sector-chip">Woodworking</span>
+                  <span class="sector-chip">Electrical</span>
+                  <span class="sector-chip">Automobile</span>
+                  <span class="sector-chip">Food Processing</span>
+                  <span class="sector-chip">Baking</span>
+                  <span class="sector-chip">Mechatronics</span>
+                  <span class="sector-chip">Gardening</span>
+                  <span class="sector-chip">Healthcare</span>
+                </div>
+                <div class="programme-school-impact">
+                  <p class="programme-impact-title">What this means for your school</p>
+                  <ul class="programme-benefits">
+                    <li>Experience NEP 2020 &amp; NCF 2023 skill education in practice</li>
+                    <li>Gain exposure to multiple vocational sectors</li>
+                    <li>Inspire students and educators through hands-on learning</li>
+                    <li>Understand the connection between academics and real-world skills</li>
+                    <li>Support career awareness and practical skill development</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Skills on Wheels Card -->
+          <article class="programme-card reveal">
+            <div class="programme-card-img">
+              <img
+                src="./assets/p7.jpg"
+                alt="Students taking part in a practical Skills on Wheels activity"
+              />
+            </div>
+            <div class="programme-header">
+              <!-- <div class="programme-grade"></div> -->
+              <h3>Skills on Wheels</h3>
+              <div class="hindi">Bringing Skills to Every School</div>
+            </div>
+            <button class="programme-toggle" id="programme-toggle-skills-on-wheels" type="button" aria-expanded="false" aria-controls="programme-details-skills-on-wheels">
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+            </button>
+            <div class="programme-details" id="programme-details-skills-on-wheels" role="region" aria-labelledby="programme-toggle-skills-on-wheels" hidden>
+              <div class="programme-body">
+                <p>
+                  A travelling, experiential learning programme that introduces students to the world of work through hands-on activities across multiple vocational sectors—making skill education accessible, engaging, and relevant, regardless of school infrastructure.
+                </p>
+                <p>
+                  <strong style="font-size: 0.82rem; color: var(--ink)">Sample Activity Areas:</strong>
+                </p>
+                <div class="sectors-list">
+                  <span class="sector-chip">Agriculture</span>
+                  <span class="sector-chip">Mechatronics</span>
+                  <span class="sector-chip">Healthcare</span>
+                  <span class="sector-chip">AI &amp; Coding</span>
+                  <span class="sector-chip">Basic Engineering</span>
+                  <span class="sector-chip">Food Processing</span>
+                  <span class="sector-chip">Finance</span>
+                  <span class="sector-chip">Fashion</span>
+                  <span class="sector-chip">Automobile</span>
+                </div>
+                <div class="programme-school-impact">
+                  <p class="programme-impact-title">What this means for your school</p>
+                  <ul class="programme-benefits">
+                    <li>Skill education at your doorstep</li>
+                    <li>Learn from trained practitioners</li>
+                    <li>Explore skills and career pathways</li>
+                    <li>NEP 2020 &amp; NCF 2023-aligned learning</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -728,7 +919,7 @@
       <div class="section-inner">
         <div class="section-label reveal">Our Support Model</div>
         <h2 class="section-title reveal">
-          What <span class="it">LAHI Brings</span> to the Partnership
+          How <span class="it">LAHI supports </span> Schools to implement Skill Education.
         </h2>
         <p class="section-desc reveal">
           We function as an embedded partner — not a vendor. Every component
@@ -819,7 +1010,7 @@
           </div>
 
           <!-- Card 3: Get a Headstart to Implementation -->
-          <div class="provide-card provide-card-with-img reveal">
+          <!-- <div class="provide-card provide-card-with-img reveal">
             <div class="provide-content">
               <div class="icon">🚀</div>
               <h3>Get a Headstart to Implementation</h3>
@@ -857,7 +1048,7 @@
                 </ul>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Card 4: Monitoring -->
           <div class="provide-card reveal">
@@ -1011,9 +1202,10 @@
         </div>
 
         <div class="reveal" style="margin-top: 40px; text-align: center">
-          <a href="#register" class="btn-primary"
-            >Talk to LAHI about implementation ↗</a
-          >
+          <a href="#register" class="btn-primary">
+            Talk to LAHI about implementation
+            <svg class="direction-icon up-right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up-right"></use></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -1034,7 +1226,7 @@
           </p>
         </div>
 
-        <div class="partners-stats reveal">
+        <!-- <div class="partners-stats reveal">
           <div class="partners-stat">
             <span class="partners-stat-num" data-count="150" data-suffix="+">0</span>
             <span class="partners-stat-label">🏫 Schools</span>
@@ -1047,7 +1239,7 @@
             <span class="partners-stat-num" data-count="1000" data-suffix="+">0</span>
             <span class="partners-stat-label">🎓 Students Reached</span>
           </div>
-        </div>
+        </div> -->
 
         <div class="partners-marquee-wrap reveal">
           <div class="partner-marquee-row">
@@ -1333,186 +1525,32 @@
 
     <!-- EXPOSURE VISIT -->
     <section id="visit">
-      <div class="section-inner">
+      <div class="section-inner visit-inner">
         <div class="section-label">Upcoming Event</div>
         <h2 class="section-title">
-          Exposure Visit at <span class="it">Karigar</span>
+          Virtual Tour Of <span class="it">Karigar</span>
         </h2>
-        <p
-          style="
-            font-size: 1.05rem;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.75;
-            max-width: 640px;
-            font-weight: 300;
-            margin-bottom: 0;
-          "
-        >
+        <p class="visit-intro">
           A 2-day immersive visit to Karigar School of Applied Learning, Pune —
           India's model for hands-on skill education. Meet, learn, and
           experience NEP-NCF implementation in action. Most schools decide their
           next step after this visit.
         </p>
-
-        <div class="visit-grid">
-          <div class="visit-details">
-            <div class="date-badge"><span>📅</span> </div>
-            <div class="visit-location">
-              <span>📍</span>
-              <span>
-                <a
-                  href="https://maps.app.goo.gl/MZ63Xg7XdbLUshBv6"
-                  target="_blank"
-                  style="text-decoration: none; color: inherit"
-                >
-                  <strong>Karigar School of Applied Learning</strong>, Pune,
-                  Maharashtra
-                </a>
-              </span>
-            </div>
-
-            <div class="visit-highlights">
-              <div class="visit-highlight">
-                <div class="text">
-                  <strong>Hands-On Lab Sessions</strong>
-                  Rotate through Workshop Engineering, Electrical, Food
-                  Processing, Electromechanical, and Gardening labs — experience
-                  the curriculum as a student would.
-                </div>
-              </div>
-              <div class="visit-highlight">
-                <div class="text">
-                  <strong>Introduction to NEP-NCF Skill Education</strong>
-                  Understand the full implementation framework — Kaushal Bodh,
-                  multi-sector for Gr 9–10, and internship for Gr 11–12 — with
-                  clarity on what CBSE expects.
-                </div>
-              </div>
-              <div class="visit-highlight">
-                <div class="text">
-                  <strong>Interaction with Students & Teachers</strong>
-                  Meet students who have gone through the programme and teachers
-                  implementing it — hear their experience directly.
-                </div>
-              </div>
-              <div class="visit-highlight">
-                <div class="text">
-                  <strong>Brainstorming Workshop</strong>
-                  On Day 2, CBSE principals work in groups on real implementation
-                  questions: timetabling, teacher sourcing, lab setup, and more.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- RIGHT: photos on top, then info card + CTA -->
-          <div
-            class="visit-agenda"
-            style="
-              display: flex;
-              flex-direction: column;
-              justify-content: flex-start;
-              align-items: flex-start;
-              gap: 24px;
-            "
-          >
-            <!-- Videos replacing photos -->
-          <div class="visit-video-row">
-              <div class="visit-video-wrap">
-                <iframe
-                  src="https://www.youtube.com/embed/B4awb8JLTxM"
-                  title="Karigar Exposure Visit Video 1"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </div>
-              <div class="visit-video-wrap">
-                <iframe
-                  src="https://www.youtube.com/embed/K8sGRY8NOcE"
-                  title="Karigar Exposure Visit Video 2"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </div>
-            </div>
-
-            <div
-              style="
-                background: rgba(255, 255, 255, 0.07);
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                border-radius: 16px;
-                padding: 32px;
-                width: 100%;
-              "
-            >
-              <p
-                style="
-                  font-size: 1rem;
-                  color: rgba(255, 255, 255, 0.8);
-                  line-height: 1.75;
-                  margin-bottom: 20px;
-                "
-              >
-                The visit gives school leaders a direct experience of NEP–NCF
-                implementation in practice—labs, curriculum, teachers, and
-                students—so you leave with clarity on your next step.
-              </p>
-              <ul
-                style="
-                  list-style: none;
-                  display: flex;
-                  flex-direction: column;
-                  gap: 12px;
-                "
-              >
-                <li
-                  style="
-                    display: flex;
-                    gap: 12px;
-                    align-items: flex-start;
-                    font-size: 0.9rem;
-                    color: rgba(255, 255, 255, 0.75);
-                    line-height: 1.6;
-                  "
-                >
-                  <span
-                    style="
-                      color: var(--saffron-light);
-                      font-weight: 700;
-                      flex-shrink: 0;
-                    "
-                    >→</span
-                  >
-                  Day 1: Lab visits, student &amp; teacher interactions, NEP-NCF
-                  framework session
-                </li>
-                <li
-                  style="
-                    display: flex;
-                    gap: 12px;
-                    align-items: flex-start;
-                    font-size: 0.9rem;
-                    color: rgba(255, 255, 255, 0.75);
-                    line-height: 1.6;
-                  "
-                >
-                  <span
-                    style="
-                      color: var(--saffron-light);
-                      font-weight: 700;
-                      flex-shrink: 0;
-                    "
-                    >→</span
-                  >
-                  Day 2: Brainstorming workshop on timetabling, teacher sourcing
-                  &amp; lab setup
-                </li>
-              </ul>
-            </div>
-            <a href="#register" class="btn-primary" style="display: inline-flex"
-              >Register for the Visit ↗</a
-            >
-          </div>
+        <div class="visit-feature-video">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/hZq72CPGl8s"
+            title="Karigar exposure visit"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="visit-cta-wrap">
+          <a href="#register" class="btn-primary">
+            Register for the Visit
+            <svg class="direction-icon up-right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up-right"></use></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -1538,15 +1576,21 @@
             </p>
             <ul class="engage-options">
               <li>
-                <span class="engage-arrow">→</span>
+                <span class="engage-arrow" aria-hidden="true">
+                  <svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-right"></use></svg>
+                </span>
                 Experience a live session through Skills on Wheels at your school
               </li>
               <li>
-                <span class="engage-arrow">→</span>
+                <span class="engage-arrow" aria-hidden="true">
+                  <svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-right"></use></svg>
+                </span>
                 Visit a Kaarigar lab with your school team (leaders, teachers, coordinators)
               </li>
               <li>
-                <span class="engage-arrow">→</span>
+                <span class="engage-arrow" aria-hidden="true">
+                  <svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-right"></use></svg>
+                </span>
                 Explore a phased implementation approach tailored to your context
               </li>
 
@@ -1589,23 +1633,9 @@
               </div>
             </div>
 
-            <!-- Skills on Wheels Video -->
-            <div style="margin-top: 28px;">
-              <p style="font-size: 0.85rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;">Skills on Wheels</p>
-              <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px;">
-                <iframe
-                  src="https://www.youtube.com/embed/2PyL_oxm9Ho"
-                  title="Skills on Wheels"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                  style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;"
-                ></iframe>
-              </div>
-            </div>
           </div>
 
-          <div class="register-form-wrap reveal">
+          <div class="register-form-wrap reveal" id="register-form">
             <div id="form-container">
               <div class="form-title">Tell us about your school</div>
               <div class="form-row">
@@ -1641,10 +1671,10 @@
                   <label>City / Town *</label>
                   <input type="text" id="city" placeholder="City" required />
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label>State *</label>
                   <input type="text" id="state" placeholder="State" />
-                </div>
+                </div> -->
               </div>
               <div class="form-row">
                 <div class="form-group">
@@ -1668,20 +1698,26 @@
               </div>
               <div class="form-group">
                 <label>What are you most interested in?</label>
-                <select id="interest">
-                  <option value="">Select an option</option>
-                  <option>Composite Skill Lab setup</option>
-                  <option> End to end skill implementation support</option>
-                  <option>General partnership discussion</option>
-                  <option>Internship for students</option>
-                  <option>Karigar exposure visit for teachers/students</option>
-                  <option>Teacher training for Kaushal Bodh(6th to 8th)/Kaushal Vikas(9th grade)  
-                  </option>
-                  <option>Request a sample timetable</option>
-                  <option>Request case studies</option>
-                  <option>Request Karigar visit or Skills on Wheels Experience</option>
-                  <option>Multiple of the above</option>
-                </select>
+                <div class="form-select-control">
+                  <select id="interest">
+                    <option value="">Select an option</option>
+                    <option>Composite Skill Lab Free consultation</option>
+                    <option> End to end skill implementation support</option>
+                    <option>General partnership discussion</option>
+                    <option>Internship for students</option>
+                    <option>Karigar exposure visit for teachers/students</option>
+                    <option>Teacher training for Kaushal Bodh(6th to 8th)/Kaushal Vikas(9th grade)
+                    </option>
+                    <option>Request a sample timetable</option>
+                    <option>Request case studies</option>
+                    <option>Request Skills on Wheels for teachers and students</option>
+                    <option>Multiple of the above</option>
+                  </select>
+                  <svg class="form-select-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+                    <rect width="256" height="256" fill="none" />
+                    <polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
+                  </svg>
+                </div>
               </div>
               <div class="form-group">
                 <label
@@ -1692,92 +1728,9 @@
                   placeholder="E.g. We already have a small skill room; we're looking to formalise our Grade 9-10 programme..."
                 ></textarea>
               </div>
-              <div class="form-group">
-                <label
-                  style="
-                    font-size: 0.875rem;
-                    font-weight: 600;
-                    color: var(--ink);
-                    margin-bottom: 8px;
-                    display: block;
-                  "
-                  >Would you like to attend the May 8 & 9 Exposure Visit at
-                  Karigar, Pune?</label
-                >
-                <div style="display: flex; gap: 12px; flex-wrap: wrap">
-                  <label
-                    style="
-                      display: flex;
-                      align-items: center;
-                      gap: 8px;
-                      font-size: 0.875rem;
-                      font-weight: 400;
-                      cursor: pointer;
-                      background: var(--warm);
-                      border: 1.5px solid var(--border);
-                      border-radius: 8px;
-                      padding: 10px 16px;
-                      transition: border-color 0.2s;
-                    "
-                  >
-                    <input
-                      type="radio"
-                      name="visit-interest"
-                      value="yes"
-                      style="width: auto"
-                    />
-                    Yes, I'm interested
-                  </label>
-                  <label
-                    style="
-                      display: flex;
-                      align-items: center;
-                      gap: 8px;
-                      font-size: 0.875rem;
-                      font-weight: 400;
-                      cursor: pointer;
-                      background: var(--warm);
-                      border: 1.5px solid var(--border);
-                      border-radius: 8px;
-                      padding: 10px 16px;
-                      transition: border-color 0.2s;
-                    "
-                  >
-                    <input
-                      type="radio"
-                      name="visit-interest"
-                      value="maybe"
-                      style="width: auto"
-                    />
-                    Possibly — tell me more
-                  </label>
-                  <label
-                    style="
-                      display: flex;
-                      align-items: center;
-                      gap: 8px;
-                      font-size: 0.875rem;
-                      font-weight: 400;
-                      cursor: pointer;
-                      background: var(--warm);
-                      border: 1.5px solid var(--border);
-                      border-radius: 8px;
-                      padding: 10px 16px;
-                      transition: border-color 0.2s;
-                    "
-                  >
-                    <input
-                      type="radio"
-                      name="visit-interest"
-                      value="no"
-                      style="width: auto"
-                    />
-                    Not this time
-                  </label>
-                </div>
-              </div>
               <button class="form-submit" onclick="submitForm()">
-                Submit Interest →
+                Submit Interest
+                <svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-right"></use></svg>
               </button>
               <p class="form-note">
                 By submitting, you agree to be contacted by Lend A Hand India's team. Your
@@ -1794,9 +1747,23 @@
               <p
                 style="margin-top: 12px; font-size: 0.85rem; color: var(--teal)"
               >
-                cbse@lendahandindia.org · 020-25630092
+                schools@lendahandindia.org · 020-25630092
               </p>
             </div>
+          </div>
+        </div>
+
+        <div class="register-feature-video reveal">
+          <p class="register-feature-video-title">Skills on Wheels</p>
+          <div class="register-feature-video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/2PyL_oxm9Ho"
+              title="Skills on Wheels"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
       </div>
@@ -1804,7 +1771,7 @@
 
     <!-- ══════════════════════════════════════════
          DYNAMIC FAQ SECTION
-         Data loaded from: faq-data.json (or Google Sheets CMS API)
+         Data loaded from: faq-data.json
          ══════════════════════════════════════════ -->
     <section id="faq" class="faq-section">
       <div class="section-inner">
@@ -1826,16 +1793,10 @@
               class="faq-search"
               placeholder="Search FAQs…"
               aria-label="Search frequently asked questions"
-              oninput="filterFAQs()"
             />
           </div>
           <div class="faq-cats" id="faq-cats" role="tablist" aria-label="FAQ categories">
-            <button class="faq-cat active" data-cat="All" onclick="setFAQCat(this)" role="tab" aria-selected="true">All</button>
-            <button class="faq-cat" data-cat="Policy" onclick="setFAQCat(this)" role="tab">Policy</button>
-            <button class="faq-cat" data-cat="Timetable" onclick="setFAQCat(this)" role="tab">Timetable</button>
-            <button class="faq-cat" data-cat="Skill Labs" onclick="setFAQCat(this)" role="tab">Skill Labs</button>
-            <button class="faq-cat" data-cat="Teacher Training" onclick="setFAQCat(this)" role="tab">Teacher Training</button>
-            <button class="faq-cat" data-cat="Assessments" onclick="setFAQCat(this)" role="tab">Assessments</button>
+            <button class="faq-cat active" data-cat="All" role="tab" aria-controls="faq-list" aria-selected="true">All</button>
           </div>
         </div>
 
@@ -1891,7 +1852,7 @@
                   <h3>NEP 2020</h3>
                   <p>Mandates skill education from Grade 6, replacing rote learning with competency-based, experiential learning.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <ul>
@@ -1901,7 +1862,7 @@
                   <li>Focus on holistic development, skills, and real-world application</li>
                 </ul>
                 <p style="margin-top:14px;font-size:0.875rem;color:var(--teal);font-weight:600;">Skill education is positioned as a core part of mainstream schooling, not an add-on.</p>
-                <a href="https://aicte.gov.in/sites/default/files/nep2020.pdf" target="_blank" rel="noopener" class="resource-dl-btn">↓ Download NEP 2020 Document</a>
+                <a href="https://aicte.gov.in/sites/default/files/nep2020.pdf" target="_blank" rel="noopener" class="resource-dl-btn"><svg class="direction-icon down-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg><span>Download NEP 2020 Document</span></a>
               </div>
             </div>
 
@@ -1913,7 +1874,7 @@
                   <h3>NCF 2023</h3>
                   <p>Operationalises NEP in classrooms — introduces Kaushal Bodh and multi-sector skill exposure for Grades 6–10.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <ul>
@@ -1923,7 +1884,7 @@
                   <li>Focus on teacher-led implementation and school ecosystem readiness</li>
                 </ul>
                 <p style="margin-top:14px;font-size:0.875rem;color:var(--teal);font-weight:600;">NCF translates policy into what schools actually need to do.</p>
-                <a href="https://dsel.education.gov.in/sites/default/files/guidelines/ncf_2023.pdf" target="_blank" rel="noopener" class="resource-dl-btn">↓ Download NCF 2023 Document</a>
+                <a href="https://dsel.education.gov.in/sites/default/files/guidelines/ncf_2023.pdf" target="_blank" rel="noopener" class="resource-dl-btn"><svg class="direction-icon down-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg><span>Download NCF 2023 Document</span></a>
               </div>
             </div>
 
@@ -1935,7 +1896,7 @@
                   <h3>CBSE Circulars</h3>
                   <p>Multiple circulars pushing Composite Skill Labs, Kaushal Bodh implementation, and NEP–NCF alignment across schools.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <ul>
@@ -1945,10 +1906,10 @@
                   <li>Increasing alignment of affiliation and inspections with NEP–NCF</li>
                 </ul>
                 <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
-                  <a href="https://cbseacademic.nic.in/web_material/Circulars/2023/01_Circular_2023.pdf" target="_blank" rel="noopener" class="resource-link">→ Integration of Skill Education (2023) — sets the direction</a>
-                  <a href="https://www.cbse.gov.in/cbsenew/documents/75_Circular_2024_Composite_Skill_Labs_27082024.pdf" target="_blank" rel="noopener" class="resource-link">→ Composite Skill Labs (2024) — infrastructure expectation</a>
-                  <a href="https://cbseacademic.nic.in/web_material/Circulars/2025/81_Circular_2025.pdf" target="_blank" rel="noopener" class="resource-link">→ Mandatory Kaushal Bodh (2025) — immediate implementation</a>
-                  <a href="https://www.cbse.gov.in/cbsenew/documents/01_Circular_2025_SKILL_10012025.pdf" target="_blank" rel="noopener" class="resource-link">→ NEP–NCF alignment push (latest) — ongoing compliance direction</a>
+                  <a href="https://cbseacademic.nic.in/web_material/Circulars/2023/01_Circular_2023.pdf" target="_blank" rel="noopener" class="resource-link"><svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-right"></use></svg><span>Integration of Skill Education (2023) — sets the direction</span></a>
+                  <a href="https://www.cbse.gov.in/cbsenew/documents/75_Circular_2024_Composite_Skill_Labs_27082024.pdf" target="_blank" rel="noopener" class="resource-link"><svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-right"></use></svg><span>Composite Skill Labs (2024) — infrastructure expectation</span></a>
+                  <a href="https://cbseacademic.nic.in/web_material/Circulars/2025/81_Circular_2025.pdf" target="_blank" rel="noopener" class="resource-link"><svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-right"></use></svg><span>Mandatory Kaushal Bodh (2025) — immediate implementation</span></a>
+                  <a href="https://www.cbse.gov.in/cbsenew/documents/01_Circular_2025_SKILL_10012025.pdf" target="_blank" rel="noopener" class="resource-link"><svg class="direction-icon right-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-right"></use></svg><span>NEP–NCF alignment push (latest) — ongoing compliance direction</span></a>
                 </div>
               </div>
             </div>
@@ -1961,7 +1922,7 @@
                   <h3>Timetable Integration</h3>
                   <p>~110 hours/year per CBSE guidelines — typically 4–5 periods per week per grade, in distributed or block models.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px;">
@@ -1987,7 +1948,7 @@
                   <h3>Case Studies</h3>
                   <p>Real implementation stories from Lend A Hand India partner schools — how they started, what changed, and what they'd do differently.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <span class="resource-arrow">↓</span></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <a href="#register" class="resource-dl-btn">📩 Request Case Study Pack</a>
@@ -2015,7 +1976,7 @@
                   </p>
                 </div>
                 <button class="resource-view-btn" aria-expanded="false">
-                  View <span class="resource-arrow">↓</span>
+                  View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg>
                 </button>
               </div>
               <div class="resource-expand">
@@ -2079,6 +2040,34 @@
 
       </div><!-- /section-inner -->
     </section>
+
+    <!-- MEDIA GALLERY -->
+    <section
+      id="gallery-mosaic"
+      class="gallery-section gallery-albums-section"
+      aria-labelledby="gallery-mosaic-title"
+    >
+      <div class="section-inner">
+        <div class="gallery-heading-row">
+          <div>
+            <div class="section-label reveal">Media Gallery</div>
+            <h2 class="section-title reveal" id="gallery-mosaic-title">
+              Voices and Moments <span class="it">from the Field</span>
+            </h2>
+          </div>
+          <p class="section-desc reveal">
+            Explore school-readiness insights, teacher training, student
+            voices, and events from across our skill-education work.
+          </p>
+        </div>
+        <div
+          class="gallery-demo gallery-albums reveal"
+          data-gallery-variant="albums"
+          aria-label="Skill education photo and film albums"
+        ></div>
+      </div>
+    </section>
+
     <!-- FOOTER -->
     <footer>
       <div class="footer-inner">
@@ -2094,7 +2083,7 @@
               <strong>As schools navigate skill education and NCF implementation, Lend A Hand India provides structured, end-to-end support.</strong>
             </p>
             <div class="footer-social">
-              <a href="mailto: cbse@lendahandindia.org" class="footer-badge"
+              <a href="mailto:schools@lendahandindia.org" class="footer-badge"
                 >✉ Email Us</a
               >
               <a
@@ -2111,12 +2100,12 @@
             <h4>On This Page</h4>
             <ul>
               <li><a href="#about">About LAHI</a></li>
-              <li><a href="#policy">NEP-NCF Context</a></li>
+              <!-- <li><a href="#policy">NEP-NCF Context</a></li> -->
               <li><a href="#programmes">Programmes</a></li>
               <li><a href="#provides">What We Offer</a></li>
-              <li><a href="#timetable-gen">Timetable Generator</a></li>
-              <li><a href="#visit">Exposure Visit</a></li>
-              <li><a href="#faq">FAQs</a></li>
+              <!-- <li><a href="#timetable-gen">Timetable Generator</a></li> -->
+              <!-- <li><a href="#visit">Exposure Visit</a></li> -->
+              <!-- <li><a href="#faq">FAQs</a></li> -->
               <li><a href="#resources">Resources</a></li>
               <li><a href="#register">Register Interest</a></li>
             </ul>
@@ -2128,8 +2117,8 @@
             <ul>
               <li>
                 <span class="footer-contact-icon">✉</span>
-                <a href="mailto:cbse@lendahandindia.org"
-                  >cbse@lendahandindia.org</a
+                <a href="mailto:schools@lendahandindia.org"
+                  >schools@lendahandindia.org</a
                 >
               </li>
               <li>
@@ -2161,6 +2150,21 @@
         </div>
       </div>
     </footer>
+
+    <a
+      class="whatsapp-chat-launcher"
+      href="https://api.whatsapp.com/send?phone=918956411022&amp;text=begin"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Chat with Lend A Hand India on WhatsApp"
+      title="Chat with us on WhatsApp"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path d="M4.929 19.071A9.969 9.969 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10H2l2.929-2.929zM11 6v12h2V6h-2zM7 9v6h2V9H7zm8 0v6h2V9h-2z" />
+      </svg>
+    </a>
+
     <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
     <script src="script.js"></script>
   </body>
