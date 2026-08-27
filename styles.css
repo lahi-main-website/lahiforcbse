@@ -1921,7 +1921,7 @@ section {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  margin-top: 44px;
+  margin-top: 32px;
   box-shadow: var(--shadow-sm);
 }
 .resource-card {
@@ -2077,15 +2077,18 @@ section {
 }
 @media (max-width: 500px) {
   .resource-card-visible {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
     padding: 16px 16px;
     gap: 12px;
-    flex-wrap: wrap;
   }
   .resource-summary {
-    flex-basis: calc(100% - 56px);
+    min-width: 0;
   }
   .resource-view-btn {
-    margin-left: 56px;
+    grid-column: 2;
+    margin-left: 0;
+    justify-self: start;
   }
 }
 
@@ -3007,7 +3010,7 @@ button:focus-visible {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-  margin-top: 36px;
+  margin-top: 28px;
 }
 
 .res-tab {
@@ -3049,6 +3052,7 @@ button:focus-visible {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: clamp(16px, 2.5vw, 24px);
   width: 100%;
+  margin-top: 28px;
 }
 
 .webinar-card {
@@ -3159,6 +3163,7 @@ button:focus-visible {
   gap: var(--brochure-gap);
   width: 100%;
   margin-inline: auto;
+  margin-top: 28px;
 }
 
 .brochure-card {
@@ -3175,6 +3180,14 @@ button:focus-visible {
   flex: 0 1 100%;
   width: 100%;
   max-width: 360px;
+  min-width: 0;
+}
+
+.brochure-heading {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   min-width: 0;
 }
 
@@ -3200,6 +3213,7 @@ button:focus-visible {
   font-weight: 700;
   color: var(--ink);
   line-height: 1.45;
+  min-width: 0;
 }
 
 .brochure-desc {
