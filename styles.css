@@ -532,7 +532,7 @@ nav {
 
 /* SECTION BASICS */
 section {
-  padding: clamp(48px, 7vw, 88px) clamp(16px, 4vw, 40px);
+  padding: clamp(32px, 4.5vw, 56px) clamp(16px, 4vw, 40px);
   scroll-margin-top: 68px;
 }
 .section-inner {
@@ -570,6 +570,25 @@ section {
   line-height: 1.8;
   width: 100%;
   max-width: none;
+}
+
+@media (max-width: 600px) {
+  section {
+    padding: 28px 16px;
+  }
+
+  .section-label {
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    margin-bottom: 14px;
+  }
+
+  .section-desc {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
 }
 
 /* REVEAL */
@@ -844,7 +863,7 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 56px;
   align-items: start;
-  margin-top: 44px;
+  margin-top: 32px;
 }
 .about-photo-collage {
   position: relative;
@@ -1038,7 +1057,7 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 48px;
-  margin-top: 44px;
+  margin-top: 32px;
   align-items: start;
 }
 .circular-cards {
@@ -1133,7 +1152,7 @@ section {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 22px;
-  margin-top: 44px;
+  margin-top: 32px;
   align-items: start;
 }
 .programme-card {
@@ -1388,7 +1407,7 @@ section {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
-  margin-top: 44px;
+  margin-top: 32px;
 }
 .provide-card {
   background: var(--surface);
@@ -1432,8 +1451,19 @@ section {
   align-items: center;
   justify-content: center;
   font-size: 1.35rem;
-  margin-bottom: 16px;
+  margin-bottom: 0;
   flex-shrink: 0;
+}
+.provide-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  margin-bottom: 12px;
+}
+.provide-card .provide-heading h3 {
+  min-width: 0;
+  margin-bottom: 0;
 }
 .provide-card h3 {
   font-family: var(--font-display);
@@ -1473,9 +1503,19 @@ section {
 @media (max-width: 700px) {
   .provides-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
   }
   .provide-card {
-    padding: 24px 20px;
+    padding: 20px 16px;
+  }
+  .provide-card .icon {
+    width: 44px;
+    height: 44px;
+  }
+  .provide-heading {
+    align-items: flex-start;
+    gap: 10px;
   }
 }
 
@@ -1488,7 +1528,7 @@ section {
   overflow: hidden;
   border: 1px solid var(--border);
   box-shadow: var(--shadow-md);
-  margin-top: 44px;
+  margin-top: 32px;
   overflow-x: auto;
 }
 .comparison-table {
@@ -2145,6 +2185,11 @@ footer {
     background 0.2s,
     color 0.2s;
 }
+.footer-badge-icon {
+  font-size: 1rem;
+  line-height: 1;
+  flex: 0 0 auto;
+}
 .footer-badge:hover {
   background: rgba(255, 255, 255, 0.14);
   color: white;
@@ -2168,13 +2213,17 @@ footer {
 .footer-col ul li {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
 }
 .footer-contact-icon {
-  font-size: 0.8rem;
-  margin-top: 2px;
+  width: 22px;
+  min-width: 22px;
+  font-size: 1rem;
+  line-height: 1.3;
+  text-align: center;
+  margin-top: 0;
   flex-shrink: 0;
-  opacity: 0.55;
+  opacity: 0.85;
 }
 .footer-col ul li a,
 .footer-col ul li span:not(.footer-contact-icon) {
@@ -3351,6 +3400,16 @@ button:focus-visible {
   .faq-item.open .faq-answer { padding-right: 16px; padding-left: 16px; }
   .faq-answer-inner { padding-left: 0; }
   .faq-controls { gap: 12px; }
+  .faq-download-tab { width: 100%; }
+  .about-grid,
+  .policy-content,
+  .programmes-grid,
+  .comparison-table-wrap,
+  .resource-cards,
+  .webinar-grid,
+  .brochure-grid {
+    margin-top: 24px;
+  }
 }
 
 @media (min-width: 600px) {
@@ -3381,14 +3440,7 @@ button:focus-visible {
 }
 
 /* Floating WhatsApp chat launcher */
-@property --chat-gradient-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 135deg;
-}
-
 .whatsapp-chat-launcher {
-  --chat-gradient-angle: 135deg;
   position: fixed;
   right: calc(clamp(16px, 3vw, 28px) + env(safe-area-inset-right));
   bottom: calc(clamp(16px, 3vw, 28px) + env(safe-area-inset-bottom));
@@ -3396,11 +3448,7 @@ button:focus-visible {
   width: clamp(54px, 5vw, 60px);
   height: clamp(54px, 5vw, 60px);
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.18) 18%, transparent 36%),
-    linear-gradient(var(--chat-gradient-angle), #075e54 0%, #128c7e 28%, #25d366 62%, #46e989 100%);
-  background-position: center;
-  background-size: 100% 100%;
+  background: #25d366;
   color: white;
   border: 2px solid rgba(255, 255, 255, 0.9);
   display: flex;
@@ -3412,31 +3460,34 @@ button:focus-visible {
     inset 0 1px 0 rgba(255, 255, 255, 0.24);
   transition:
     transform 0.2s ease,
-    --chat-gradient-angle 0.7s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.25s ease,
     filter 0.25s ease;
 }
 
 .whatsapp-chat-launcher svg {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   position: relative;
   z-index: 1;
   filter: drop-shadow(0 1px 1px rgba(7, 94, 84, 0.24));
 }
 
 .whatsapp-chat-launcher:hover {
-  --chat-gradient-angle: 290deg;
-  transform: translateY(-3px) scale(1.04);
-  filter: saturate(1.08) brightness(1.04);
+  transform: translateY(-4px) scale(1.08);
+  filter: brightness(1.04) saturate(1.06);
   box-shadow:
-    0 15px 36px rgba(18, 140, 126, 0.44),
-    inset 0 1px 0 rgba(255, 255, 255, 0.34);
+    0 0 0 9px rgba(37, 211, 102, 0.13),
+    0 16px 34px rgba(18, 140, 126, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
 }
 
 .whatsapp-chat-launcher:focus-visible {
-  --chat-gradient-angle: 290deg;
-  filter: saturate(1.08) brightness(1.04);
+  transform: translateY(-4px) scale(1.08);
+  filter: brightness(1.04) saturate(1.06);
+  box-shadow:
+    0 0 0 9px rgba(37, 211, 102, 0.13),
+    0 16px 34px rgba(18, 140, 126, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
   outline: 3px solid var(--saffron-light);
   outline-offset: 4px;
 }
