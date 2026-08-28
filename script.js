@@ -443,7 +443,9 @@ const BROCHURE_DISPLAY_CONFIG = Object.freeze([
     title: 'Teacher Training',
     description: 'Teacher training for Kaushal Bodh and Kaushal Vikas.',
     aliases: ['teacher training', 'teacher manual'],
-    fallbackFileURL: 'https://drive.google.com/file/d/1LzEohWU76m0J8wdRooUPH7Z73lX3q6ev/view?usp=sharing',
+    fallbackFileURL: './assets/brochures/teacher-training-capacity-building.pdf',
+    forceFallbackFileURL: true,
+    type: 'PDF',
     icon: '👩‍🏫'
   }),
   Object.freeze({
@@ -982,8 +984,10 @@ function renderBrochures() {
 
     return (
       '<div class="brochure-card">' +
-        '<div class="brochure-icon-wrap">' + (b.icon || '📄') + '</div>' +
-        '<div class="brochure-title">'     + escapeHTML(b.title       || '') + '</div>' +
+        '<div class="brochure-heading">' +
+          '<div class="brochure-icon-wrap">' + (b.icon || '📄') + '</div>' +
+          '<div class="brochure-title">' + escapeHTML(b.title || '') + '</div>' +
+        '</div>' +
         '<div class="brochure-desc">'      + escapeHTML(b.description || '') + '</div>' +
         btnHtml +
       '</div>'
