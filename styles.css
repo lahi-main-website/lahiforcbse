@@ -591,6 +591,24 @@ section {
   }
 }
 
+/* Keep adjoining same-color sections to a 56px shared vertical gap. */
+#provides,
+#partners,
+#faq {
+  padding-bottom: 28px;
+}
+
+#comparison,
+#timetable-gen,
+#gallery-mosaic {
+  padding-top: 28px;
+}
+
+#resources {
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+
 /* REVEAL */
 .reveal {
   opacity: 0;
