@@ -606,8 +606,7 @@ section {
 
 /* HERO */
 #home {
-  padding: clamp(88px, 12vw, 128px) clamp(16px, 4vw, 40px)
-    clamp(52px, 8vw, 84px);
+  padding: clamp(88px, 12vw, 128px) clamp(16px, 4vw, 40px) 28px;
   background: var(--warm);
   min-height: 100vh;
   display: flex;
@@ -857,6 +856,7 @@ section {
 /* ABOUT */
 #about {
   background: var(--warm);
+  padding-top: 28px;
 }
 .about-grid {
   display: grid;
