@@ -2932,6 +2932,7 @@ button:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
   flex: 0 0 auto;
   min-height: 38px;
   padding: 9px 18px;

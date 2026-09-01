@@ -11,14 +11,12 @@ function directionIconMarkup(direction, className) {
   const mobileResources = document.querySelector('.mobile-nav-dropdown');
   const mobileResourcesToggle = document.querySelector('.mobile-dropdown-toggle');
   const mobileHeaderCta = document.querySelector('.mobile-header-cta');
-  const visitRegisterCta = document.getElementById('visit-register-cta');
-  const implementationRegisterCta = document.getElementById('implementation-register-cta');
-  const conversationRegisterCta = document.getElementById('conversation-register-cta');
+  const responsiveRegisterCtas = document.querySelectorAll('[data-responsive-register-cta]');
   const mobileRegisterTarget = window.matchMedia('(max-width: 860px)');
 
   function syncResponsiveRegisterTargets(event) {
-    [visitRegisterCta, implementationRegisterCta, conversationRegisterCta].forEach(function(cta) {
-      if (cta) cta.setAttribute('href', event.matches ? '#register-form' : '#register');
+    responsiveRegisterCtas.forEach(function(cta) {
+      cta.setAttribute('href', event.matches ? '#register-form' : '#register');
     });
   }
 
@@ -443,7 +441,7 @@ const BROCHURE_DISPLAY_CONFIG = Object.freeze([
     title: 'Teacher Training',
     description: 'Teacher training for Kaushal Bodh and Kaushal Vikas.',
     aliases: ['teacher training', 'teacher manual'],
-    fallbackFileURL: './assets/brochures/teacher-training-capacity-building.pdf',
+    fallbackFileURL: 'https://drive.google.com/file/d/1r0A9m464jr8fp3TaM0Y3jwoj2NtW7LQR/view',
     forceFallbackFileURL: true,
     type: 'PDF',
     icon: '👩‍🏫'
@@ -452,7 +450,7 @@ const BROCHURE_DISPLAY_CONFIG = Object.freeze([
     title: 'Karigar',
     description: 'Hands-on, skill-based learning through the Karigar School of Applied Learning.',
     aliases: ['karigar', 'karigar programme brochure'],
-    fallbackFileURL: './assets/brochures/karigar-brochure.pdf',
+    fallbackFileURL: 'https://drive.google.com/file/d/1H7zmRJR2S_ZsoGJA9RHpcYCSgeB4xtr7/view?usp=sharing',
     forceFallbackFileURL: true,
     icon: '🏫'
   }),

@@ -34,7 +34,7 @@
     {
       "title": "Teacher Training",
       "description": "Teacher training for Kaushal Bodh and Kaushal Vikas.",
-      "fileURL": "./assets/brochures/teacher-training-capacity-building.pdf",
+      "fileURL": "https://drive.google.com/file/d/1r0A9m464jr8fp3TaM0Y3jwoj2NtW7LQR/view",
       "type": "PDF",
       "icon": "👩‍🏫",
       "status": "Active"
@@ -42,7 +42,7 @@
     {
       "title": "Karigar",
       "description": "Hands-on, skill-based learning through the Karigar School of Applied Learning.",
-      "fileURL": "./assets/brochures/karigar-brochure.pdf",
+      "fileURL": "https://drive.google.com/file/d/1H7zmRJR2S_ZsoGJA9RHpcYCSgeB4xtr7/view?usp=sharing",
       "type": "PDF",
       "icon": "🏫",
       "status": "Active"
