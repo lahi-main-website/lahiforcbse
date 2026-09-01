@@ -591,6 +591,24 @@ section {
   }
 }
 
+/* Keep adjoining same-color sections to a 56px shared vertical gap. */
+#provides,
+#partners,
+#faq {
+  padding-bottom: 28px;
+}
+
+#comparison,
+#timetable-gen,
+#gallery-mosaic {
+  padding-top: 28px;
+}
+
+#resources {
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+
 /* REVEAL */
 .reveal {
   opacity: 0;
@@ -606,8 +624,7 @@ section {
 
 /* HERO */
 #home {
-  padding: clamp(88px, 12vw, 128px) clamp(16px, 4vw, 40px)
-    clamp(52px, 8vw, 84px);
+  padding: clamp(88px, 12vw, 128px) clamp(16px, 4vw, 40px) 28px;
   background: var(--warm);
   min-height: 100vh;
   display: flex;
@@ -857,6 +874,7 @@ section {
 /* ABOUT */
 #about {
   background: var(--warm);
+  padding-top: 28px;
 }
 .about-grid {
   display: grid;
