@@ -56,6 +56,17 @@
     }
     .gbtn { transition: all .2s; }
     .gbtn:hover { transform: translateY(-1px); }
+    .gbtn-with-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .gbtn-arrow-icon {
+      width: 1.1em;
+      height: 1.1em;
+      flex: 0 0 auto;
+    }
 
     input[type=color] { -webkit-appearance: none; border: none; cursor: pointer; }
     input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
@@ -74,22 +85,10 @@
     /* Responsive layouts */
     @media (max-width: 600px) {
       body { font-size: 14px; }
+      .config-layout { grid-template-columns: minmax(0, 1fr) !important; gap: 16px !important; }
     }
     @media (max-width: 480px) {
       body { font-size: 13px; }
-    }
-
-    /* ── Print styles ── */
-    @media print {
-      body { background: #fff !important; color: #000 !important; }
-      body > div > div:first-child,
-      body > div > div:nth-child(2),
-      body > div > div:last-child > div:first-child,
-      button { display: none !important; }
-      table { border-collapse: collapse !important; width: 100% !important; font-size: 11px; }
-      th, td { border: 1px solid #ccc !important; padding: 4px 6px !important; }
-      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-      @page { size: A4 landscape; margin: 12mm; }
     }
   </style>
 
@@ -157,7 +156,7 @@
         pdf.save('LAHI_CBSE_Timetable_' + new Date().toISOString().slice(0,10) + '.pdf');
       }).catch(function(err) {
         console.error('PDF export error:', err);
-        alert('PDF export failed. Please try Print → Save as PDF instead.');
+        alert('PDF export failed. Please try again or use a different browser.');
       });
     }
   </script>
@@ -303,6 +302,16 @@
     };
 
     // ── Small components ────────────────────────────────────────────────────────
+    function RightArrowIcon() {
+      return (
+        <svg className="gbtn-arrow-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+          <rect width="256" height="256" fill="none" />
+          <line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24" />
+          <polyline points="144 56 216 128 144 200" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="24" />
+        </svg>
+      );
+    }
+
     function Panel({ title, subtitle, children }) {
       return (
         <div style={{ background:"#ffffff", border:"1px solid var(--lahi-border)", borderRadius:14, padding:18, boxShadow:"var(--lahi-shadow-sm)" }}>
@@ -539,7 +548,7 @@
 
             {/* ══ CONFIG TAB ══ */}
             {tab === "config" && (
-              <div style={{ display:"grid", gridTemplateColumns:"min(300px,100%) 1fr", gap:20 }}>
+              <div className="config-layout" style={{ display:"grid", gridTemplateColumns:"min(300px,100%) 1fr", gap:20 }}>
 
                 {/* Left */}
                 <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
@@ -699,12 +708,13 @@
 
             {tab === "config" && (
               <div style={{ textAlign:"center", marginTop:22 }}>
-                <button className="gbtn" onClick={generate}
+                <button className="gbtn gbtn-with-icon" onClick={generate}
                   style={{ background:"linear-gradient(135deg,var(--lahi-saffron) 0%,var(--lahi-saffron-dark) 100%)", border:"none", borderRadius:12,
                     color:"#fff", cursor:"pointer", fontSize:15, fontWeight:700,
                     fontFamily:"DM Sans,Arial,sans-serif", padding:"14px 52px",
                     letterSpacing:"0.05em", boxShadow:"0 4px 16px rgba(224,123,42,.35)", width:"100%", maxWidth:360 }}>
-                  GENERATE TIMETABLE →
+                  <span>GENERATE TIMETABLE</span>
+                  <RightArrowIcon />
                 </button>
               </div>
             )}
@@ -835,12 +845,6 @@
                       fontFamily:"DM Sans,Arial,sans-serif", padding:"9px 26px" }}>
                     ⚙ Edit Config
                   </button>
-                  <button className="gbtn" onClick={() => window.print()}
-                    style={{ background:"#ffffff", border:"1px solid #22c55e", borderRadius:10, color:"#22c55e",
-                      cursor:"pointer", fontSize:13, fontWeight:600,
-                      fontFamily:"DM Sans,Arial,sans-serif", padding:"9px 26px" }}>
-                    🖨 Print Timetable
-                  </button>
                   <button className="gbtn" onClick={() => exportTimetablePDF(subjects, config, timetable, subMap, annualHrs)}
                     style={{ background:"linear-gradient(135deg,#6366f1 0%,#4f46e5 100%)", border:"none",
                       borderRadius:10, color:"#fff", cursor:"pointer", fontSize:13, fontWeight:600,
@@ -855,11 +859,12 @@
               <div style={{ textAlign:"center", paddingTop:80, color:"var(--lahi-muted)" }}>
                 <div style={{ fontSize:48, marginBottom:16 }}>📅</div>
                 <div style={{ fontSize:16, marginBottom:8 }}>No timetable generated yet</div>
-                <button className="gbtn" onClick={generate}
+                <button className="gbtn gbtn-with-icon" onClick={generate}
                   style={{ background:"linear-gradient(135deg,var(--lahi-saffron) 0%,var(--lahi-saffron-dark) 100%)", border:"none",
                     borderRadius:10, color:"#fff", cursor:"pointer", fontSize:14, fontWeight:600,
                     fontFamily:"DM Sans,Arial,sans-serif", padding:"12px 36px", marginTop:8 }}>
-                  Generate Now →
+                  <span>Generate Now</span>
+                  <RightArrowIcon />
                 </button>
               </div>
             )}
