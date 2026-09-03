@@ -748,8 +748,6 @@ section {
 .hero-image {
   width: 100%;
   height: auto;
-  max-width: 85%;
-  margin: 0 auto;
   object-fit: contain;
   border-radius: var(--radius-lg);
 }
@@ -985,6 +983,10 @@ section {
   font-size: 0.84rem;
   color: var(--muted);
   line-height: 1.6;
+}
+.highlight-body p strong {
+  color: var(--ink);
+  font-weight: 700;
 }
 @media (max-width: 860px) {
   .about-grid {
@@ -1490,7 +1492,8 @@ section {
   margin-bottom: 9px;
   color: var(--ink);
 }
-.provide-card > p {
+.provide-card > p,
+.provide-card .provide-content > p {
   font-size: 0.88rem;
   color: var(--muted);
   line-height: 1.7;
@@ -1668,7 +1671,6 @@ section {
   max-width: 680px;
   color: rgba(255, 255, 255, 0.68);
   font-size: 1.05rem;
-  font-weight: 300;
   line-height: 1.75;
 }
 .visit-feature-video {

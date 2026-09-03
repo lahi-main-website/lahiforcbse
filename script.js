@@ -432,7 +432,7 @@ const BROCHURE_DISPLAY_CONFIG = Object.freeze([
     title: 'CSL',
     description: 'Composite Skill Lab model and implementation support for schools.',
     aliases: ['csl', 'cbse vocational guide', 'cbse skill education brochure'],
-    fallbackFileURL: './assets/brochures/CSL%20Flier%2001.pdf',
+    fallbackFileURL: 'https://drive.google.com/file/d/1iIKNeShAVk78uvjr0u4CmCvCJk9205DH/view?usp=sharing',
     forceFallbackFileURL: true,
     type: 'PDF',
     icon: '🧰'
@@ -459,7 +459,7 @@ const BROCHURE_DISPLAY_CONFIG = Object.freeze([
     description: 'Mobile skill education through hands-on, experiential learning.',
     aliases: ['sow', 'scope of work (sow)'],
     fallbackFileURL: 'https://drive.google.com/file/d/14t1x4ae4fEfa-8Ojczp48-315IMwWnci/view?usp=sharing',
-    icon: '🛻'
+    icon: '🚌'
   }),
   Object.freeze({
     title: 'Internships',
