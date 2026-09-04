@@ -1582,3 +1582,21 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     renderAlbums(root);
   });
 })();
+
+// ══════════════════════════════════════════════════════════════
+//  GA4 CLICK TRACKING — tracks every button/link click site-wide
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('click', function (e) {
+  var el = e.target.closest('a, button');
+  if (!el || typeof gtag !== 'function') return;
+
+  var label = el.dataset.gtagLabel || el.id;
+  if (!label) {
+    var card = el.closest('.resource-card');
+    var heading = card && card.querySelector('h3, h4');
+    var text = (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+    label = (heading ? heading.textContent.trim() + ' — ' : '') + (text || el.getAttribute('aria-label') || 'unlabeled');
+  }
+
+  gtag('event', 'click', { event_category: 'button', event_label: label });
+});

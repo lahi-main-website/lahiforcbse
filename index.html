@@ -47,19 +47,19 @@
 
     <!-- NAV -->
     <nav>
-      <a href="#" class="nav-logo">
+      <a href="#" class="nav-logo" data-gtag-label="logo_home">
         <img
           src="./assets/logo-lahi.png"
           alt="Lend A Hand India — Building A Skilled Tomorrow"
         />
       </a>
       <ul class="nav-links">
-        <li><a href="#about">About LAHI</a></li>
-        <li><a href="#policy">NEP-NCF</a></li>
-        <li><a href="#programmes">Programmes</a></li>
-        <li><a href="#provides">What We Offer</a></li>
-        <li><a href="#visit">Virtual Tour of Karigar</a></li>
-        <li><a href="#gallery-mosaic">Gallery</a></li>
+        <li><a href="#about" data-gtag-label="about_lahi_nav_desktop">About LAHI</a></li>
+        <li><a href="#policy" data-gtag-label="nep_ncf_nav_desktop">NEP-NCF</a></li>
+        <li><a href="#programmes" data-gtag-label="programmes_nav_desktop">Programmes</a></li>
+        <li><a href="#provides" data-gtag-label="what_we_offer_nav_desktop">What We Offer</a></li>
+        <li><a href="#visit" data-gtag-label="virtual_tour_nav_desktop">Virtual Tour of Karigar</a></li>
+        <li><a href="#gallery-mosaic" data-gtag-label="gallery_nav_desktop">Gallery</a></li>
         <li class="dropdown" id="resources-dropdown">
           <button
             class="dropdown-toggle"
@@ -82,10 +82,10 @@
         <li><a href="#partners">Partner Schools</a></li>
       </ul>
       <div class="nav-ctas">
-        <a href="#register" class="nav-cta">Register Interest</a>
+        <a href="#register" class="nav-cta" data-gtag-label="register_interest_nav_desktop">Register Interest</a>
         <a href="https://calendar.app.google/NGyU42gqyEWC4U678" target="_blank" rel="noopener" class="nav-cta nav-cta-book">📅 Book a Call</a>
       </div>
-      <a href="#register-form" class="nav-cta mobile-header-cta">Register Interest</a>
+      <a href="#register-form" class="nav-cta mobile-header-cta" data-gtag-label="register_interest_mobile_header">Register Interest</a>
       <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
@@ -93,7 +93,7 @@
 
     <!-- MOBILE NAV OVERLAY -->
     <div class="mobile-nav-overlay" id="mobile-nav">
-      <a href="#about" class="mobile-nav-link">About LAHI</a>
+      <a href="#about" class="mobile-nav-link" data-gtag-label="about_lahi_mobile">About LAHI</a>
       <a href="#policy" class="mobile-nav-link">NEP-NCF</a>
       <a href="#programmes" class="mobile-nav-link">Programmes</a>
       <a href="#provides" class="mobile-nav-link">What We Offer</a>
@@ -119,7 +119,7 @@
         </div>
       </div>
       <a href="#partners" class="mobile-nav-link">Partner Schools</a>
-      <a href="#register-form" class="mobile-cta mobile-nav-link">Register Interest</a>
+      <a href="#register-form" class="mobile-cta mobile-nav-link" data-gtag-label="register_interest_mobile_menu">Register Interest</a>
       <a href="https://calendar.app.google/NGyU42gqyEWC4U678" target="_blank" rel="noopener" class="mobile-cta mobile-cta-book mobile-nav-link">📅 Book a Call</a>
     </div>
 
@@ -1910,9 +1910,9 @@
 
         <!-- Resource Tabs -->
         <div class="res-tabs reveal" role="tablist" aria-label="Resource categories">
-          <button class="res-tab active" data-tab="guides" onclick="switchResTab(this)" role="tab" aria-selected="true">📚 Guides &amp; Tools</button>
-          <button class="res-tab" data-tab="webinars" onclick="switchResTab(this)" role="tab" aria-selected="false">🎥 Webinar Library</button>
-          <button class="res-tab" data-tab="brochures" onclick="switchResTab(this)" role="tab" aria-selected="false">📄 Downloadable Brochures</button>
+          <button class="res-tab active" data-tab="guides" data-gtag-label="resource_tab_guides" onclick="switchResTab(this)" role="tab" aria-selected="true">📚 Guides &amp; Tools</button>
+          <button class="res-tab" data-tab="webinars" data-gtag-label="resource_tab_webinars" onclick="switchResTab(this)" role="tab" aria-selected="false">🎥 Webinar Library</button>
+          <button class="res-tab" data-tab="brochures" data-gtag-label="resource_tab_brochures" onclick="switchResTab(this)" role="tab" aria-selected="false">📄 Downloadable Brochures</button>
         </div>
 
         <!-- ─────────────────────────────────────────────────────────
@@ -2126,7 +2126,7 @@
           <div class="footer-col">
             <h4>On This Page</h4>
             <ul>
-              <li><a href="#about">About LAHI</a></li>
+              <li><a href="#about" data-gtag-label="about_lahi_footer">About LAHI</a></li>
               <!-- <li><a href="#policy">NEP-NCF Context</a></li> -->
               <li><a href="#programmes">Programmes</a></li>
               <li><a href="#provides">What We Offer</a></li>
@@ -2134,7 +2134,7 @@
               <!-- <li><a href="#visit">Exposure Visit</a></li> -->
               <!-- <li><a href="#faq">FAQs</a></li> -->
               <li><a href="#resources">Resources</a></li>
-              <li><a href="#register">Register Interest</a></li>
+              <li><a href="#register" data-gtag-label="register_interest_footer">Register Interest</a></li>
             </ul>
           </div>
 
