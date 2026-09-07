@@ -472,7 +472,7 @@ const BROCHURE_DISPLAY_CONFIG = Object.freeze([
 
 // ── Global state ──────────────────────────────────────────────
 let allFAQs       = [];
-let currentCat    = 'All';
+let currentCat    = 'Skill Labs';
 let currentSearch = '';
 let resourcesData = { webinars: [], brochures: [] };
 
