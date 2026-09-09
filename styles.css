@@ -3184,6 +3184,15 @@ button:focus-visible {
   opacity: 1;
 }
 
+.instagram-reel-shade {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(20, 13, 7, 0.02) 42%, rgba(20, 13, 7, 0.78) 100%);
+  transition: background 0.3s ease;
+}
+
 .instagram-reel-card.has-error {
   background:
     radial-gradient(circle at 30% 25%, rgba(224, 123, 42, 0.18), transparent 36%),
@@ -3199,6 +3208,10 @@ button:focus-visible {
 .instagram-reel-card:hover .instagram-reel-image {
   transform: scale(1.045);
   filter: saturate(1.06) contrast(1.02);
+}
+
+.instagram-reel-card:hover .instagram-reel-shade {
+  background: linear-gradient(180deg, rgba(20, 13, 7, 0.02) 32%, rgba(20, 13, 7, 0.88) 100%);
 }
 
 .instagram-reel-link {
@@ -3218,6 +3231,22 @@ button:focus-visible {
 .instagram-reel-link:focus-visible {
   outline: 3px solid var(--saffron);
   outline-offset: 3px;
+}
+
+.instagram-reel-title {
+  position: absolute;
+  z-index: 1;
+  right: clamp(14px, 2vw, 24px);
+  bottom: clamp(14px, 2vw, 24px);
+  left: clamp(14px, 2vw, 24px);
+  width: fit-content;
+  max-width: calc(100% - clamp(28px, 4vw, 48px));
+  color: white;
+  font-family: var(--font-display);
+  font-size: clamp(0.88rem, 1.45vw, 1.12rem);
+  font-weight: 600;
+  line-height: 1.2;
+  text-shadow: 0 2px 12px rgba(8, 5, 3, 0.72);
 }
 
 .instagram-reel-action {
@@ -3278,11 +3307,20 @@ button:focus-visible {
   .instagram-reel-link {
     padding: 10px;
   }
+
+  .instagram-reel-title {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    max-width: calc(100% - 20px);
+    font-size: 0.78rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .instagram-reel-card,
   .instagram-reel-image,
+  .instagram-reel-shade,
   .instagram-reel-action,
   .instagram-reel-card::before {
     transition: none;

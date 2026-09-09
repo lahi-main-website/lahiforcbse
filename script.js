@@ -1246,7 +1246,8 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
   var instagramFeed = [
     {
       url: 'https://www.instagram.com/reel/Dc5xRzJTsX0/?igsi=MXQ4YW0xdTNleG95Yg==',
-      shortcode: 'Dc5xRzJTsX0'
+      shortcode: 'Dc5xRzJTsX0',
+      title: 'Teachers Day'
     }
   ];
 
@@ -1284,15 +1285,16 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     var gridMaxWidth = (visibleColumns * 326) + ((visibleColumns - 1) * 18) + 32;
     root.style.setProperty('--instagram-grid-max-width', gridMaxWidth + 'px');
     root.classList.add('is-loading');
-    root.innerHTML = instagramFeed.map(function(item, index) {
+    root.innerHTML = instagramFeed.map(function(item) {
       var instagramMediaUrl = 'https://www.instagram.com/p/' + encodeURIComponent(item.shortcode) + '/media/?size=l';
       var thumbnailUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent(instagramMediaUrl) +
         '&w=800&h=800&fit=cover&output=jpg';
       return '<article class="instagram-reel-card">' +
         '<img class="instagram-reel-image" src="' + escapeHTML(thumbnailUrl) + '" alt="" aria-hidden="true" ' +
           'loading="lazy" decoding="async" />' +
+        '<span class="instagram-reel-shade" aria-hidden="true"></span>' +
         '<a class="instagram-reel-link" href="' + escapeHTML(item.url) + '" target="_blank" rel="noopener" ' +
-          'aria-label="View Instagram post ' + (index + 1) + ' in a new tab">' +
+          'aria-label="View ' + escapeHTML(item.title) + ' on Instagram in a new tab">' +
           '<span class="instagram-reel-action" aria-hidden="true">' +
             '<svg class="instagram-reel-icon" viewBox="0 0 24 24" focusable="false">' +
               '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"></rect>' +
@@ -1301,6 +1303,7 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
             '</svg>' +
             directionIconMarkup('up-right', 'instagram-reel-arrow') +
           '</span>' +
+          '<strong class="instagram-reel-title">' + escapeHTML(item.title) + '</strong>' +
         '</a>' +
       '</article>';
     }).join('');
