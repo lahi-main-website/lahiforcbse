@@ -1085,7 +1085,8 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
 // ══════════════════════════════════════════════════════════════
 (function initMediaGallery() {
   var albumRoots = document.querySelectorAll('[data-gallery-variant="albums"]');
-  if (!albumRoots.length) return;
+  var instagramReelRoots = document.querySelectorAll('[data-instagram-reels]');
+  if (!albumRoots.length && !instagramReelRoots.length) return;
 
   var galleryMedia = [
     {
@@ -1242,8 +1243,15 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     }
   ];
 
+  var instagramFeed = [
+    {
+      url: 'https://www.instagram.com/reel/Dc5xRzJTsX0/?igsi=MXQ4YW0xdTNleG95Yg==',
+      shortcode: 'Dc5xRzJTsX0'
+    }
+  ];
+
   var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  var viewer = createGalleryViewer();
+  var viewer = albumRoots.length ? createGalleryViewer() : null;
 
   function imageMarkup(item, className) {
     return '<img class="' + className + '" src="' + escapeHTML(item.poster || item.src) + '" alt="' +
@@ -1269,6 +1277,57 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
 
   function setLiveStatus(element, item, index, total) {
     if (element) element.textContent = item.title + ', item ' + (index + 1) + ' of ' + total;
+  }
+
+  function renderInstagramReels(root) {
+    var visibleColumns = Math.max(1, Math.min(instagramFeed.length, 3));
+    var gridMaxWidth = (visibleColumns * 326) + ((visibleColumns - 1) * 18) + 32;
+    root.style.setProperty('--instagram-grid-max-width', gridMaxWidth + 'px');
+    root.classList.add('is-loading');
+    root.innerHTML = instagramFeed.map(function(item, index) {
+      var instagramMediaUrl = 'https://www.instagram.com/p/' + encodeURIComponent(item.shortcode) + '/media/?size=l';
+      var thumbnailUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent(instagramMediaUrl) +
+        '&w=800&h=800&fit=cover&output=jpg';
+      return '<article class="instagram-reel-card">' +
+        '<img class="instagram-reel-image" src="' + escapeHTML(thumbnailUrl) + '" alt="" aria-hidden="true" ' +
+          'loading="lazy" decoding="async" />' +
+        '<a class="instagram-reel-link" href="' + escapeHTML(item.url) + '" target="_blank" rel="noopener" ' +
+          'aria-label="View Instagram post ' + (index + 1) + ' in a new tab">' +
+          '<span class="instagram-reel-action" aria-hidden="true">' +
+            '<svg class="instagram-reel-icon" viewBox="0 0 24 24" focusable="false">' +
+              '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"></rect>' +
+              '<circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"></circle>' +
+              '<circle cx="17.5" cy="6.5" r="1" fill="currentColor"></circle>' +
+            '</svg>' +
+            directionIconMarkup('up-right', 'instagram-reel-arrow') +
+          '</span>' +
+        '</a>' +
+      '</article>';
+    }).join('');
+
+    var pendingImages = root.querySelectorAll('.instagram-reel-image').length;
+    root.querySelectorAll('.instagram-reel-image').forEach(function(image) {
+      var isSettled = false;
+
+      function settleImage(loaded) {
+        if (isSettled) return;
+        isSettled = true;
+        var card = image.closest('.instagram-reel-card');
+        if (card) card.classList.add(loaded ? 'is-loaded' : 'has-error');
+        pendingImages -= 1;
+        if (pendingImages <= 0) root.classList.remove('is-loading');
+      }
+
+      image.addEventListener('load', function() {
+        settleImage(true);
+      }, { once: true });
+
+      image.addEventListener('error', function() {
+        settleImage(false);
+      }, { once: true });
+
+      if (image.complete) settleImage(image.naturalWidth > 0);
+    });
   }
 
   function addSwipe(element, onPrevious, onNext) {
@@ -1580,5 +1639,8 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
 
   albumRoots.forEach(function(root) {
     renderAlbums(root);
+  });
+  instagramReelRoots.forEach(function(root) {
+    renderInstagramReels(root);
   });
 })();
