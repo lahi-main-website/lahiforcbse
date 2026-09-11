@@ -1247,7 +1247,7 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     {
       url: 'https://www.instagram.com/reel/Dc5xRzJTsX0/?igsi=MXQ4YW0xdTNleG95Yg==',
       shortcode: 'Dc5xRzJTsX0',
-      title: 'Teachers Day'
+      title: 'One Practical answer to make skill education happen. Every week'
     }
   ];
 
