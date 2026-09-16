@@ -4,55 +4,63 @@
       "title": "From Policy to Practice: Implementing Skill Education in Schools",
       "description": "Practical discussion on implementing skill education in schools aligned with NEP and CBSE expectations.",
       "recordingLink": "https://us06web.zoom.us/rec/share/bHYViO76Wqz9E6AhJ-5CDCX8MA8XcdxRxda1nbFTNZZISLm_ZyIXUNocnOwuQsHV.wqDTivwMunfJzFHg?startTime=1777091146000",
-      "thumbnail": "",
+      "thumbnail": "./assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools.png",
       "status": "Active"
     },
     {
       "title": "Setting up Composite Skill Labs in CBSE Schools",
       "description": "Understanding CSL requirements, infrastructure planning and implementation.",
       "recordingLink": "https://us06web.zoom.us/rec/share/-wdEKmKW5-NMuQq-OwBY8rpJ-6VkdRZa_0PNgAY_hthFAviYdngNSZxNss1tFjby.NXHXjIhMINHBhkc0?startTime=1780049672000",
-      "thumbnail": "",
+      "thumbnail": "./assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools (1).png",
       "status": "Active"
     },
     {
       "title": "Assessment Readiness for Skill Education",
       "description": "Preparing schools for assessment and evaluation requirements under the skill education framework.",
       "recordingLink": "https://us06web.zoom.us/rec/share/QDCghbWMaWsxTDl8jQXljRGmgMmrHE7rOdMaw3_Fu9OwXHm4S-iSEcJoKHMtORvJ.OwaoHDMBRe6sJmHv",
-      "thumbnail": "",
+      "thumbnail": "./assets/webinar-thumbnails/Webinar Thumbnails - Lahi For Schools (2).png",
       "status": "Active"
     }
   ],
   "brochures": [
     {
-      "title": "CBSE Skill Education Brochure",
-      "description": "Overview of CBSE's skill education mandate, key policies, and implementation requirements for schools.",
-      "fileURL": "#",
+      "title": "CSL",
+      "description": "Composite Skill Lab model and implementation support for schools.",
+      "fileURL": "https://drive.google.com/file/d/1iIKNeShAVk78uvjr0u4CmCvCJk9205DH/view?usp=sharing",
       "type": "PDF",
-      "icon": "📋",
+      "icon": "🧰",
       "status": "Active"
     },
     {
-      "title": "Scope of Work (SOW)",
-      "description": "Detailed scope of work outlining Lend A Hand India's implementation support framework for CBSE schools.",
-      "fileURL": "#",
+      "title": "Teacher Training",
+      "description": "Teacher training for Kaushal Bodh and Kaushal Vikas.",
+      "fileURL": "https://drive.google.com/file/d/1r0A9m464jr8fp3TaM0Y3jwoj2NtW7LQR/view",
       "type": "PDF",
-      "icon": "📝",
+      "icon": "👩‍🏫",
       "status": "Active"
     },
     {
-      "title": "Karigar Programme Brochure",
-      "description": "Learn about Karigar School of Applied Learning — India's model institution for hands-on, NEP-aligned skill education.",
-      "fileURL": "https://drive.google.com/file/d/1LzEohWU76m0J8wdRooUPH7Z73lX3q6ev/view?usp=sharing",
+      "title": "Karigar",
+      "description": "Hands-on, skill-based learning through the Karigar School of Applied Learning.",
+      "fileURL": "https://drive.google.com/file/d/1H7zmRJR2S_ZsoGJA9RHpcYCSgeB4xtr7/view?usp=sharing",
       "type": "PDF",
       "icon": "🏫",
       "status": "Active"
     },
     {
-      "title": "School Programme Brochure",
-      "description": "Comprehensive brochure on Lend A Hand India's school programme — empowering India's youth through skill education.",
-      "fileURL": "./_Public__School_Program_Brochure_3_Fold__S___4_.pdf",
+      "title": "SOW",
+      "description": "Mobile skill education through hands-on, experiential learning.",
+      "fileURL": "https://drive.google.com/file/d/14t1x4ae4fEfa-8Ojczp48-315IMwWnci/view?usp=sharing",
       "type": "PDF",
-      "icon": "📄",
+      "icon": "🚌",
+      "status": "Active"
+    },
+    {
+      "title": "Internships",
+      "description": "Real-world exposure through structured student internships.",
+      "fileURL": "https://drive.google.com/file/d/18l_X1CnciIEJ38PprdzZFAqvK_1OrKnR/view?usp=sharing",
+      "type": "PDF",
+      "icon": "👷🏼‍♀️",
       "status": "Active"
     }
   ]
