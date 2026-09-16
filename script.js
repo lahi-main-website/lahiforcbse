@@ -482,6 +482,49 @@ let resourcesData = { webinars: [], brochures: [] };
 document.addEventListener('DOMContentLoaded', function initCMS() {
   console.log('[LAHI CMS] DOMContentLoaded fired — starting boot sequence');
 
+  // ── Hero programme poster switcher ────────────────────────
+  const heroProgramImage = document.getElementById('hero-program-image');
+  const heroProgramSwitcher = document.querySelector('.hero-program-switcher');
+  const heroContent = document.querySelector('.hero-content');
+  const heroRight = document.querySelector('.hero-right');
+
+  function syncHeroImageHeight() {
+    if (!heroContent || !heroRight) return;
+
+    if (window.matchMedia('(min-width: 901px)').matches) {
+      heroRight.style.setProperty(
+        '--hero-content-height',
+        heroContent.getBoundingClientRect().height + 'px'
+      );
+    } else {
+      heroRight.style.removeProperty('--hero-content-height');
+    }
+  }
+
+  syncHeroImageHeight();
+  window.addEventListener('resize', syncHeroImageHeight);
+
+  if (heroContent && 'ResizeObserver' in window) {
+    const heroContentObserver = new ResizeObserver(syncHeroImageHeight);
+    heroContentObserver.observe(heroContent);
+  }
+
+  if (heroProgramImage && heroProgramSwitcher) {
+    heroProgramSwitcher.addEventListener('click', function(event) {
+      const button = event.target.closest('.hero-program-button');
+      if (!button || !heroProgramSwitcher.contains(button)) return;
+
+      heroProgramImage.src = button.dataset.posterSrc;
+      heroProgramImage.alt = button.dataset.posterAlt;
+
+      heroProgramSwitcher.querySelectorAll('.hero-program-button').forEach(function(option) {
+        const isSelected = option === button;
+        option.classList.toggle('active', isSelected);
+        option.setAttribute('aria-pressed', String(isSelected));
+      });
+    });
+  }
+
   // ── Timetable modal overlay click / ESC ───────────────────
   const overlay = document.getElementById('timetable-modal');
   if (overlay) {
