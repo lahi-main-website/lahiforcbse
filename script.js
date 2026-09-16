@@ -1243,11 +1243,17 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     }
   ];
 
+  // Store each reel thumbnail at assets/instagram-reels/<shortcode>.jpg.
   var instagramFeed = [
     {
       url: 'https://www.instagram.com/reel/Dc5xRzJTsX0/?igsi=MXQ4YW0xdTNleG95Yg==',
       shortcode: 'Dc5xRzJTsX0',
-      title: 'One Practical answer to make skill education happen. Every week'
+      title: 'One Practical answer to make skill education happen. Week 1'
+    },
+    {
+      url: 'https://www.instagram.com/reel/DdQ-GQ3qgzS/?stkn=c2V6aHgzcmkzNGh3',
+      shortcode: 'DdQ-GQ3qgzS',
+      title: 'One Practical answer to make skill education happen. Week 2'
     }
   ];
 
@@ -1283,12 +1289,11 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
   function renderInstagramReels(root) {
     var visibleColumns = Math.max(1, Math.min(instagramFeed.length, 3));
     var gridMaxWidth = (visibleColumns * 326) + ((visibleColumns - 1) * 18) + 32;
+    root.dataset.reelCount = String(visibleColumns);
     root.style.setProperty('--instagram-grid-max-width', gridMaxWidth + 'px');
     root.classList.add('is-loading');
     root.innerHTML = instagramFeed.map(function(item) {
-      var instagramMediaUrl = 'https://www.instagram.com/p/' + encodeURIComponent(item.shortcode) + '/media/?size=l';
-      var thumbnailUrl = 'https://images.weserv.nl/?url=' + encodeURIComponent(instagramMediaUrl) +
-        '&w=800&h=800&fit=cover&output=jpg';
+      var thumbnailUrl = 'assets/instagram-reels/' + encodeURIComponent(item.shortcode) + '.jpg';
       return '<article class="instagram-reel-card">' +
         '<img class="instagram-reel-image" src="' + escapeHTML(thumbnailUrl) + '" alt="" aria-hidden="true" ' +
           'loading="lazy" decoding="async" />' +
