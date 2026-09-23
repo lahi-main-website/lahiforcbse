@@ -3429,7 +3429,7 @@ button:focus-visible {
     bottom: 10px;
     left: 10px;
     max-width: calc(100% - 20px);
-    font-size: 0.78rem;
+    font-size: 0.86rem;
   }
 }
 

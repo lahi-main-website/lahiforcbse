@@ -1297,6 +1297,11 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
       url: 'https://www.instagram.com/reel/DdQ-GQ3qgzS/?stkn=c2V6aHgzcmkzNGh3',
       shortcode: 'DdQ-GQ3qgzS',
       title: 'One Practical answer to make skill education happen. Week 2'
+    },
+    {
+      url: 'https://www.instagram.com/reel/DdloUznq3ok/?stkn=MW5kYjAyNHBlNnNyaQ==',
+      shortcode: 'DdloUznq3ok',
+      title: 'One Practical answer to make skill education happen. Week 3'
     }
   ];
 
