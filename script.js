@@ -1286,12 +1286,17 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     }
   ];
 
-  // Store each reel thumbnail at assets/instagram-reels/<shortcode>.jpg.
+  // Keep newest reels first. Store thumbnails at assets/instagram-reels/<shortcode>.jpg.
   var instagramFeed = [
     {
-      url: 'https://www.instagram.com/reel/Dc5xRzJTsX0/?igsi=MXQ4YW0xdTNleG95Yg==',
-      shortcode: 'Dc5xRzJTsX0',
-      title: 'One Practical answer to make skill education happen. Week 1'
+      url: 'https://www.instagram.com/reel/Dd1GKJWoqNm/?stkn=MXBpMmZjMjFnanNrdA==',
+      shortcode: 'Dd1GKJWoqNm',
+      title: 'One Practical answer to make skill education happen. Week 4'
+    },
+    {
+      url: 'https://www.instagram.com/reel/DdloUznq3ok/?stkn=MW5kYjAyNHBlNnNyaQ==',
+      shortcode: 'DdloUznq3ok',
+      title: 'One Practical answer to make skill education happen. Week 3'
     },
     {
       url: 'https://www.instagram.com/reel/DdQ-GQ3qgzS/?stkn=c2V6aHgzcmkzNGh3',
@@ -1299,9 +1304,9 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
       title: 'One Practical answer to make skill education happen. Week 2'
     },
     {
-      url: 'https://www.instagram.com/reel/DdloUznq3ok/?stkn=MW5kYjAyNHBlNnNyaQ==',
-      shortcode: 'DdloUznq3ok',
-      title: 'One Practical answer to make skill education happen. Week 3'
+      url: 'https://www.instagram.com/reel/Dc5xRzJTsX0/?igsi=MXQ4YW0xdTNleG95Yg==',
+      shortcode: 'Dc5xRzJTsX0',
+      title: 'One Practical answer to make skill education happen. Week 1'
     }
   ];
 
@@ -1335,19 +1340,22 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
   }
 
   function renderInstagramReels(root) {
-    var visibleColumns = Math.max(1, Math.min(instagramFeed.length, 3));
-    var gridMaxWidth = (visibleColumns * 326) + ((visibleColumns - 1) * 18) + 32;
-    root.dataset.reelCount = String(visibleColumns);
-    root.style.setProperty('--instagram-grid-max-width', gridMaxWidth + 'px');
     root.classList.add('is-loading');
-    root.innerHTML = instagramFeed.map(function(item) {
+    var reelCards = instagramFeed.map(function(item, index) {
       var thumbnailUrl = 'assets/instagram-reels/' + encodeURIComponent(item.shortcode) + '.jpg';
-      return '<article class="instagram-reel-card">' +
+      var newBadge = index === 0
+        ? '<span class="instagram-reel-new" aria-hidden="true">New</span>'
+        : '';
+      var positionLabel = 'Reel ' + (index + 1) + ' of ' + instagramFeed.length + (index === 0 ? ', new reel' : '');
+      return '<article class="instagram-reel-card" role="group" aria-roledescription="slide" aria-label="' +
+          escapeHTML(positionLabel) + '">' +
         '<img class="instagram-reel-image" src="' + escapeHTML(thumbnailUrl) + '" alt="" aria-hidden="true" ' +
           'loading="lazy" decoding="async" />' +
         '<span class="instagram-reel-shade" aria-hidden="true"></span>' +
+        newBadge +
         '<a class="instagram-reel-link" href="' + escapeHTML(item.url) + '" target="_blank" rel="noopener" ' +
-          'aria-label="View ' + escapeHTML(item.title) + ' on Instagram in a new tab">' +
+          'aria-label="View ' + escapeHTML(item.title) + (index === 0 ? ', new reel' : '') +
+          ' on Instagram in a new tab">' +
           '<span class="instagram-reel-action" aria-hidden="true">' +
             '<svg class="instagram-reel-icon" viewBox="0 0 24 24" focusable="false">' +
               '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"></rect>' +
@@ -1360,6 +1368,130 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
         '</a>' +
       '</article>';
     }).join('');
+
+    root.innerHTML =
+      '<div class="instagram-reels-stage">' +
+        '<button type="button" class="instagram-reels-button instagram-reels-button-previous" data-reels-previous ' +
+          'aria-label="Show newer reels" disabled>' + directionIconMarkup('left', 'instagram-reels-button-icon') + '</button>' +
+        '<div class="instagram-reels-track" data-reels-track tabindex="0" role="region" ' +
+          'aria-roledescription="carousel" aria-label="Instagram reels, newest first">' + reelCards + '</div>' +
+        '<button type="button" class="instagram-reels-button instagram-reels-button-next" data-reels-next ' +
+          'aria-label="Show older reels">' + directionIconMarkup('right', 'instagram-reels-button-icon') + '</button>' +
+      '</div>' +
+      '<input class="instagram-reels-scrollbar" data-reels-scrollbar type="range" min="0" max="1" value="0" step="1" ' +
+        'aria-label="Reel carousel position" />' +
+      '<p class="instagram-reels-status" data-reels-status aria-live="polite"></p>';
+
+    var track = root.querySelector('[data-reels-track]');
+    var cards = Array.from(track.querySelectorAll('.instagram-reel-card'));
+    var previousButton = root.querySelector('[data-reels-previous]');
+    var nextButton = root.querySelector('[data-reels-next]');
+    var carouselScrollbar = root.querySelector('[data-reels-scrollbar]');
+    var status = root.querySelector('[data-reels-status]');
+    var scrollTimer = null;
+
+    function visibleReelCount() {
+      if (window.matchMedia('(max-width: 480px)').matches) return 1;
+      if (window.matchMedia('(max-width: 899px)').matches) return 2;
+      return 3;
+    }
+
+    function currentReelIndex() {
+      if (!cards.length) return 0;
+      return cards.reduce(function(closestIndex, card, index) {
+        var closestDistance = Math.abs(cards[closestIndex].offsetLeft - track.scrollLeft);
+        var cardDistance = Math.abs(card.offsetLeft - track.scrollLeft);
+        return cardDistance < closestDistance ? index : closestIndex;
+      }, 0);
+    }
+
+    function maximumStartIndex() {
+      return Math.max(0, cards.length - visibleReelCount());
+    }
+
+    function updateCarouselState(announce) {
+      var index = Math.min(currentReelIndex(), maximumStartIndex());
+      var finalVisibleIndex = Math.min(cards.length, index + visibleReelCount());
+      previousButton.disabled = index <= 0;
+      nextButton.disabled = index >= maximumStartIndex();
+      carouselScrollbar.max = String(maximumStartIndex());
+      carouselScrollbar.value = String(index);
+      carouselScrollbar.disabled = maximumStartIndex() === 0;
+      carouselScrollbar.setAttribute(
+        'aria-valuetext',
+        'Showing reels ' + (index + 1) + ' to ' + finalVisibleIndex + ' of ' + cards.length
+      );
+      if (announce && status) {
+        status.textContent = 'Showing reels ' + (index + 1) + ' to ' + finalVisibleIndex + ' of ' + cards.length + '.';
+      }
+    }
+
+    function scrollToReel(index, announce, behavior) {
+      var targetIndex = Math.max(0, Math.min(index, maximumStartIndex()));
+      var targetCard = cards[targetIndex];
+      if (!targetCard) return;
+      track.scrollTo({
+        left: targetCard.offsetLeft,
+        behavior: behavior || (prefersReducedMotion.matches ? 'auto' : 'smooth')
+      });
+      previousButton.disabled = targetIndex <= 0;
+      nextButton.disabled = targetIndex >= maximumStartIndex();
+      carouselScrollbar.max = String(maximumStartIndex());
+      carouselScrollbar.value = String(targetIndex);
+      if (announce && status) {
+        var finalVisibleIndex = Math.min(cards.length, targetIndex + visibleReelCount());
+        status.textContent = 'Showing reels ' + (targetIndex + 1) + ' to ' + finalVisibleIndex + ' of ' + cards.length + '.';
+      }
+    }
+
+    previousButton.addEventListener('click', function() {
+      scrollToReel(currentReelIndex() - visibleReelCount(), true);
+    });
+
+    nextButton.addEventListener('click', function() {
+      scrollToReel(currentReelIndex() + visibleReelCount(), true);
+    });
+
+    carouselScrollbar.addEventListener('input', function() {
+      scrollToReel(Number(carouselScrollbar.value), false, 'auto');
+    });
+
+    carouselScrollbar.addEventListener('change', function() {
+      updateCarouselState(true);
+    });
+
+    track.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        scrollToReel(currentReelIndex() - 1, true);
+      } else if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        scrollToReel(currentReelIndex() + 1, true);
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        scrollToReel(0, true);
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        scrollToReel(maximumStartIndex(), true);
+      }
+    });
+
+    track.addEventListener('scroll', function() {
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(function() {
+        updateCarouselState(true);
+      }, 120);
+    }, { passive: true });
+
+    window.addEventListener('resize', function() {
+      window.clearTimeout(scrollTimer);
+      scrollTimer = window.setTimeout(function() {
+        scrollToReel(Math.min(currentReelIndex(), maximumStartIndex()), false);
+        updateCarouselState(false);
+      }, 120);
+    });
+
+    updateCarouselState(false);
 
     var pendingImages = root.querySelectorAll('.instagram-reel-image').length;
     root.querySelectorAll('.instagram-reel-image').forEach(function(image) {
