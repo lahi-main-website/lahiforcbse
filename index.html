@@ -23,11 +23,6 @@
   </head>
   <body>
     <svg class="direction-icon-sprite" aria-hidden="true" focusable="false">
-      <symbol id="direction-arrow-left" viewBox="0 0 256 256">
-        <rect width="256" height="256" fill="none"></rect>
-        <line x1="216" y1="128" x2="40" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
-        <polyline points="112 56 40 128 112 200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
-      </symbol>
       <symbol id="direction-arrow-right" viewBox="0 0 256 256">
         <rect width="256" height="256" fill="none"></rect>
         <line x1="40" y1="128" x2="216" y2="128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
@@ -38,10 +33,31 @@
         <line x1="128" y1="216" x2="128" y2="40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
         <polyline points="56 112 128 40 200 112" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
       </symbol>
+      <symbol id="direction-arrow-down" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <line x1="128" y1="40" x2="128" y2="216" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
+        <polyline points="56 144 128 216 200 144" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
       <symbol id="direction-arrow-up-right" viewBox="0 0 256 256">
         <rect width="256" height="256" fill="none"></rect>
         <line x1="64" y1="192" x2="192" y2="64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></line>
         <polyline points="88 64 192 64 192 168" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
+      <symbol id="direction-caret-left" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <polyline points="160 208 80 128 160 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
+      <symbol id="direction-caret-right" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <polyline points="96 48 176 128 96 208" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
+      <symbol id="direction-caret-up" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
+      </symbol>
+      <symbol id="direction-caret-down" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <polyline points="48 96 128 176 208 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"></polyline>
       </symbol>
     </svg>
 
@@ -68,10 +84,7 @@
             aria-controls="resources-dropdown-menu"
           >
             Resources
-            <svg class="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
-              <rect width="256" height="256" fill="none" />
-              <polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-            </svg>
+            <svg class="dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-caret-down"></use></svg>
           </button>
           <ul class="dropdown-menu" id="resources-dropdown-menu">
             <li><a href="#resources">Resources &amp; Circulars</a></li>
@@ -107,10 +120,7 @@
           aria-controls="mobile-resources-menu"
         >
           Resources
-          <svg class="mobile-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
-            <rect width="256" height="256" fill="none" />
-            <polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-          </svg>
+          <svg class="mobile-dropdown-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-caret-down"></use></svg>
         </button>
         <div class="mobile-dropdown-menu" id="mobile-resources-menu">
           <a href="#resources" class="mobile-sub-nav-link">Resources &amp; Circulars</a>
@@ -468,7 +478,7 @@
               <div class="hindi">Kaushal Bodh — Awareness Through Skill</div>
             </div>
             <button class="programme-toggle" id="programme-toggle-kaushal-bodh" type="button" aria-expanded="false" aria-controls="programme-details-kaushal-bodh">
-              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-down"></use></svg></span>
             </button>
             <div class="programme-details" id="programme-details-kaushal-bodh" role="region" aria-labelledby="programme-toggle-kaushal-bodh" hidden>
             <div class="programme-body">
@@ -599,7 +609,7 @@
               <div class="hindi">Kaushal Vikas — Skill Development</div>
             </div>
             <button class="programme-toggle" id="programme-toggle-kaushal-vikas" type="button" aria-expanded="false" aria-controls="programme-details-kaushal-vikas">
-              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-down"></use></svg></span>
             </button>
             <div class="programme-details" id="programme-details-kaushal-vikas" role="region" aria-labelledby="programme-toggle-kaushal-vikas" hidden>
             <div class="programme-body">
@@ -747,7 +757,7 @@
               <div class="hindi">Work-Based Learning & Career Exposure</div>
             </div>
             <button class="programme-toggle" id="programme-toggle-internship" type="button" aria-expanded="false" aria-controls="programme-details-internship">
-              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-down"></use></svg></span>
             </button>
             <div class="programme-details" id="programme-details-internship" role="region" aria-labelledby="programme-toggle-internship" hidden>
             <div class="programme-body">
@@ -855,7 +865,7 @@
               <div class="hindi">Bringing Skill Education to Life</div>
             </div>
             <button class="programme-toggle" id="programme-toggle-karigar" type="button" aria-expanded="false" aria-controls="programme-details-karigar">
-              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-down"></use></svg></span>
             </button>
             <div class="programme-details" id="programme-details-karigar" role="region" aria-labelledby="programme-toggle-karigar" hidden>
               <div class="programme-body">
@@ -903,7 +913,7 @@
               <div class="hindi">Bringing Skills to Every School</div>
             </div>
             <button class="programme-toggle" id="programme-toggle-skills-on-wheels" type="button" aria-expanded="false" aria-controls="programme-details-skills-on-wheels">
-              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-up"></use></svg></span>
+              <span>Read more</span><span class="programme-toggle-icon" aria-hidden="true"><svg class="direction-icon toggle-arrow-icon" viewBox="0 0 256 256" focusable="false"><use href="#direction-arrow-down"></use></svg></span>
             </button>
             <div class="programme-details" id="programme-details-skills-on-wheels" role="region" aria-labelledby="programme-toggle-skills-on-wheels" hidden>
               <div class="programme-body">
@@ -1802,10 +1812,7 @@
                     <option>Request Skills on Wheels for teachers and students</option>
                     <option>Multiple of the above</option>
                   </select>
-                  <svg class="form-select-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
-                    <rect width="256" height="256" fill="none" />
-                    <polyline points="48 160 128 80 208 160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24" />
-                  </svg>
+                  <svg class="form-select-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-caret-down"></use></svg>
                 </div>
               </div>
               <div class="form-group">
@@ -1959,7 +1966,7 @@
                   <h3>NEP 2020</h3>
                   <p>Mandates skill education from Grade 6, replacing rote learning with competency-based, experiential learning.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-down"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <ul>
@@ -1969,7 +1976,7 @@
                   <li>Focus on holistic development, skills, and real-world application</li>
                 </ul>
                 <p style="margin-top:14px;font-size:0.875rem;color:var(--teal);font-weight:600;">Skill education is positioned as a core part of mainstream schooling, not an add-on.</p>
-                <a href="https://aicte.gov.in/sites/default/files/nep2020.pdf" target="_blank" rel="noopener" class="resource-dl-btn"><svg class="direction-icon down-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg><span>Download NEP 2020 Document</span></a>
+                <a href="https://aicte.gov.in/sites/default/files/nep2020.pdf" target="_blank" rel="noopener" class="resource-dl-btn"><svg class="direction-icon down-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-down"></use></svg><span>Download NEP 2020 Document</span></a>
               </div>
             </div>
 
@@ -1981,7 +1988,7 @@
                   <h3>NCF 2023</h3>
                   <p>Operationalises NEP in classrooms — introduces Kaushal Bodh and multi-sector skill exposure for Grades 6–10.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-down"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <ul>
@@ -1991,7 +1998,7 @@
                   <li>Focus on teacher-led implementation and school ecosystem readiness</li>
                 </ul>
                 <p style="margin-top:14px;font-size:0.875rem;color:var(--teal);font-weight:600;">NCF translates policy into what schools actually need to do.</p>
-                <a href="https://dsel.education.gov.in/sites/default/files/guidelines/ncf_2023.pdf" target="_blank" rel="noopener" class="resource-dl-btn"><svg class="direction-icon down-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg><span>Download NCF 2023 Document</span></a>
+                <a href="https://dsel.education.gov.in/sites/default/files/guidelines/ncf_2023.pdf" target="_blank" rel="noopener" class="resource-dl-btn"><svg class="direction-icon down-arrow-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-down"></use></svg><span>Download NCF 2023 Document</span></a>
               </div>
             </div>
 
@@ -2003,7 +2010,7 @@
                   <h3>CBSE Circulars</h3>
                   <p>Multiple circulars pushing Composite Skill Labs, Kaushal Bodh implementation, and NEP–NCF alignment across schools.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-down"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <ul>
@@ -2029,7 +2036,7 @@
                   <h3>Timetable Integration</h3>
                   <p>~110 hours/year per CBSE guidelines — typically 4–5 periods per week per grade, in distributed or block models.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-down"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px;">
@@ -2055,7 +2062,7 @@
                   <h3>Case Studies</h3>
                   <p>Real implementation stories from Lend A Hand India partner schools — how they started, what changed, and what they'd do differently.</p>
                 </div>
-                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-up"></use></svg></button>
+                <button class="resource-view-btn" aria-expanded="false">View <svg class="direction-icon resource-arrow" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="#direction-arrow-down"></use></svg></button>
               </div>
               <div class="resource-expand">
                 <a href="#register" class="resource-dl-btn">📩 Request Case Study Pack</a>
