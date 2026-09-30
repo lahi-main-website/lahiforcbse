@@ -1,7 +1,13 @@
-function directionIconMarkup(direction, className) {
+function directionIconMarkup(direction, className, family) {
   return '<svg class="direction-icon ' + (className || '') + '" viewBox="0 0 256 256" aria-hidden="true" focusable="false">' +
-    '<use href="#direction-arrow-' + direction + '"></use>' +
+    '<use href="#direction-' + (family || 'arrow') + '-' + direction + '"></use>' +
     '</svg>';
+}
+
+function setDirectionIcon(icon, direction, family) {
+  var iconUse = icon && icon.querySelector('use');
+  if (!iconUse) return;
+  iconUse.setAttribute('href', '#direction-' + (family || 'arrow') + '-' + direction);
 }
 
 // ── Hamburger menu ──
@@ -35,6 +41,7 @@ function directionIconMarkup(direction, className) {
     if (mobileResources && mobileResourcesToggle) {
       mobileResources.classList.remove('is-open');
       mobileResourcesToggle.setAttribute('aria-expanded', 'false');
+      setDirectionIcon(mobileResourcesToggle.querySelector('.mobile-dropdown-chevron'), 'down', 'caret');
     }
   }
  
@@ -57,6 +64,7 @@ function directionIconMarkup(direction, className) {
     mobileResourcesToggle.addEventListener('click', () => {
       const isOpen = mobileResources.classList.toggle('is-open');
       mobileResourcesToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      setDirectionIcon(mobileResourcesToggle.querySelector('.mobile-dropdown-chevron'), isOpen ? 'up' : 'down', 'caret');
     });
   }
 
@@ -68,6 +76,7 @@ function directionIconMarkup(direction, className) {
     if (!resourcesDropdown || !resourcesToggle) return;
     resourcesDropdown.classList.toggle('is-open', open);
     resourcesToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    setDirectionIcon(resourcesToggle.querySelector('.dropdown-chevron'), open ? 'up' : 'down', 'caret');
   }
 
   if (resourcesDropdown && resourcesToggle) {
@@ -217,6 +226,7 @@ function directionIconMarkup(direction, className) {
       }, 460);
     }
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    setDirectionIcon(toggle.querySelector('.toggle-arrow-icon'), open ? 'up' : 'down');
     const label = toggle.querySelector('span:first-child');
     if (label) label.textContent = open ? 'Read less' : 'Read more';
   }
@@ -336,12 +346,18 @@ function directionIconMarkup(direction, className) {
       document.querySelectorAll('.resource-card.is-open').forEach(c => {
         c.classList.remove('is-open');
         const b = c.querySelector('.resource-view-btn');
-        if (b) b.setAttribute('aria-expanded', 'false');
+        if (b) {
+          b.setAttribute('aria-expanded', 'false');
+          setDirectionIcon(b.querySelector('.resource-arrow'), 'down');
+        }
       });
       // Open this one (toggle)
       if (!isOpen) {
         card.classList.add('is-open');
-        if (btn) btn.setAttribute('aria-expanded', 'true');
+        if (btn) {
+          btn.setAttribute('aria-expanded', 'true');
+          setDirectionIcon(btn.querySelector('.resource-arrow'), 'up');
+        }
       }
     });
   });
@@ -871,7 +887,7 @@ function renderFAQs() {
         '<button class="faq-q-btn" id="faq-question-' + id + '" aria-expanded="false" aria-controls="faq-answer-' + id + '">' +
           '<span class="faq-q-cat-badge">' + escapeHTML(faq.category || '') + '</span>' +
           '<span class="faq-q-text">'     + escapeHTML(faq.question  || '') + '</span>' +
-          '<span class="faq-q-arrow" aria-hidden="true">' + directionIconMarkup('up', 'toggle-arrow-icon') + '</span>' +
+          '<span class="faq-q-arrow" aria-hidden="true">' + directionIconMarkup('down', 'toggle-arrow-icon') + '</span>' +
         '</button>' +
         '<div class="faq-answer" id="faq-answer-' + id + '" role="region" aria-labelledby="faq-question-' + id + '">' +
           '<div class="faq-answer-inner">' + escapeHTML(faq.answer || '') + '</div>' +
@@ -890,13 +906,19 @@ function toggleFAQItem(item) {
   document.querySelectorAll('.faq-item.open').forEach(function(el) {
     el.classList.remove('open');
     var btn = el.querySelector('.faq-q-btn');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
+    if (btn) {
+      btn.setAttribute('aria-expanded', 'false');
+      setDirectionIcon(btn.querySelector('.toggle-arrow-icon'), 'down');
+    }
   });
   // Open clicked item (toggle)
   if (!isOpen) {
     item.classList.add('open');
     var btn = item.querySelector('.faq-q-btn');
-    if (btn) btn.setAttribute('aria-expanded', 'true');
+    if (btn) {
+      btn.setAttribute('aria-expanded', 'true');
+      setDirectionIcon(btn.querySelector('.toggle-arrow-icon'), 'up');
+    }
   }
 }
 
@@ -1018,7 +1040,7 @@ function renderBrochures() {
     var isPlaceholder = !b.fileURL || b.fileURL === '#';
     var fileType = String(b.type || '').trim().toUpperCase();
     var downloadLabel = fileType ? 'Download ' + escapeHTML(fileType) : 'Download';
-    var downloadIcon = directionIconMarkup('up', 'down-arrow-icon');
+    var downloadIcon = directionIconMarkup('down', 'down-arrow-icon');
     var btnHtml = isPlaceholder
       ? '<span class="brochure-dl-btn" style="opacity:0.5;cursor:default;" title="Coming soon">⏳ Coming Soon</span>'
       : '<a href="' + escapeHTML(b.fileURL) + '" target="_blank" rel="noopener" class="brochure-dl-btn" download>' + downloadIcon + '<span>' + downloadLabel + '</span></a>';
@@ -1324,11 +1346,11 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
   }
 
   function galleryLeftArrowMarkup() {
-    return directionIconMarkup('left', 'gallery-chevron');
+    return directionIconMarkup('left', 'gallery-chevron', 'caret');
   }
 
   function galleryRightArrowMarkup() {
-    return directionIconMarkup('right', 'gallery-chevron');
+    return directionIconMarkup('right', 'gallery-chevron', 'caret');
   }
 
   function normalizedIndex(index, length) {
@@ -1372,11 +1394,11 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     root.innerHTML =
       '<div class="instagram-reels-stage">' +
         '<button type="button" class="instagram-reels-button instagram-reels-button-previous" data-reels-previous ' +
-          'aria-label="Show newer reels" disabled>' + directionIconMarkup('left', 'instagram-reels-button-icon') + '</button>' +
+          'aria-label="Show newer reels" disabled>' + directionIconMarkup('left', 'instagram-reels-button-icon', 'caret') + '</button>' +
         '<div class="instagram-reels-track" data-reels-track tabindex="0" role="region" ' +
           'aria-roledescription="carousel" aria-label="Instagram reels, newest first">' + reelCards + '</div>' +
         '<button type="button" class="instagram-reels-button instagram-reels-button-next" data-reels-next ' +
-          'aria-label="Show older reels">' + directionIconMarkup('right', 'instagram-reels-button-icon') + '</button>' +
+          'aria-label="Show older reels">' + directionIconMarkup('right', 'instagram-reels-button-icon', 'caret') + '</button>' +
       '</div>' +
       '<input class="instagram-reels-scrollbar" data-reels-scrollbar type="range" min="0" max="1" value="0" step="1" ' +
         'aria-label="Reel carousel position" />' +
@@ -1789,20 +1811,23 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
       ) close();
     });
     addSwipe(stage, function() { select(activeIndex - 1, true); }, function() { select(activeIndex + 1, true); });
-    document.addEventListener('keydown', function(event) {
+    function handleGalleryKeydown(event) {
       if (overlay.hidden) return;
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' || event.key === 'Esc') {
         event.preventDefault();
+        event.stopPropagation();
         close();
         return;
       }
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
+        event.stopPropagation();
         select(activeIndex - 1, true);
         return;
       }
       if (event.key === 'ArrowRight') {
         event.preventDefault();
+        event.stopPropagation();
         select(activeIndex + 1, true);
         return;
       }
@@ -1820,7 +1845,8 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
         event.preventDefault();
         first.focus();
       }
-    });
+    }
+    window.addEventListener('keydown', handleGalleryKeydown, true);
 
     return { open: open, close: close };
   }

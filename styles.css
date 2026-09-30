@@ -63,8 +63,6 @@ body {
 .down-arrow-icon {
   width: 1.05em;
   height: 1.05em;
-  transform: rotate(180deg);
-  transform-origin: center;
 }
 img {
   display: block;
@@ -150,8 +148,6 @@ nav {
   width: 15px;
   height: 15px;
   flex: 0 0 auto;
-  transform: rotate(180deg);
-  transition: transform 0.2s ease;
 }
 
 .dropdown-menu {
@@ -189,12 +185,6 @@ nav {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
-}
-
-.dropdown:hover .dropdown-chevron,
-.dropdown:focus-within .dropdown-chevron,
-.dropdown.is-open .dropdown-chevron {
-  transform: rotate(0deg);
 }
 
 .dropdown-menu::before {
@@ -254,12 +244,6 @@ nav {
   width: 20px;
   height: 20px;
   flex: 0 0 auto;
-  transform: rotate(180deg);
-  transition: transform 0.2s ease;
-}
-
-.mobile-nav-dropdown.is-open .mobile-dropdown-chevron {
-  transform: rotate(0deg);
 }
 
 .mobile-dropdown-menu {
@@ -479,9 +463,7 @@ nav {
 
 @media (prefers-reduced-motion: reduce) {
   .dropdown-menu,
-  .dropdown-chevron,
-  .mobile-dropdown-menu,
-  .mobile-dropdown-chevron {
+  .mobile-dropdown-menu {
     transition: none;
   }
 }
@@ -1366,16 +1348,13 @@ section {
   flex-shrink: 0;
   border: 1px solid var(--border);
   border-radius: 50%;
-  transform: rotate(180deg);
-  transform-origin: center;
-  transition: transform 0.3s ease, background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 .programme-toggle-icon .toggle-arrow-icon {
   width: 14px;
   height: 14px;
 }
 .programme-card.is-expanded .programme-toggle-icon {
-  transform: rotate(0deg);
   background: var(--teal);
   border-color: var(--teal);
   color: white;
@@ -1951,7 +1930,7 @@ section {
   height: 16px;
   color: var(--muted);
   pointer-events: none;
-  transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%);
   transition: color 0.2s ease;
 }
 .form-select-control:focus-within .form-select-chevron {
@@ -2141,14 +2120,8 @@ section {
   color: white;
 }
 .resource-arrow {
-  transition: transform 0.3s ease;
   width: 1em;
   height: 1em;
-  transform: rotate(180deg);
-  transform-origin: center;
-}
-.resource-card.is-open .resource-arrow {
-  transform: rotate(0deg);
 }
 .resource-expand {
   max-height: 0;
@@ -3124,9 +3097,7 @@ button:focus-visible {
   justify-content: center;
   font-size: 0.75rem;
   color: var(--muted);
-  transform: rotate(180deg);
-  transform-origin: center;
-  transition: transform 0.3s ease, background 0.2s, border-color 0.2s;
+  transition: background 0.2s, border-color 0.2s;
   margin-top: 1px;
 }
 .faq-q-arrow .toggle-arrow-icon {
@@ -3135,7 +3106,6 @@ button:focus-visible {
 }
 
 .faq-item.open .faq-q-arrow {
-  transform: rotate(0deg);
   background: var(--teal);
   border-color: var(--teal);
   color: white;
@@ -3236,7 +3206,7 @@ button:focus-visible {
   height: 44px;
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 50%;
-  background: rgba(250, 247, 242, 0.68);
+  background: rgba(250, 247, 242, 0.54);
   color: var(--teal);
   box-shadow: 0 4px 14px rgba(26, 18, 9, 0.14);
   backdrop-filter: blur(10px) saturate(1.08);
@@ -3244,7 +3214,7 @@ button:focus-visible {
   cursor: pointer;
   touch-action: manipulation;
   transform: translateY(-50%);
-  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .instagram-reels-button-previous {
@@ -3272,14 +3242,28 @@ button:focus-visible {
 }
 
 .instagram-reels-button:disabled {
-  opacity: 0.38;
-  cursor: default;
-  pointer-events: none;
+  background: rgba(250, 247, 242, 0.22);
+  color: rgba(137, 75, 7, 0.58);
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: auto;
 }
 
 .instagram-reels-button-icon {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
+}
+
+.instagram-reels-button:disabled .instagram-reels-button-icon {
+  opacity: 0.42;
+}
+
+.instagram-reels-button-previous .instagram-reels-button-icon {
+  transform: translateX(-1px);
+}
+
+.instagram-reels-button-next .instagram-reels-button-icon {
+  transform: translateX(1px);
 }
 
 .instagram-reels-track {
@@ -3371,45 +3355,65 @@ button:focus-visible {
   left: 14px;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  overflow: hidden;
   padding: 7px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.56);
   border-radius: 100px;
-  background: linear-gradient(135deg, rgba(224, 123, 42, 0.9), rgba(137, 75, 7, 0.82));
-  box-shadow: 0 8px 22px rgba(137, 75, 7, 0.34);
-  backdrop-filter: blur(10px) saturate(1.15);
-  -webkit-backdrop-filter: blur(10px) saturate(1.15);
-  color: white;
+  background:
+    linear-gradient(135deg, rgba(224, 123, 42, 0.46), rgba(137, 75, 7, 0.34)),
+    rgba(26, 18, 9, 0.18);
+  box-shadow:
+    0 8px 22px rgba(137, 75, 7, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px) saturate(1.4);
+  -webkit-backdrop-filter: blur(8px) saturate(1.4);
+  color: #fff;
   font-size: 0.72rem;
   font-weight: 800;
   line-height: 1;
   letter-spacing: 0.09em;
+  text-shadow: 0 1px 3px rgba(26, 18, 9, 0.72);
   text-transform: uppercase;
   pointer-events: none;
 }
 
 .instagram-reel-new::before {
   content: "";
-  width: 7px;
-  height: 7px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: #fff7ed;
-  animation: instagram-reel-new-pulse 1.3s ease-out 3;
+  position: absolute;
+  top: -60%;
+  left: -55%;
+  width: 42%;
+  height: 220%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.58),
+    rgba(255, 255, 255, 0)
+  );
+  opacity: 0;
+  transform: translateX(0) rotate(18deg);
+  animation: instagram-reel-new-shimmer 4s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
-@keyframes instagram-reel-new-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(255, 247, 237, 0.72);
-    transform: scale(0.92);
+@keyframes instagram-reel-new-shimmer {
+  0%,
+  72% {
+    opacity: 0;
+    transform: translateX(0) rotate(18deg);
   }
-  60% {
-    box-shadow: 0 0 0 7px rgba(255, 247, 237, 0);
-    transform: scale(1);
+  76% {
+    opacity: 0.72;
   }
+  91% {
+    opacity: 0.72;
+    transform: translateX(410%) rotate(18deg);
+  }
+  95%,
   100% {
-    box-shadow: 0 0 0 7px rgba(255, 247, 237, 0);
-    transform: scale(1);
+    opacity: 0;
+    transform: translateX(410%) rotate(18deg);
   }
 }
 
@@ -3636,13 +3640,7 @@ button:focus-visible {
     top: 10px;
     left: 10px;
     padding: 5px 9px;
-    gap: 5px;
     font-size: 0.66rem;
-  }
-
-  .instagram-reel-new::before {
-    width: 6px;
-    height: 6px;
   }
 
   .instagram-reel-link {
@@ -3675,6 +3673,7 @@ button:focus-visible {
   }
 
   .instagram-reel-new::before {
+    opacity: 0;
     animation: none;
   }
 }
@@ -5674,19 +5673,18 @@ button:hover > .gallery-play {
 }
 
 .gallery-chevron {
-  position: relative;
   display: block;
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   flex: 0 0 auto;
 }
 
 .gallery-viewer-side-prev .gallery-chevron {
-  left: -1px;
+  transform: translateX(-1px);
 }
 
 .gallery-viewer-side-next .gallery-chevron {
-  left: 1px;
+  transform: translateX(1px);
 }
 
 .gallery-viewer-media-title {
