@@ -1293,6 +1293,11 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
   // Keep newest reels first. Store thumbnails at assets/instagram-reels/<shortcode>.jpg.
   var instagramFeed = [
     {
+      url: 'https://www.instagram.com/reel/DeMOdQIijgR/?stkn=MWlnZ3J0bW9scmY1dQ==',
+      shortcode: 'DeMOdQIijgR',
+      title: 'One Practical answer to make skill education happen. Week 5'
+    },
+    {
       url: 'https://www.instagram.com/reel/Dd1GKJWoqNm/?stkn=MXBpMmZjMjFnanNrdA==',
       shortcode: 'Dd1GKJWoqNm',
       title: 'One Practical answer to make skill education happen. Week 4'
