@@ -4193,27 +4193,43 @@ button:focus-visible {
 .partner-marquee-track {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: var(--partner-marquee-gap);
   width: max-content;
   will-change: transform;
+  --partner-marquee-gap: 20px;
+  --partner-marquee-half-gap: 10px;
+  --partner-marquee-duration: 71s;
 }
 .partner-marquee-track.partner-marquee-left {
-  animation: partners-scroll-left 42s linear infinite;
+  animation: partners-scroll-left var(--partner-marquee-duration) linear infinite;
 }
 .partner-marquee-track.partner-marquee-right {
-  animation: partners-scroll-right 42s linear infinite;
+  animation: partners-scroll-right var(--partner-marquee-duration) linear infinite;
 }
-.partner-marquee-row:hover .partner-marquee-track {
+.partner-marquee-row:hover .partner-marquee-track,
+.partner-marquee-row:focus-within .partner-marquee-track {
   animation-play-state: paused;
   cursor: pointer;
 }
 
+[data-partners-row="second"] {
+  --partner-marquee-duration: 67s;
+}
+
+[data-partners-row="mobile"] {
+  --partner-marquee-duration: 86s;
+}
+
+.partner-marquee-row-mobile {
+  display: none;
+}
+
 @keyframes partners-scroll-left {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(calc(-50% - var(--partner-marquee-half-gap))); }
 }
 @keyframes partners-scroll-right {
-  from { transform: translateX(-50%); }
+  from { transform: translateX(calc(-50% - var(--partner-marquee-half-gap))); }
   to { transform: translateX(0); }
 }
 
@@ -4293,17 +4309,26 @@ button:focus-visible {
     height: 76px;
     padding: 12px 14px;
   }
-  .partner-marquee-track.partner-marquee-left,
-  .partner-marquee-track.partner-marquee-right {
-    animation-duration: 34s;
+
+  [data-partners-row="first"] {
+    --partner-marquee-duration: 58s;
+  }
+
+  [data-partners-row="second"] {
+    --partner-marquee-duration: 55s;
   }
 }
 
 /* Mobile — single scrolling row, smaller cards */
 @media (max-width: 640px) {
-  .partner-marquee-row:nth-child(2) {
+  .partner-marquee-row-desktop {
     display: none;
   }
+
+  .partner-marquee-row-mobile {
+    display: block;
+  }
+
   .partner-logo-card {
     width: 108px;
     height: 66px;
@@ -4311,10 +4336,12 @@ button:focus-visible {
     border-radius: 12px;
   }
   .partner-marquee-track {
-    gap: 14px;
+    --partner-marquee-gap: 14px;
+    --partner-marquee-half-gap: 7px;
   }
-  .partner-marquee-track.partner-marquee-left {
-    animation-duration: 26s;
+
+  [data-partners-row="mobile"] {
+    --partner-marquee-duration: 86s;
   }
   .partners-stats {
     gap: 20px;
@@ -4341,8 +4368,71 @@ button:focus-visible {
     gap: 12px;
   }
   .partner-marquee-track {
-    gap: 16px;
+    --partner-marquee-gap: 16px;
+    --partner-marquee-half-gap: 8px;
   }
+}
+
+/* Floating school-name tooltip — rendered outside the marquee so edge masks cannot clip it. */
+.partner-school-tooltip {
+  --partner-tooltip-bg: rgba(47, 30, 17, 0.92);
+  position: fixed;
+  z-index: 1000;
+  visibility: hidden;
+  max-width: min(260px, calc(100vw - 24px));
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  background: var(--partner-tooltip-bg);
+  box-shadow: 0 8px 22px rgba(26, 18, 9, 0.24);
+  backdrop-filter: blur(8px) saturate(1.15);
+  -webkit-backdrop-filter: blur(8px) saturate(1.15);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition:
+    opacity 0.16s ease,
+    transform 0.16s ease,
+    visibility 0.16s ease;
+}
+
+.partner-school-tooltip.is-active {
+  visibility: visible;
+}
+
+.partner-school-tooltip.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.partner-school-tooltip[data-placement="bottom"] {
+  transform: translateY(-4px);
+}
+
+.partner-school-tooltip[data-placement="bottom"].is-visible {
+  transform: translateY(0);
+}
+
+.partner-school-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  border: 6px solid transparent;
+  border-top-color: var(--partner-tooltip-bg);
+  transform: translateX(-50%);
+}
+
+.partner-school-tooltip[data-placement="bottom"]::after {
+  top: auto;
+  bottom: 100%;
+  border-top-color: transparent;
+  border-bottom-color: var(--partner-tooltip-bg);
 }
 
 /* Partner school logo modal — opens on logo click, closes on outside click / ESC / close button */
@@ -4487,6 +4577,7 @@ button:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .partner-school-tooltip,
   .partner-modal-overlay,
   .partner-modal {
     transition: none;

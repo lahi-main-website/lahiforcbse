@@ -241,12 +241,161 @@ function setDirectionIcon(icon, direction, family) {
     });
   });
 
-  // ── Partner Schools logo modal (click a logo to view name) ──
+  // ── Partner Schools marquee, tooltip, and logo modal ──
+  const partnerSchools = [
+    { name: 'ARISE International School', logo: 'arise-international-school.jpeg' },
+    { name: "BUD'S International School", logo: 'buds-international-school.jpeg' },
+    { name: 'CKMNSS School, Chalakudy', logo: 'ckmnss-school-chalakudy.jpeg' },
+    { name: 'Dnyanada English Medium School', logo: 'dhyandarpan-english-school.jpeg' },
+    { name: 'GG International School', logo: 'gg-international-school.png' },
+    { name: 'Golden Jubilee School, Jalna', logo: 'golden-jubilee-school.jpeg' },
+    { name: 'Gurukul English Medium School', logo: 'gurukul-english-medium-school.jpeg' },
+    { name: 'Hadas CBSE School, Nagpur', logo: 'hadas-cbse-school.jpeg' },
+    { name: 'Lakhotiya Bhutada High School', logo: 'lakhotiya-bhutada-highschool.jpeg' },
+    { name: 'Loyola Academy', logo: 'loyola-school.jpeg' },
+    { name: 'Nashik Cambridge School', logo: 'nashik-cambridge-school.png' },
+    { name: 'Global International School and Junior College, Nashik', logo: 'global-international-school-nashik.png' },
+    { name: 'GEMS English Medium School, Nashik', logo: 'gems-english-medium-school-nashik.png' },
+    { name: 'St. Vincent Pallotti School, Nashik', logo: 'st-vincent-pallotti-school-nashik.png' },
+    { name: 'Wisdom High International School, Nashik', logo: 'wisdom-high-international-school-nashik.png' },
+    { name: 'Delhi Public School, Nashik', logo: 'delhi-public-school-nashik.png' },
+    { name: 'Vidya Vikas International School, Malegaon', logo: 'vidya-vikas-international-school-malegaon.png' },
+    { name: 'Peevees Public School', logo: 'peevees-public-school.png' },
+    { name: 'PK Foundation School', logo: 'pk-international-school.png' },
+    { name: 'Radiance International School', logo: 'radiance-international-school.png' },
+    { name: 'Shreemant Shivajiraje School', logo: 'shreemant-shivajiraje-school.png' },
+    { name: "St. Xavier's School, Pune", logo: 'st-xaviers-school.png' },
+    { name: 'Sumati Balwan School', logo: 'sumati-balwan-school.jpeg' },
+    { name: 'Thanekar International School', logo: 'thanekar-international-school.jpeg' },
+    { name: 'Vidyavalley International School', logo: 'vidyavalley-international-school.jpeg' },
+    { name: 'Vikhe Patil Memorial School', logo: 'vikhe-patil-memorial-school.jpeg' },
+    { name: 'VPDCPS School', logo: 'vpdcps-school.png' },
+    { name: 'Little Blossoms School, Nashik', logo: 'little-blossoms-school-nashik.png' },
+    { name: 'Clifford International School, Nashik', logo: 'clifford-international-school-nashik.png' },
+    { name: 'New Grace Academy, Nashik', logo: 'new-grace-academy-nashik.png' },
+    { name: 'SRN Mehta CBSE School, Kalburgi', logo: 'srn-mehta-cbse-school-kalburgi.png' },
+    { name: "St. Joseph's Convent Senior Secondary School, Jalgaon", logo: 'st-josephs-convent-school-jalgaon.png' },
+    { name: 'The Knowledge Habitat, Pune', logo: 'the-knowledge-habitat-pune.png' }
+  ];
+
+  function createPartnerCard(school, isLoopDuplicate) {
+    const card = document.createElement('div');
+    card.className = 'partner-logo-card';
+    card.dataset.school = school.name;
+    if (isLoopDuplicate) {
+      card.tabIndex = -1;
+      card.setAttribute('aria-hidden', 'true');
+    } else {
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', 'View ' + school.name);
+    }
+
+    const image = document.createElement('img');
+    image.src = './assets/partner-logos/' + school.logo;
+    image.alt = school.name + ' - CBSE Skill Education partner school';
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    card.appendChild(image);
+    return card;
+  }
+
+  function fillPartnerCollection(container, schools, repeat) {
+    if (!container) return;
+    const fragment = document.createDocumentFragment();
+    const copies = repeat ? 2 : 1;
+    for (let copy = 0; copy < copies; copy += 1) {
+      schools.forEach(school => fragment.appendChild(createPartnerCard(school, copy > 0)));
+    }
+    container.replaceChildren(fragment);
+  }
+
+  function renderPartnerSchools() {
+    const firstRow = document.querySelector('[data-partners-row="first"]');
+    const secondRow = document.querySelector('[data-partners-row="second"]');
+    const mobileRow = document.querySelector('[data-partners-row="mobile"]');
+    const reducedMotionGrid = document.querySelector('[data-partners-grid]');
+    if (!firstRow || !secondRow || !mobileRow || !reducedMotionGrid) return;
+
+    const splitIndex = Math.ceil(partnerSchools.length / 2);
+    fillPartnerCollection(firstRow, partnerSchools.slice(0, splitIndex), true);
+    fillPartnerCollection(secondRow, partnerSchools.slice(splitIndex), true);
+    fillPartnerCollection(mobileRow, partnerSchools, true);
+    fillPartnerCollection(reducedMotionGrid, partnerSchools, false);
+  }
+
+  renderPartnerSchools();
+
   (function initPartnerModal() {
     const cards = document.querySelectorAll('.partner-logo-card');
     if (!cards.length) return;
 
-    // Build modal markup once and append to <body> (keeps existing HTML untouched)
+    const hoverQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const tooltip = document.createElement('div');
+    tooltip.className = 'partner-school-tooltip';
+    tooltip.id = 'partner-school-tooltip';
+    tooltip.setAttribute('role', 'tooltip');
+    tooltip.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(tooltip);
+
+    let tooltipCard = null;
+    let tooltipFrame = null;
+
+    function positionTooltip() {
+      tooltipFrame = null;
+      if (!tooltipCard || !tooltipCard.isConnected) {
+        hideTooltip();
+        return;
+      }
+
+      const cardRect = tooltipCard.getBoundingClientRect();
+      const tooltipRect = tooltip.getBoundingClientRect();
+      const gutter = 12;
+      const gap = 10;
+      let placement = 'top';
+      let top = cardRect.top - tooltipRect.height - gap;
+
+      if (top < gutter) {
+        placement = 'bottom';
+        top = cardRect.bottom + gap;
+      }
+
+      const centeredLeft = cardRect.left + (cardRect.width / 2) - (tooltipRect.width / 2);
+      const maximumLeft = Math.max(gutter, window.innerWidth - tooltipRect.width - gutter);
+      const left = Math.min(Math.max(centeredLeft, gutter), maximumLeft);
+
+      tooltip.dataset.placement = placement;
+      tooltip.style.left = Math.round(left) + 'px';
+      tooltip.style.top = Math.round(top) + 'px';
+      tooltip.classList.add('is-visible');
+    }
+
+    function scheduleTooltipPosition() {
+      if (!tooltipCard || tooltipFrame !== null) return;
+      tooltipFrame = requestAnimationFrame(positionTooltip);
+    }
+
+    function showTooltip(card, fromKeyboard) {
+      if (!fromKeyboard && !hoverQuery.matches) return;
+      tooltipCard = card;
+      tooltip.textContent = card.dataset.school || '';
+      tooltip.classList.add('is-active');
+      tooltip.setAttribute('aria-hidden', 'false');
+      scheduleTooltipPosition();
+    }
+
+    function hideTooltip(card) {
+      if (card && tooltipCard !== card) return;
+      if (tooltipFrame !== null) {
+        cancelAnimationFrame(tooltipFrame);
+        tooltipFrame = null;
+      }
+      tooltipCard = null;
+      tooltip.classList.remove('is-active', 'is-visible');
+      tooltip.setAttribute('aria-hidden', 'true');
+    }
+
+    // Build modal markup once and append to <body>.
     const overlay = document.createElement('div');
     overlay.className = 'partner-modal-overlay';
     overlay.setAttribute('aria-hidden', 'true');
@@ -276,6 +425,7 @@ function setDirectionIcon(icon, direction, family) {
     function openModal(card) {
       const img  = card.querySelector('img');
       const name = card.dataset.school || (img ? img.alt : '');
+      hideTooltip();
       if (img) {
         modalImg.src = img.src;
         modalImg.alt = name;
@@ -297,6 +447,10 @@ function setDirectionIcon(icon, direction, family) {
     }
 
     cards.forEach(card => {
+      card.addEventListener('pointerenter', () => showTooltip(card, false));
+      card.addEventListener('pointerleave', () => hideTooltip(card));
+      card.addEventListener('focus', () => showTooltip(card, true));
+      card.addEventListener('blur', () => hideTooltip(card));
       card.addEventListener('click', () => openModal(card));
       card.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -304,6 +458,20 @@ function setDirectionIcon(icon, direction, family) {
           openModal(card);
         }
       });
+    });
+
+    window.addEventListener('resize', scheduleTooltipPosition);
+    window.addEventListener('scroll', scheduleTooltipPosition, true);
+    if (typeof hoverQuery.addEventListener === 'function') {
+      hoverQuery.addEventListener('change', () => hideTooltip());
+    } else {
+      hoverQuery.addListener(() => hideTooltip());
+    }
+    new MutationObserver(() => {
+      if (tooltipCard && !tooltipCard.isConnected) hideTooltip();
+    }).observe(document.querySelector('[data-partners-marquee]'), {
+      childList: true,
+      subtree: true
     });
 
     closeBtn.addEventListener('click', closeModal);
