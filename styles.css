@@ -5865,27 +5865,9 @@ button:hover > .gallery-play {
   color: var(--saffron);
 }
 
-/* ---- Listing hero ---- */
-.blog-hero {
-  padding: clamp(100px, 11vw, 140px) clamp(16px, 4vw, 40px) clamp(28px, 3.5vw, 44px);
-  background: linear-gradient(180deg, var(--warm), var(--cream));
-  border-bottom: 1px solid var(--border);
-}
-.blog-hero .section-inner {
-  max-width: 760px;
-  text-align: center;
-}
-.blog-hero .section-title {
-  margin-bottom: 16px;
-}
-.blog-hero .section-desc {
-  max-width: 600px;
-  margin-inline: auto;
-}
-
 /* ---- Listing grid ---- */
 .blog-listing {
-  padding-top: clamp(28px, 4vw, 48px);
+  padding-top: clamp(100px, 11vw, 140px);
 }
 .blog-listing .section-inner {
   max-width: 1320px;
