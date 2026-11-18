@@ -72,6 +72,12 @@
     "status": "Active"
   },
   {
+    "category": "Skill Labs",
+    "question": "Which sectors/skill subjects should we choose for the CSL?",
+    "answer": "The school should choose skill subjects that cover all three forms of work (Life Forms; Machines & Materials; Human Services) and are locally relevant. Selection criteria:\n\n• Local context — what industries, farms, or services exist near the school that students can link to.\n• Availability of resources — tools, raw materials, and a teacher/trainer.\n• Access to local businesses for field visits, guest experts, and internship placements.\n• Aspirations of students and school management.\n\n📌 Note: NCF-SE 2023 recommends 6 vocations over Classes IX–X (2 per form of work) — the CSL should be equipped to support all 6.",
+    "status": "Active"
+  },
+  {
     "category": "Teacher Training",
     "question": "Who will teach Kaushal Vikas? Must we hire a new teacher?",
     "answer": "Schools do not necessarily need to hire a new teacher. NCF-SE 2023 explicitly recognises that trained local practitioners and experienced community resource persons can deliver vocational courses. Options include: identifying an existing teacher with relevant competency; appointing a dedicated skill teacher; engaging a locally trained resource trainer (artisan, practitioner); or using guest expert sessions from local industries, farms, or NGOs.",
@@ -99,6 +105,18 @@
     "category": "Assessments",
     "question": "How will Kaushal Vikas (Class 9–10) marks appear on the report card?",
     "answer": "Kaushal Vikas is a marks-based, board-assessed subject. The report card will reflect marks (not just grades). The split is: 75% demonstration/portfolio-based and 25% written examination. For Class 10 board exams, it will be treated as a full subject with marks contributing to the overall score.",
+    "status": "Active"
+  },
+  {
+    "category": "Assessments",
+    "question": "Is the Kaushal Vikas exam a board paper or school assessment for Class 10?",
+    "answer": "It is a board-level subject (Subject Code 444). The Class 10 board exam will include a written component (25%) assessed by CBSE, alongside the school-assessed practical/portfolio component (75%). Schools should clarify the exact examination structure with CBSE as updated guidelines are issued.",
+    "status": "Active"
+  },
+  {
+    "category": "Assessments",
+    "question": "Is it mandatory to use the NCERT textbook for Kaushal Bodh/Kaushal Vikas?",
+    "answer": "Yes, the NCERT textbook is the prescribed text for Kaushal Vikas (Class 9 onwards). For Kaushal Bodh (Classes VI–VIII), NCERT has developed Kaushal Bodh textbooks that schools should follow. While the schools can consider their own projects and vocations, the topics, project structure and curriculum must align with CBSE/NCERT criteria and guidelines.",
     "status": "Active"
   },
   {
