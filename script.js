@@ -2013,3 +2013,94 @@ console.log('[LAHI CMS] Module definitions complete — waiting for DOMContentLo
     renderInstagramReels(root);
   });
 })();
+
+// ══════════════════════════════════════════════════════════════
+//  TESTIMONIALS — scroll-snap row; arrows appear only when it overflows
+// ══════════════════════════════════════════════════════════════
+(function() {
+  document.querySelectorAll('[data-testimonials]').forEach(function(root) {
+    var track = root.querySelector('.testimonial-track');
+    var controls = root.querySelector('.testimonial-controls');
+    if (!track || !controls) return;
+    var buttons = controls.querySelectorAll('.testimonial-btn');
+    var pending = false;
+
+    function update() {
+      pending = false;
+      var max = track.scrollWidth - track.clientWidth;
+      controls.hidden = max <= 2;
+      buttons.forEach(function(btn) {
+        var dir = Number(btn.dataset.dir);
+        btn.disabled = dir < 0 ? track.scrollLeft <= 2 : track.scrollLeft >= max - 2;
+      });
+    }
+    function schedule() {
+      if (!pending) {
+        pending = true;
+        window.requestAnimationFrame(update);
+      }
+    }
+
+    buttons.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var card = track.querySelector('.testimonial-card');
+        var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+        var step = card ? card.getBoundingClientRect().width + gap : track.clientWidth;
+        track.scrollBy({ left: step * Number(btn.dataset.dir) });
+      });
+    });
+    track.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+  });
+})();
+
+// ══════════════════════════════════════════════════════════════
+//  DEEP LINKS INTO RESOURCE TABS (#resources-webinars, #resources-brochures)
+// ══════════════════════════════════════════════════════════════
+(function() {
+  function openResourceTabFromHash() {
+    var match = /^#resources-(guides|webinars|brochures)$/.exec(window.location.hash);
+    if (!match) return;
+    var btn = document.querySelector('.res-tab[data-tab="' + match[1] + '"]');
+    var section = document.getElementById('resources');
+    if (btn && typeof switchResTab === 'function') switchResTab(btn);
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  // #resource-<key> (e.g. from the Policy Context timeline): open Guides & Tools,
+  // expand that policy card and bring it into view.
+  function openResourceCardFromHash() {
+    var match = /^#resource-([a-z0-9-]+)$/.exec(window.location.hash);
+    if (!match) return;
+    var card = document.getElementById('resource-' + match[1]);
+    if (!card) return;
+    var guidesTab = document.querySelector('.res-tab[data-tab="guides"]');
+    if (guidesTab && typeof switchResTab === 'function') switchResTab(guidesTab);
+    if (!card.classList.contains('is-open')) {
+      var trigger = card.querySelector('.resource-card-visible');
+      if (trigger) trigger.click();
+    }
+    window.requestAnimationFrame(function() {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+  function handleHash() {
+    openResourceTabFromHash();
+    openResourceCardFromHash();
+  }
+
+  window.addEventListener('hashchange', handleHash);
+  // Re-clicking a link whose hash is already current doesn't fire hashchange.
+  document.addEventListener('click', function(event) {
+    var link = event.target.closest && event.target.closest('a[href^="#resources-"], a[href^="#resource-"]');
+    if (link && link.getAttribute('href') === window.location.hash) {
+      event.preventDefault();
+      handleHash();
+    }
+  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleHash);
+  } else {
+    handleHash();
+  }
+})();
