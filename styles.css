@@ -259,7 +259,8 @@ nav {
 }
 
 .mobile-nav-dropdown.is-open .mobile-dropdown-menu {
-  max-height: 150px;
+  /* room for all 7 resource links; the overlay itself scrolls if the screen is short */
+  max-height: 480px;
   opacity: 1;
 }
 
@@ -6615,14 +6616,17 @@ html.has-topbar {
   right: 0;
   z-index: 210;
   height: 36px;
-  background: var(--ink);
-  color: rgba(250, 247, 242, 0.82);
+  /* same surface as the nav below */
+  background: rgba(250, 247, 242, 0.94);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
   font-size: 0.78rem;
 }
 .topbar-inner {
-  max-width: 1160px;
+  /* same width and side padding as the nav, so the mail lines up with the logo
+     and the social icons line up with the CTA buttons */
   height: 100%;
-  margin: 0 auto;
   padding: 0 clamp(12px, 2vw, 32px);
   display: flex;
   align-items: center;
@@ -6651,6 +6655,8 @@ html.has-topbar {
 }
 .topbar-links li {
   height: 100%;
+  display: flex;
+  align-items: center;
 }
 .topbar-link {
   display: inline-flex;
@@ -6670,8 +6676,7 @@ html.has-topbar {
   flex-shrink: 0;
 }
 .topbar-link:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
 }
 /* Brand colours on hover/focus: YouTube red with white play, Instagram gradient */
 .topbar-link--yt:hover svg,
@@ -6706,7 +6711,7 @@ html.has-topbar {
 }
 .topbar-link:focus-visible,
 .skip-link:focus-visible {
-  outline: 2px solid var(--saffron-light);
+  outline: 2px solid var(--saffron);
   outline-offset: -2px;
 }
 .topbar-link--mail {
@@ -7369,4 +7374,50 @@ html.has-topbar {
 .topbar-link--icon svg {
   width: 19px;
   height: 19px;
+}
+
+/* Timetable preview image (assets/timetable-sample.svg) */
+.tg-card {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+}
+.tg-preview {
+  position: relative;
+  width: 100%;
+  margin: 0 0 12px;
+}
+.tg-preview img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+@media (max-width: 860px) {
+  .tg-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Light pill behind icons on hover so brand colours stay legible on the brown bar */
+.topbar-link--icon {
+  height: 28px;
+  align-self: center;
+  border-radius: 8px;
+}
+.topbar-link--icon:hover,
+.topbar-link--icon:focus-visible {
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.topbar-link--mail:hover {
+  color: var(--teal);
+  background: rgba(137, 75, 7, 0.07);
+}
+.topbar-link--mail:hover svg {
+  color: var(--teal);
+}
+
+/* cancel the links' own inner padding at the outer edges */
+.topbar-links {
+  margin-right: -8px;
 }
